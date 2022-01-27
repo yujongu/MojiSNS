@@ -59,19 +59,68 @@
     top: 20%;
     bottom: 5%;
     width: 15%;
-    border-radius: 10%;
     height: 15%;
     background-image: url("../../public/images/start_logo.png");
     background-size: 105%;
 }
 
-a.login {
-    position: absolute;
-    color: orange;
-}
 
 p {
     color: black;
     font-size: 27px;
 }
 
+.loginB {
+    position: absolute;
+    background-color: #FFC368;
+    color: #E26714;
+    transition: background-color 1s;
+    width: 15%;
+    height: 6.5%;
+    margin-top: 28%;
+    margin-left: 67.5%;
+    z-index: 999;
+    border-style: none;
+    border-radius: 27px;
+    perspective: 1px;
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.loginB:hover {
+    background-color: #ffac2e;
+}
+
+.loginB:focus,
+.loginB:active {
+    background-color: #fba31f;
+    transition: none;
+}
+      
+.signupB {
+    position: absolute;
+    background-color: #FFC368;
+    color: #E26714;
+    transition: background-color 1s;
+    width: 15%;
+    height: 6.5%;
+    margin-top: 34%;
+    margin-left: 67.5%;
+    z-index: 998;
+    border-style: none;
+    border-radius: 27px;
+    perspective: 1px;
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.signupB:hover {
+    background-color: #ffac2e;
+}
+
+.signupB:focus,
+.signupB:active {
+    background-color: #fba31f;
+    transition: none;
+}
+      

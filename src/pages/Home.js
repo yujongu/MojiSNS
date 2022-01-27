@@ -29,9 +29,13 @@ class Home extends React.Component {
 
                 </div>
 
-                <button type="login">login</button>
-                
-                <button type="signup">signup</button>
+                <div class="login">
+                  <button class="loginB">Log In</button>
+                </div> 
+
+                <div class="signup">
+                  <button class="signupB">Sign Up</button>
+                </div> 
 
             </React.Fragment>
         );
