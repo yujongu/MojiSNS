@@ -1,8 +1,11 @@
 import React from "react"
 import "./Home.css"
+import { useNavigate } from "react-router-dom";
 
-class Home extends React.Component {
-    render() {
+function Home() {
+
+        let navigate = useNavigate();
+
         return (
             <React.Fragment>
 
@@ -30,7 +33,8 @@ class Home extends React.Component {
                 </div>
 
                 <div class="login">
-                  <button class="loginB">Log In</button>
+                    <button class="loginB"  onClick={() => {
+                      navigate("/login")}}>Log In</button>
                 </div> 
 
                 <div class="signup">
@@ -39,7 +43,6 @@ class Home extends React.Component {
 
             </React.Fragment>
         );
-    }
 
 
 }
