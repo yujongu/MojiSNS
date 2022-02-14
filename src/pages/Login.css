@@ -1,0 +1,37 @@
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.background {
+    background-image: url('../../public/images/ls_background.png');
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-size: 100%;
+
+}
+
+.box {
+    position: absolute;
+    margin-top: 12%;
+    margin-left: 38%;
+    background-color: white;
+    width: 15%;
+    height: 32%;
+    border-radius: 5%;
+    padding: 5%;
+}
+
+.logo {
+    position: absolute;
+    left: 42.5%;
+    top: 25%;
+    bottom: 5%;
+    width: 15%;
+    height: 15%;
+    background-image: url("../../public/images/start_logo.png");
+    background-size: 105%;
+}
+
+
