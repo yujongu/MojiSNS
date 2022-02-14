@@ -1,4 +1,18 @@
-# Moji Social Networking Web App
+# MOJI project for CS 307
 
-## This is a social networking web application
-## done by CS 307 Purdue students.
+Complete source code for CS 307 project Spring 2022
+***
+
+## Contributers
+
+Jongu Yu<br/>
+Juha Jeon<br/>
+(Add your name here)<br/>
+(Add your name here)<br/>
+***
+## How to I run the website?
+
+```
+cd Frontend //change directory to frontend
+npm start
+```
