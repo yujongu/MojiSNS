@@ -1,0 +1,126 @@
+.left {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    bottom: 5%;
+    width: 50%;
+    border-bottom-left-radius: 10%;
+    border-top-left-radius: 10%;
+    height: 90%;
+    background-color: #F2F2F2;
+    background-size: 100%;
+    box-shadow: 0 6px 2px -2px rgb(202, 202, 202);
+}
+
+.rightHalf {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    bottom: 5%;
+    width: 50%;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+    border-top-left-radius: 6%;
+    border-bottom-left-radius: 5%;
+    height: 90%;
+    background-color: white;
+    background-size: 100%;
+    box-shadow: 4px 4px rgb(202, 202, 202);
+    
+}
+
+.leftHalf {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    bottom: 5%;
+    width: 50%;
+    border-radius: 10%;
+    height: 90;
+    background-image: url("../../public/images/start_background.png");
+    background-size: 107%;
+}
+
+.welcome {
+    position: absolute;
+    margin-top: 8%;
+    margin-left: 12.5%;
+    background-color: white;
+    opacity: 80%;
+    width: 25%;
+    height: 50%;
+    border-radius: 10%;
+    padding: 5%;
+}
+
+.logo {
+    position: absolute;
+    left: 67%;
+    top: 20%;
+    bottom: 5%;
+    width: 15%;
+    height: 15%;
+    background-image: url("../../public/images/start_logo.png");
+    background-size: 105%;
+}
+
+
+p {
+    color: black;
+    font-size: 27px;
+}
+
+.loginB {
+    position: absolute;
+    background-color: #FFC368;
+    color: #E26714;
+    transition: background-color 1s;
+    width: 15%;
+    height: 6.5%;
+    margin-top: 28%;
+    margin-left: 67.5%;
+    z-index: 999;
+    border-style: none;
+    border-radius: 27px;
+    perspective: 1px;
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.loginB:hover {
+    background-color: #ffac2e;
+}
+
+.loginB:focus,
+.loginB:active {
+    background-color: #fba31f;
+    transition: none;
+}
+      
+.signupB {
+    position: absolute;
+    background-color: #FFC368;
+    color: #E26714;
+    transition: background-color 1s;
+    width: 15%;
+    height: 6.5%;
+    margin-top: 34%;
+    margin-left: 67.5%;
+    z-index: 998;
+    border-style: none;
+    border-radius: 27px;
+    perspective: 1px;
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.signupB:hover {
+    background-color: #ffac2e;
+}
+
+.signupB:focus,
+.signupB:active {
+    background-color: #fba31f;
+    transition: none;
+}
+      
