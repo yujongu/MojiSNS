@@ -5,6 +5,7 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Homeweb from "./pages/Homeweb"
+import ForgetID from './pages/ForgetID';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Homeweb />} />
+        <Route path="/forget" element={<ForgetID />} />
       </Routes>
     </Router>
   );
