@@ -1,14 +1,11 @@
 import React from "react"
 import { useState, useEffect } from "react";
-import "./Login.css"
+import "./Signup.css"
 import { useNavigate } from "react-router-dom";
 
-
-
-
-function Login() {
+function Signup() {
     const [isActive, setIsActive] = useState(false);
-    
+
 
     return(
 
@@ -22,36 +19,41 @@ function Login() {
 
             </div>
 
-            <div class="logoL">
+            <div class="logoS">
 
             </div>
 
-            <div class="welcomeL">
-                <p1>Welcome back!</p1>
+            <div id="float-label3">
+                <input type="email" 
+                />  
+                <label className={ isActive ? "Active" : ""} htmlFor="username" >Email</label>
             </div>
 
-            <div id="float-label">
+            <div id="float-label4">
                 <input type="username" 
                 />  
                 <label className={ isActive ? "Active" : ""} htmlFor="username" >Username</label>
             </div>
 
-            <div id="float-label2">
+            <div id="float-label5">
                 <input type="password" 
                 />  
                 <label className={ isActive ? "Active" : ""} htmlFor="password" >Password</label>
             </div>
 
-            <div class="loginL">
-                <button class="loginBL">Log In</button>
-            </div> 
-
-            <div class="forgotpsw">
-                <p3>Forgot password?</p3>
+            <div id="float-label6">
+                <input type="confirmpsw" 
+                />  
+                <label className={ isActive ? "Active" : ""} htmlFor="confirmpsw" >Confirm Password</label>
             </div>
+
+
+            <div class="signupS">
+                <button class="signupBS">Sign Up</button>
+            </div> 
 
         </React.Fragment>
     );
 }
 
-export default Login;
+export default Signup;

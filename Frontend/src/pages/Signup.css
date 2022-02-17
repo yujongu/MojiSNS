@@ -25,7 +25,7 @@ body {
     padding: 5%;
 }
 
-.logoL {
+.logoS {
     position: absolute;
     left: 42.5%;
     top: 25%;
@@ -37,28 +37,18 @@ body {
     background-size: 105%;
 }
 
-.welcomeL {
-    color: #FFC368;
-    font-size: 25px;
-    font-style: italic;
-    font-weight: bold;
-    margin-left: 46.2%;
-    margin-top: 21.2%;
-    position: absolute;
-}
-
-#float-label {
+#float-label3 {
     display: flex;
     flex-direction: column;
     position: absolute;
     z-index: 500;
     width: 15%;
     height: 5%;
-    margin-top: 24%;
+    margin-top: 22%;
     margin-left:42.5%
   }
   
-  #float-label input {
+  #float-label3 input {
     width: 100%;
     height: 56px;
     padding: 14px 16px 0 10px;
@@ -70,7 +60,7 @@ body {
     font-size: 16px;
   }
   
-  #float-label label {
+  #float-label3 label {
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
     padding: 0 12px;
@@ -82,15 +72,58 @@ body {
     transition: all 0.2s ease-out;
   }
 
-  #float-label:focus-within label {
+  #float-label3:focus-within label {
     transform: translate(0, 12px) scale(0.75);
   }
 
-  #float-label .Active {
+  #float-label3 .Active {
     transform: translate(0, 12px) scale(0.75);
   }
 
-  #float-label2 {
+  #float-label4 {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 500;
+    width: 15%;
+    margin-top: 25%;
+    margin-left:42.5%;
+    height: 5%;
+  }
+  
+  #float-label4 input {
+    width: 100%;
+    height: 56px;
+    padding: 14px 16px 0 10px;
+    outline: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+  }
+  
+  #float-label4 label {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 12px;
+    color: #999;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(0, 26px) scale(1);
+    transform-origin: top left;
+    transition: all 0.2s ease-out;
+  }
+
+  #float-label4:focus-within label {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+  #float-label4 .Active {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+  #float-label5 {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -101,7 +134,7 @@ body {
     height: 5%;
   }
   
-  #float-label2 input {
+  #float-label5 input {
     width: 100%;
     height: 56px;
     padding: 14px 16px 0 10px;
@@ -113,7 +146,7 @@ body {
     font-size: 16px;
   }
   
-  #float-label2 label {
+  #float-label5 label {
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
     padding: 0 12px;
@@ -125,22 +158,67 @@ body {
     transition: all 0.2s ease-out;
   }
 
-  #float-label2:focus-within label {
+  #float-label5:focus-within label {
     transform: translate(0, 12px) scale(0.75);
   }
 
-  #float-label2 .Active {
+  #float-label5 .Active {
     transform: translate(0, 12px) scale(0.75);
   }
 
-.loginBL {
+
+  #float-label6 {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 500;
+    width: 15%;
+    margin-top: 31%;
+    margin-left:42.5%;
+    height: 5%;
+  }
+  
+  #float-label6 input {
+    width: 100%;
+    height: 56px;
+    padding: 14px 16px 0 10px;
+    outline: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+  }
+  
+  #float-label6 label {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 12px;
+    color: #999;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(0, 26px) scale(1);
+    transform-origin: top left;
+    transition: all 0.2s ease-out;
+  }
+
+  #float-label6:focus-within label {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+  #float-label6 .Active {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+
+.signupBS {
     position: absolute;
     background-color: #FFC368;
     color: #E26714;
     transition: background-color 1s;
     width: 16.3%;
     height: 5.3%;
-    margin-top: 32.2%;
+    margin-top: 34%;
     margin-left: 42.5%;
     z-index: 999;
     border-style: none;
@@ -150,22 +228,12 @@ body {
     font-weight: bold;
 }
   
-.loginBL:hover {
+.signupBS:hover {
     background-color: #ffac2e;
 }
 
-.loginBL:focus,
-.loginBL:active {
+.signupBS:focus,
+.signupBS:active {
     background-color: #fba31f;
     transition: none;
-}
-
-.forgotpsw {
-    color: black;
-    font-size: 14px;
-    font-weight: bold;
-    margin-left: 53%;
-    margin-top: 36%;
-    position: absolute;
-    z-index: 999;
 }
