@@ -1,16 +1,12 @@
 import * as React from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/private-theming';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { Container, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Grid } from '@mui/material';
 
-
-
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const theme = createTheme({
     palette: {
@@ -20,70 +16,22 @@ const theme = createTheme({
             contrastText: 'rgba(255,255,255,0.87)',
         },
         secondary: {
-            main: '#ffffff',
-            contrastText: '#959595'
+            main: '#f50057',
         },
     }
 })
 
 
-
 const Header = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
     return (
         <ThemeProvider theme={theme}>
-            <Box
-                sx={{
-                    height: 30
-                }}
-            >
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        Hello
+                    </Toolbar>
+                </AppBar>
             </Box>
-            <Grid container>
-                <Grid item xs={11}>
-                    <Typography variant='h4' align='left'
-                        sx={{
-                            color: 'primary'
-                        }}
-                    >
-                        Welcome to Moji!
-                    </Typography>
-                </Grid>
-                <Grid item xs>
-                    <div>
-                        <Button
-                            color='secondary'
-                            variant='contained'
-                            onClick={handleClick}
-                        >
-                            Settings
-                        </Button>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                        >
-                            <MenuItem onClick={handleClose}>This</MenuItem>
-                            <MenuItem onClick={handleClose}>Could</MenuItem>
-                            <MenuItem onClick={handleClose}>Be anything</MenuItem>
-                        </Menu>
-                    </div>
-                </Grid>
-            </Grid>
         </ThemeProvider>
     )
 }
