@@ -1,32 +1,46 @@
 import React from 'react'
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/private-theming';
-import { Container } from '@mui/material';
+import { Container, Grid } from '@mui/material'
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import EditIcon from '@mui/icons-material/Edit';
+import { makeStyles } from '@mui/material';
 
 import Header from './components/Header/Header'
-
-
-const theme = createTheme({
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#c5742a',
-      contrastText: 'rgba(255,255,255,0.87)',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-  }
-})
+import Tab from './components/Tab/Tab';
+import TopicView from './components/TopicView/TopicView';
 
 const Homeweb = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Header />
+    <Box
+    sx={{
+      backgroundColor: '#CCCCCC'
+    }}
+    >
       <Container>
-
+        <Grid container rowSpacing={3}>
+          <Grid item xs={12} >
+            <Header />
+          </Grid>
+          <Grid item xs={12}>
+            <Tab />
+          </Grid>
+          <Grid item xs={12} style={{ backgroundColor: 'yellow' }}>
+            <TopicView />
+          </Grid>
+          <Grid item xs={9} style={{ backgroundColor: 'red' }}>
+            Posts
+          </Grid>
+          <Grid item xs style={{ backgroundColor: 'green' }}>
+            Profile
+          </Grid>
+        </Grid>
+        <Box>
+          <Fab color="secondary" aria-label="edit">
+            <EditIcon />
+          </Fab>
+        </Box>
       </Container>
-    </ThemeProvider>
+    </Box>
   )
 }
 
