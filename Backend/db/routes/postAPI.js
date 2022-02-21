@@ -10,17 +10,14 @@ router.get("/main", async (req, res) => { //maybe not url?
   
 
 router.post("/main", async (req, res) => { //makes new post on POST request
-    const post = new Post({
-        USER_ID: req.body.USER_ID,
-        TOPIC_ID: req.body.TOPIC_ID,
-        BODY: req.body.BODY
-    });
+    const post = new Post(req.body);
     await post.save(); //save this object to collection in db
     res.send(post);//maybe different?
 });
 
 // router.get("/single-blog", async (req, res))
 
+//get single blog
 router.get("/main/:id", async (req, res) => {
     try {
       const post = await Post.findOne({ _id: req.params.id });
