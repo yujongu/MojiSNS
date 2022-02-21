@@ -5,14 +5,15 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Homeweb from "./pages/Homeweb"
-import ForgetID from './pages/ForgetID';
+import ForgetID from './pages/ForgetID'
+import HomeNew from "./pages/HomeNew"
 
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomeNew />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Homeweb />} />
