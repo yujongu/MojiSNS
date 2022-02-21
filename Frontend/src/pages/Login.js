@@ -6,9 +6,23 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
+
 function Login() {
     const [isActive, setIsActive] = useState(false);
-    
+    const [value, setValue] = useState('');
+    const [value1, setValue1] = useState('');
+
+    function handleTextChange(text) {
+        setValue(text);
+        setValue1(text);
+      
+        if (text !== '') {
+          setIsActive(true);
+        } else {
+          setIsActive(false);
+        }
+    }
 
     return(
 
@@ -31,13 +45,17 @@ function Login() {
             </div>
 
             <div id="float-label">
-                <input type="username" 
+                <input type="username"
+                        value={value}
+                        onChange={(e) => handleTextChange(e.target.value)}
                 />  
                 <label className={ isActive ? "Active" : ""} htmlFor="username" >Username</label>
             </div>
 
             <div id="float-label2">
-                <input type="password" 
+                <input type="password"
+                        value1={value1}
+                        onChange={(e) => handleTextChange(e.target.value1)}
                 />  
                 <label className={ isActive ? "Active" : ""} htmlFor="password" >Password</label>
             </div>
