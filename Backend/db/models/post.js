@@ -2,26 +2,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({ // need to add more
-    userid: { 
+    USER_ID: { 
         type: String,
         required: true
     },
 
-    topic: {
+    TOPIC_ID: {
         type: String,
         required: true
     },
 
-    body: {
-        type: String,
+    LIKES_COUNT: {
+        type: Number,
         required: true
     },
 
-    image: {
-        type: String, // TODO: image, gif files
+    COMMENTS_COUNT: {
+        type: Number,
         required: false
-    }
+    },
 
+    BODY: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true});
 
 const Post = mongoose.model('Post', postSchema);
