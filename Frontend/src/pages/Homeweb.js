@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { makeStyles } from '@mui/material';
 
 import Header from './components/Header/Header'
-import Tab from './components/Tab/Tab';
+import TabBar from './components/TabBar/TabBar';
 import TopicView from './components/TopicView/TopicView';
 
 const Homeweb = () => {
@@ -22,10 +22,7 @@ const Homeweb = () => {
             <Header />
           </Grid>
           <Grid item xs={12}>
-            <Tab />
-          </Grid>
-          <Grid item xs={12} style={{ backgroundColor: 'yellow' }}>
-            <TopicView />
+            <TabBar />
           </Grid>
           <Grid item xs={9} style={{ backgroundColor: 'red' }}>
             Posts
