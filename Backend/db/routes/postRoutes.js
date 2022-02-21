@@ -3,11 +3,10 @@ const express = require("express");
 const Post = require("../models/post");
 const router = express.Router();
 
-//app.use url encoded
-
 //return all posts by newest
 router.get("/main", async (req, res) => {
     const posts = await Post.find().sort({ createdAt: -1});
+    console.log(posts);
     res.send(posts);
   });
   
