@@ -8,7 +8,7 @@ Complete source code for CS 307 project Spring 2022
 Jongu Yu<br/>
 Juha Jeon<br/>
 Jaeseok Choi<br/>
-(Add your name here)<br/>
+Jooheon Lee<br/>
 ***
 ## How to I run the website?
 

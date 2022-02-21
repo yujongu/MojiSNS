@@ -1,97 +1,75 @@
 import React from "react"
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState, useEffect } from "react";
+import "./Login.css"
+import { useNavigate } from "react-router-dom";
 
-const theme = createTheme();
 
-export default function login() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // 이메일 페스워드 개발자 콘솔에서 입력값
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
 
-    return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <EmojiEmotionsIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Sign In
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="signup" variant="body2">
-                                    {"Forgot password?"}
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="forget" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-            </Container>
-        </ThemeProvider>
+
+
+
+function Login() {
+    const [isActive, setIsActive] = useState(false);
+    const [value, setValue] = useState('');
+    const [value1, setValue1] = useState('');
+
+    function handleTextChange(text) {
+        setValue(text);
+        setValue1(text);
+      
+        if (text !== '') {
+          setIsActive(true);
+        } else {
+          setIsActive(false);
+        }
+    }
+
+    return(
+
+        <React.Fragment>
+        
+            <div class="background">
+
+            </div>
+
+            <div class="box">
+
+            </div>
+
+            <div class="logoL">
+
+            </div>
+
+            <div class="welcomeL">
+                <p1>Welcome back!</p1>
+            </div>
+
+            <div id="float-label">
+                <input type="username"
+                        value={value}
+                        onChange={(e) => handleTextChange(e.target.value)}
+                />  
+                <label className={ isActive ? "Active" : ""} htmlFor="username" >Username</label>
+            </div>
+
+            <div id="float-label2">
+                <input type="password"
+                        value1={value1}
+                        onChange={(e) => handleTextChange(e.target.value1)}
+                />  
+                <label className={ isActive ? "Active" : ""} htmlFor="password" >Password</label>
+            </div>
+
+            <div class="loginL">
+                <button class="loginBL">Log In</button>
+            </div> 
+
+            <div class="forgotpsw">
+                <p3>Forgot password?</p3>
+            </div>
+
+        </React.Fragment>
     );
 }
+
+export default Login;

@@ -1,3 +1,4 @@
+
 body {
     height: 100%;
     width: 100%;
@@ -9,6 +10,7 @@ body {
     width: 100%;
     position: absolute;
     background-size: 100%;
+    z-index: -1;
 
 }
 
@@ -23,15 +25,147 @@ body {
     padding: 5%;
 }
 
-.logo {
+.logoL {
     position: absolute;
     left: 42.5%;
     top: 25%;
     bottom: 5%;
     width: 15%;
     height: 15%;
+    z-index: 999;
     background-image: url("../../public/images/start_logo.png");
     background-size: 105%;
 }
 
+.welcomeL {
+    color: #FFC368;
+    font-size: 25px;
+    font-style: italic;
+    font-weight: bold;
+    margin-left: 46.2%;
+    margin-top: 21.2%;
+    position: absolute;
+}
 
+#float-label {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 500;
+    width: 15%;
+    height: 5%;
+    margin-top: 24%;
+    margin-left:42.5%
+  }
+  
+  #float-label input {
+    width: 100%;
+    height: 56px;
+    padding: 14px 16px 0 10px;
+    outline: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+  }
+  
+  #float-label label {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 12px;
+    color: #999;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(0, 26px) scale(1);
+    transform-origin: top left;
+    transition: all 0.2s ease-out;
+  }
+
+  #float-label:focus-within label {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+  #float-label .Active {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+  #float-label2 {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 500;
+    width: 15%;
+    margin-top: 28%;
+    margin-left:42.5%;
+    height: 5%;
+  }
+  
+  #float-label2 input {
+    width: 100%;
+    height: 56px;
+    padding: 14px 16px 0 10px;
+    outline: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+  }
+  
+  #float-label2 label {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 12px;
+    color: #999;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(0, 26px) scale(1);
+    transform-origin: top left;
+    transition: all 0.2s ease-out;
+  }
+
+  #float-label2:focus-within label {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+  #float-label2 .Active {
+    transform: translate(0, 12px) scale(0.75);
+  }
+
+.loginBL {
+    position: absolute;
+    background-color: #FFC368;
+    color: #E26714;
+    transition: background-color 1s;
+    width: 16.3%;
+    height: 5.3%;
+    margin-top: 32.2%;
+    margin-left: 42.5%;
+    z-index: 999;
+    border-style: none;
+    border-radius: 4px;
+    perspective: 1px;
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.loginBL:hover {
+    background-color: #ffac2e;
+}
+
+.loginBL:focus,
+.loginBL:active {
+    background-color: #fba31f;
+    transition: none;
+}
+
+.forgotpsw {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 53%;
+    margin-top: 36%;
+    position: absolute;
+    z-index: 999;
+}

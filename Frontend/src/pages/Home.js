@@ -40,7 +40,8 @@ function Home() {
                 </div> 
 
                 <div class="signup">
-                  <button class="signupB">Sign Up</button>
+                  <button class="signupB"   onClick={() => {
+                      navigate("/signup")}}>Sign Up</button>
                 </div> 
 
             </React.Fragment>
