@@ -35,12 +35,27 @@ const ObjectId = require("mongodb").ObjectId;
 //       });
 // });
 
+//fetch user list
+userRoutes.route("/user/fetch").get((req, res) => {
+  let db_connnect = dbo.getDb();
+  db_connect
+    .collection("user")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+})
+
 //create a new user
 userRoutes.route("/user/add").post((req, res) => {
   let db_connect = dbo.getDb();
   let newUser = {
     USER_EMAIL: req.body.USER_EMAIL,
     USER_PW: req.body.USER_PW,
+    USER_BIRTHDAY: "",
+    USER_DESCRIPTION: "",
+    USER_SEX: "",
   };
 });
 
