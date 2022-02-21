@@ -1,4 +1,14 @@
-.container {
-    position: absolute;
-    color: blue;
+main{
+    display: flex;
+    position: relative;
+    background-color: #F2F2F2;
+}
+.center{
+    position: relative;
+    background-color: aquamarine;
+    margin: auto;
+}
+.leftHalf {
+    background-image: "../public/images/start_background.png";
+
 }

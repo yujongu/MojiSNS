@@ -1,6 +1,9 @@
-import './App.css'
+
 import * as React from 'react';
-import {BrowserRouter as Router, Route, Routes, Link} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
+import * as Routes from "./constants/routes"
+import './App.css'
+
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
@@ -11,15 +14,11 @@ import HomeNew from "./pages/HomeNew"
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomeNew />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<Homeweb />} />
-        <Route path="/forget" element={<ForgetID />} />
-      </Routes>
-    </Router>
+    <BrowserRouter>
+      <Route path={Routes.HOME} exact={true} component={HomeNew}/>
+      <div>Testing</div>
+    </BrowserRouter>
+    
   );
 }
 
