@@ -32,7 +32,17 @@ const userSchema = new Schema({
         type: String,
         enum: ['Male', 'Female', 'Not Sure'],
         default: 'Not Sure'
+    },
+
+    FOLLOWING_USERS: {
+        type: [{USER_ID: String, FOLLOW_DATE: Date}],
+    },
+
+    FOLLOWER_USERS: {
+        type: [{USER_ID: String, FOLLOW_DATE: Date}],
     }
+
+
 
 });
 
