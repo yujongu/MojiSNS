@@ -29,5 +29,5 @@ const postSchema = new Schema({ // need to add more
 
 }, { timestamps: true});
 
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model('Post', postSchema); //first is collection name in db. second is object type
 module.exports = Post;
