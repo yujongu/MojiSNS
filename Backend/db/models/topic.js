@@ -9,12 +9,12 @@ const topicSchema = new Schema({
 
     TOPIC_TRAFFIC_COUNT: {
         type: Number,
-        required: true
+        default: 0
     },
 
     USER_ID: {
         type: String,
-        required: true
+        //required: true
     },
 
 });

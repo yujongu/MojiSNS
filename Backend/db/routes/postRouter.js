@@ -48,7 +48,7 @@ router.post("/addPost", async (req, res) => {
       TOPIC_ID: req.body.TOPIC_ID,
       BODY: req.body.BODY
     });
-    await post.save() //save this object to collection in db
+    await post.save(); //save this object to collection in db
     res.send(post);
     console.log("post added");
   } catch (error) {

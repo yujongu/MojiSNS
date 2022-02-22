@@ -11,26 +11,38 @@ router.get("/getUsers", async (req, res) => {
 });
 
 router.post("/addUser", async (req, res) => {
+  try {
     const user = await new User({
-        USER_EMAIL: req.body.USER_EMAIL,
-        USER_PW: req.body.USER_PW,
-        USER_SEX: req.body.USER_SEX
+      USER_EMAIL: req.body.USER_EMAIL,
+      USER_PW: req.body.USER_PW,
+      USER_SEX: req.body.USER_SEX
     });
-
     user.save();
     res.send(user);
     console.log(user);
+  } catch (error) {
+    console.log(error);
+  }
+    
 });
 
 router.get("/getUser/:email", async (req, res) => {
-    const user = await User.findOne({_id: req.params.email});
+  try {
+    const user = await User.findOne({USER_EMAIL: req.params.email});
     res.send(user);
     console.log("got user");
+  } catch (error) {
+    console.log(error);
+  }  
 });
 
 router.delete("/deleteUser/:id", async (req, res) => {
+  try {
     await User.findByIdAndDelete(req.params.id);
     console.log("user removed");
+  } catch (error) {
+    console.log(error);
+  }  
 });
 
 //update user
