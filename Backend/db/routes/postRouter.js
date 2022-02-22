@@ -1,4 +1,3 @@
-//const { application } = require("express");
 const express = require("express");
 const Post = require("../models/post");
 const router = express.Router();
@@ -38,27 +37,28 @@ router.get("/getPosts", async (req, res) => {
   const posts = await Post.find().sort({createdAt: -1});
   console.log(posts);
   res.send(posts);
-
 });
 
 
 // add post
-router.post("/addPost", (req, res) => {
-  const post = new Post({
-    USER_ID: req.body.USER_ID,
-    TOPIC_ID: req.body.TOPIC_ID,
-    BODY: req.body.BODY
-  });
-  post.save() //save this object to collection in db
-    .then( result => {
-      res.send(post);
-      console.log(result);
-    })
-    .catch(err => {console.log(err)});
+router.post("/addPost", async (req, res) => {
+  try {
+    const post = new Post({
+      USER_ID: req.body.USER_ID,
+      TOPIC_ID: req.body.TOPIC_ID,
+      BODY: req.body.BODY
+    });
+    await post.save() //save this object to collection in db
+    res.send(post);
+    console.log("post added");
+  } catch (error) {
+    console.log(error);
+  }
+
 });
 
 
-//get single blog
+//get single post
 router.get("/getPost/:id", (req, res) => {
   const id =  req.params.id;
 
@@ -81,7 +81,7 @@ router.delete("/deletePost/:id", (req, res) => {
       //res.send?
     })
     .catch(err => {console.log(err)});
-})// delete all comments
+});// delete all comments
 
 
 //update post
@@ -94,6 +94,6 @@ router.patch("/updatePost/:id",  (req, res) => {
       res.send(result);
     })
     .catch(err => {console.log(err)});
-})
+});
 
 module.exports = router;
