@@ -14,12 +14,12 @@ const postSchema = new Schema({ // need to add more
 
     LIKES_COUNT: {
         type: Number,
-        required: false
+        default: 0
     },
 
     COMMENTS_COUNT: {
         type: Number,
-        required: false
+        default: 0
     },
 
     BODY: {

@@ -88,9 +88,10 @@ router.delete("/deletePost/:id", (req, res) => {
 router.patch("/updatePost/:id",  (req, res) => {
   const id = req.params.id;
 
-  Post.updateOne({ _id: id }, {BODY: req.body.BODY}) //not sure
+  Post.updateOne({ _id: id }, {BODY: req.body.BODY})
     .then(result => {
       console.log("post updated");
+      res.send(result);
     })
     .catch(err => {console.log(err)});
 })
