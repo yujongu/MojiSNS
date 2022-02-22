@@ -14,8 +14,8 @@ function App() {
     <Router>
       <Routes>
         <Route path={PageLinks.HOME} element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path={PageLinks.LOGIN} element={<Login />} />
+        <Route path={PageLinks.SIGNUP} element={<Signup />} />
       </Routes>
     </Router>
   );

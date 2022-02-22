@@ -3,7 +3,7 @@ body {
   margin: 0px;
 }
 
-main {
+.homeMain {
   display: flex;
   position: absolute;
   background-color: #f2f2f2;
@@ -14,8 +14,8 @@ main {
   display: flex;
   position: relative;
   flex-direction: row;
-  box-sizing: border-box;
   background-color: white;
+  box-sizing: border-box;
   width: 100%;
   margin: 70px;
   border-radius: 50px;
@@ -36,7 +36,7 @@ main {
   display: flex;
   position: relative;
   flex-direction: column;
-  background-color: #f2f2f2;
+  background-color: rgba(242, 242, 242, 0.85);
   border-radius: 70px;
   width: 500px;
   height: 600px;

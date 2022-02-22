@@ -7,7 +7,7 @@ function Home() {
   let navigate = useNavigate();
 
   return (
-    <main>
+    <main className="homeMain">
       <div className="center">
         <div className="lh">
           <div className="intro">
