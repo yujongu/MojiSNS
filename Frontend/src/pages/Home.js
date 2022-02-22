@@ -1,55 +1,65 @@
-import React from "react"
-import "./Home.css"
+import React from "react";
+
+import "./Home.css";
 import { useNavigate } from "react-router-dom";
-import Button from '@mui/material'
+import Button from "@mui/material";
 import { Link } from "@mui/material";
 
 function Home() {
+  let navigate = useNavigate();
 
-        let navigate = useNavigate();
+  return (
+    <main>
+      <div className="center">
+        <div className="lh">
+          <div className="intro">
+            <h1>Welcome to Moji!</h1>
+            <p>
+              <br></br>
+              <br></br>Moji is a social networking site where people can share
+              thoughts and ideas.
+            </p>
+            <p>
+              <br></br>-------------------------------------------
+            </p>
+            <p>
+              <br></br>Created by<br></br>
+              <br></br>Jongu Yu<br></br>Juha Jeon<br></br>Jaseok Choi<br></br>
+              Jooheon Lee<br></br>
+            </p>
+          </div>
+        </div>
+        <div className="rh">
+          <div class="logo"></div>
+          <div className="btns">
+            <div class="login">
+              <button
+                class="loginB"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Log In
+              </button>
+            </div>
 
-        return (
-            <React.Fragment>
+            <p className="homeText">or</p>
 
-
-
-                <div class="left">
-
-                </div>
-
-                <div class="rightHalf">
-
-                </div>
-
-                <div class="leftHalf">
-
-                </div>
-
-                <div class="welcome">
-                    <h1>Welcome to Moji!</h1>
-                    <p><br></br><br></br>Moji is a social networking site where people can share thoughts and ideas.</p>
-                    <p><br></br>-------------------------------------------</p>
-                    <p><br></br>Created by<br></br><br></br>Jongu Yu<br></br>Juha Jeon<br></br>Jaseok Choi<br></br>Jooheon Lee<br></br></p>
-                </div>
-
-                <div class="logo">
-
-                </div>
-
-                <div class="login">
-                    <button class="loginB"  onClick={() => {
-                      navigate("/login")}}>Log In</button>
-                </div> 
-
-                <div class="signup">
-                  <button class="signupB"   onClick={() => {
-                      navigate("/signup")}}>Sign Up</button>
-                </div> 
-
-            </React.Fragment>
-        );
-
-
+            <div class="signup">
+              <button
+                class="signupB"
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }
 
 export default Home;
