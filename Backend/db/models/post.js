@@ -14,7 +14,7 @@ const postSchema = new Schema({ // need to add more
 
     LIKES_COUNT: {
         type: Number,
-        required: true
+        required: false
     },
 
     COMMENTS_COUNT: {
