@@ -1,3 +1,5 @@
 export const HOME = "/"
 export const LOGIN = "/login"
 export const SIGNUP = "/signup"
+export const HOMEWEB = "/home"
+export const FORGOTID = "/forget"

@@ -9,6 +9,11 @@ const userSchema = new Schema({
         required: [true, "Enter your email!"]
     },
 
+    USER_USERNAME: {
+        type: String,
+        required: [true, "Enter your username!"]
+    }
+
     USER_PW: {
         type: String,
         required: [true, "Enter your password!"]
@@ -26,7 +31,8 @@ const userSchema = new Schema({
 
     USER_SEX: {
         type: String,
-        enum: ['Male', 'Female']
+        enum: ['Male', 'Female', 'Not Sure'],
+        default: 'Not Sure'
     }
 
 });

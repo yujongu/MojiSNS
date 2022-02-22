@@ -14,7 +14,6 @@ router.post("/addUser", async (req, res) => {
     const user = new User({
         USER_EMAIL: req.body.USER_EMAIL,
         USER_PW: req.body.USER_PW,
-        USER_SEX: req.body.USER_SEX
     })
 })
 

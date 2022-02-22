@@ -16,6 +16,8 @@ function App() {
         <Route path={PageLinks.HOME} element={<Home />} />
         <Route path={PageLinks.LOGIN} element={<Login />} />
         <Route path={PageLinks.SIGNUP} element={<Signup />} />
+        <Route path={PageLinks.HOMEWEB} element={<Homeweb />} />
+        <Route path={PageLinks.FORGOTID} element={<ForgetID />} />
       </Routes>
     </Router>
   );
