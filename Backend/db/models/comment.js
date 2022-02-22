@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
-    POST_ID: { 
+    POST_ID: { //post where comment is made
         type: String,
         required: true
     },
