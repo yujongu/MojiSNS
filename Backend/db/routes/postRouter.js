@@ -96,4 +96,14 @@ router.patch("/updatePost/:id",  (req, res) => {
     .catch(err => {console.log(err)});
 });
 
+
+//get all posts from user newest first
+router.get("/getPosts/:id", async (req, res) => {
+  console.log("find posts by user");
+  const id = req.params.id;
+  const posts = await Post.find({_id: id}).sort({createdAt: -1}); // .exec()?
+  console.log(posts);
+  res.send(posts);
+});
+
 module.exports = router;

@@ -40,9 +40,11 @@ const userSchema = new Schema({
 
     FOLLOWER_USERS: {
         type: [{USER_ID: String, FOLLOW_DATE: Date}],
+    },
+
+    FOLLOWING_TOPICS: {
+        type: [String]  // TOPIC_ID
     }
-
-
 
 });
 

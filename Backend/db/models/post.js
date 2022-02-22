@@ -25,6 +25,10 @@ const postSchema = new Schema({ // need to add more
     BODY: {
         type: String,
         required: true
+    },
+    
+    LIKED_USERS: {
+        type: [String]  // USER_ID
     }
 
 }, { timestamps: true});

@@ -3,6 +3,8 @@
 
 API
 localhost:5000/api
+ex) localhost:5000/api/post/getPosts
+
 
 /post/
       getPosts            -> get all posts by newest
@@ -10,14 +12,14 @@ localhost:5000/api
       getPost/:post_id         -> get 1 post with corresponding id
       deletePost/:post_id
       updatePost/:post_id
+      getPosts/:user_id        -> get all posts from user newest first
                         
       TODO:
-      getPosts/:user_id        -> get all posts from user newest first
       getFeed/:user_id  -> get all post from followed users and topics and sort by new
       getTopicPosts/:topic_id -> get posts only from selected topic
 
-      no. likes, comments? -> keep track automatically
-      add array of liked users on schema?
+      num likes, comments? -> keep track automatically with API call
+      add image file to schema? image_id
 
 
 
@@ -31,12 +33,19 @@ localhost:5000/api
 
       TODO:
       getFollowingUsers   -> get following users list
-      getFollowerUsers
+      getFollowerUsers    -> get follower users list
       getFollowingTopics  -> get following topics list
+      
+      addFollowingUser
+      addFollowerUser
+      addFollowingTopic  ->
 
-      add following user/topic in schema?
-      add followers in schema
-      automatically keep track of these 3 variables when API called 
+      deleteFollowingUser
+      deleteFollowerUser
+      deleteFollowingTopic
+
+      automatically keep track of  3 array variables when API called for both sides
+      add number for following/followers in schema?
 
 
 /topic/
@@ -47,3 +56,5 @@ localhost:5000/api
       TODO:
       traffic count
 
+/comment/
+TODO:

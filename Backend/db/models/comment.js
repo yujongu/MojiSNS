@@ -17,10 +17,15 @@ const commentSchema = new Schema({
         required: true
     },
 
-    PARENT_ID: {
+    PARENT_ID: { // parent comment id
         type: String,
         required: true
-    }
+    },
+    
+    LIKES_COUNT: {
+      type: Number,
+      default: 0
+    },
 
 }, { timestamps: true });
 
