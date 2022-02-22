@@ -21,18 +21,7 @@
   align-items: center;
   justify-content: center ;
   padding: 10px;
-}
-
-.logoL {
-  position: absolute;
-  left: 42.5%;
-  top: 25%;
-  bottom: 5%;
-  width: 15%;
-  height: 15%;
-  z-index: 999;
-  background-image: url("../../public/images/start_logo.png");
-  background-size: 105%;
+  box-shadow: 3px 2px 8px grey;
 }
 
 .welcomeL {
@@ -123,7 +112,7 @@
   position: relative;
   background-color: #ffc368;
   color: #e26714;
-  height: 50px;
+  height: 40px;
   width: 250px;
   margin-top: 20px;
   box-shadow: 3px 2px 8px grey;

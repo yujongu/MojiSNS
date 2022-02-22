@@ -25,7 +25,7 @@ function Login() {
         <div class="logo"></div>
         <p className="welcomeL">Welcome back!</p>
 
-        <div className="usernameTextbox" id="float-label">
+        <div id="float-label">
           <input
             type="username"
             value={value}
@@ -36,7 +36,7 @@ function Login() {
           </label>
         </div>
 
-        <div className="passwordTextbox" id="float-label2">
+        <div id="float-label2">
           <input
             type="password"
             value1={value1}
