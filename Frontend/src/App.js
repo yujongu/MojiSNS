@@ -7,7 +7,6 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Homeweb from "./pages/Homeweb";
 import ForgetID from "./pages/ForgetID";
-import HomeNew from "./pages/HomeNew";
 import * as PageLinks from "./constants/routes"
 
 function App() {
