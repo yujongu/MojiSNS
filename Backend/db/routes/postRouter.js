@@ -1,6 +1,8 @@
 const express = require("express");
+const User = require("../models/user");
 const Post = require("../models/post");
 const router = express.Router();
+
 
 //////////////////////////////////////TEST
 
@@ -105,5 +107,63 @@ router.get("/getPosts/:id", async (req, res) => {
   console.log(posts);
   res.send(posts);
 });
+
+
+// get feed
+router.get("/getFeed/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const post = await Post.find({
+      $or: [
+        {
+          TOPIC_ID: user.FOLLOWING_TOPICS
+        },
+        {
+          USER_ID: user.FOLLOWING_USERS.USER_ID // I hope this line works
+        }
+      ]
+     }).sort({createdAt: -1});
+
+    res.send(post);
+    console.log("got feed");
+  } catch (error) {
+    console.log(error);
+  }  
+});
+
+
+//get topic posts
+router.get("/getTopicPosts/:id", async (req, res) => {
+  try {
+    const post = await Post.find({TOPIC_ID: req.params.id}).sort({createdAt: -1});
+
+    res.send(post);
+    console.log("got got topic posts");
+  } catch (error) {
+    console.log(error);
+  }  
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

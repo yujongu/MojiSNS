@@ -1,5 +1,6 @@
 //const { application } = require("express");
 const express = require("express");
+const user = require("../models/user");
 const User = require("../models/user");
 const router = express.Router();
 
@@ -12,12 +13,12 @@ router.get("/getUsers", async (req, res) => {
 
 router.post("/addUser", async (req, res) => {
   try {
-    const user = await new User({
+    const user = new User({
       USER_EMAIL: req.body.USER_EMAIL,
       USER_PW: req.body.USER_PW,
       USER_SEX: req.body.USER_SEX
     });
-    user.save();
+    await user.save();
     res.send(user);
     console.log(user);
   } catch (error) {
@@ -68,4 +69,61 @@ router.patch("/updateUser/:id", async (req, res) => {
 
 });
 
+
+router.patch("/followUser/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id},
+      { $push: {FOLLOWING_USERS: {USER_ID: req.body.USER_ID, FOLLOW_DATE: Date.now()}}}
+    );
+    await User.findOneAndUpdate(
+      { _id: req.body.USER_ID},
+      { $push: {FOLLOWER_USERS: {USER_ID: req.params.id, FOLLOW_DATE: Date.now()}}}
+    )
+    console.log("user followed");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.patch("/followTopic/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id},
+      { $push: {TOPIC_ID: req.body.TOPIC_ID}}
+    );
+    console.log("topic followed");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.patch("/unfollowUser/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id},
+      { $pull: {FOLLOWING_USERS: {USER_ID: req.body.USER_ID}}}
+    );
+    await User.findOneAndUpdate(
+      { _id: req.body.USER_ID},
+      { $pull: {FOLLOWER_USERS: {USER_ID: req.params.id}}}
+    )
+    console.log("user unfollowed");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+router.patch("/unfollowTopic/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id},
+      { $pull: {TOPIC_ID: req.body.TOPIC_ID}}
+    );
+    console.log("topic followed");
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;

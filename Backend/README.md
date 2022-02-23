@@ -10,15 +10,16 @@ ex) localhost:5000/api/post/getPosts
       getPosts            -> get all posts by newest
       addPost
       getPost/:post_id         -> get 1 post with corresponding id
-      deletePost/:post_id
+      deletePost/:post_id       
       updatePost/:post_id
       getPosts/:user_id        -> get all posts from user newest first
-                        
-      TODO:
+
       getFeed/:user_id  -> get all post from followed users and topics and sort by new
       getTopicPosts/:topic_id -> get posts only from selected topic
-
-      num likes, comments? -> keep track automatically with API call
+               
+      TODO:
+      delete comments when post deleted
+      num likes, comments? just use array.length
       add image file to schema? image_id
 
 
@@ -31,21 +32,15 @@ ex) localhost:5000/api/post/getPosts
       deleteUser/:user_id
       updateUser/:user_id
 
-      TODO:
-      getFollowingUsers   -> get following users list
-      getFollowerUsers    -> get follower users list
-      getFollowingTopics  -> get following topics list
+      followUser/:user_id   is a .patch | adds to user_id.FOLLOWING_USERS | does not check for validity yet!
+      followTopic/:user_id
+      unfollowUser/:user_id
+      unfollowTopic/:user_id
       
-      addFollowingUser
-      addFollowerUser
-      addFollowingTopic  ->
 
-      deleteFollowingUser
-      deleteFollowerUser
-      deleteFollowingTopic
-
-      automatically keep track of  3 array variables when API called for both sides
-      add number for following/followers in schema?
+      TODO:
+      login                 -> check if id/password exist in db
+      check validity of follow/unfollow
 
 
 /topic/
@@ -56,5 +51,7 @@ ex) localhost:5000/api/post/getPosts
       TODO:
       traffic count
 
+
 /comment/
 TODO:
+      getComments/:post_id

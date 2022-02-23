@@ -35,11 +35,11 @@ const userSchema = new Schema({
     },
 
     FOLLOWING_USERS: {
-        type: [{USER_ID: String, FOLLOW_DATE: Date}],
+        type: [{USER_ID: String, FOLLOW_DATE: Date}]
     },
 
     FOLLOWER_USERS: {
-        type: [{USER_ID: String, FOLLOW_DATE: Date}],
+        type: [{USER_ID: String, FOLLOW_DATE: Date}]
     },
 
     FOLLOWING_TOPICS: {
