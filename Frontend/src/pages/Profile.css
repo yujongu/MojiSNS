@@ -1,0 +1,144 @@
+.profileContainer {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileMainContainer {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 700px;
+  margin-top: 30px;
+}
+
+.myProfileInfoContainer {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.myProfUpperHalf {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#lh {
+  display: flex;
+  align-items: center;
+}
+
+.imageContainer {
+  display: flex;
+  position: relative;
+  border-width: 2px;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.imageContainer img {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+
+
+.nameInfos {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-left: 10px;
+  bottom: 20px;
+}
+
+#prof_name {
+    font-size: 20px;
+}
+#prof_username {
+    color: #A6A6A6;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+.profileEditBtns {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.profile_editButton {
+    position: relative;
+    background-color: #ffc368;
+  color: #e26714;
+    border-style: none;
+    width: 100px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.profile_settingButton {
+    position: relative;
+    background-color: #ffc368;
+  color: #e26714;
+    border-style: none;
+    width: 100px;
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.infosContainer {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.birthday {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+}
+.birthday p {
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.interests {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.interestList {
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+#myPostTitle {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 30px;
+}

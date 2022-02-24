@@ -91,7 +91,7 @@ router.patch("/followTopic/:id", async (req, res) => {
   try {
     await User.findOneAndUpdate(
       { _id: req.params.id},
-      { $push: {TOPIC_ID: req.body.TOPIC_ID}}
+      { $push: {FOLLOWING_TOPICS: req.body.TOPIC_ID}}
     );
     console.log("topic followed");
   } catch (error) {
@@ -120,7 +120,7 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
   try {
     await User.findOneAndUpdate(
       { _id: req.params.id},
-      { $pull: {TOPIC_ID: mongoose.Types.ObjectId(req.body.TOPIC_ID)}}
+      { $pull: {FOLLOWING_TOPICS: mongoose.Types.ObjectId(req.body.TOPIC_ID)}}
     );
     console.log("topic unfollowed");
   } catch (error) {
@@ -159,5 +159,33 @@ router.get("/testAdd", async (req, res) => {
     console.log(error);
   }
     
+});
+
+router.get("/testFollow/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id},
+      { $push: {FOLLOWING_USERS: {USER_ID: mongoose.Types.ObjectId("621730d77cf288f58cc0edd4"), FOLLOW_DATE: Date.now()}}}
+    );
+    await User.findOneAndUpdate(
+      { _id: "621730d77cf288f58cc0edd4"},
+      { $push: {FOLLOWER_USERS: {USER_ID: mongoose.Types.ObjectId(req.params.id), FOLLOW_DATE: Date.now()}}}
+    )
+    console.log("user followed");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/testFollowTopic/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id},
+      { $push: {FOLLOWING_TOPICS: "6217308ae011412017c60aa5"}}
+    );
+    console.log("topic followed");
+  } catch (error) {
+    console.log(error);
+  }
 });
 module.exports = router;
