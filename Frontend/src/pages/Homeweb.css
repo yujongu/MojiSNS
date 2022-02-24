@@ -99,6 +99,10 @@ a {
     padding-bottom: 2%;
 }
 
+#myDIV{
+    display: none;
+}
+
 .viewByTopic {
     margin-top: 5%;
     background-color: #f2f2f2;
