@@ -1,66 +1,61 @@
-//const { application } = require("express");
 const express = require("express");
-const User = require("../models/user");
+const Comment = require("../models/comment");
 const router = express.Router();
 
-router.get("/getUsers", async (req, res) => {
-    const users = await User.find();
-    console.log("Requesting user list");
-    console.log(users);
-    res.send(users);
+router.get("/getComments/:id", async (req, res) => {
+    const comments = await Comment.find({POST_ID: req.params.id}).sort({createdAt: -1});
+    console.log("Requesting comments list");
+    console.log(comments);
+    res.send(comments);
 });
 
-router.post("/addUser", async (req, res) => {
+router.get("/getCommentsByLikes/:id", async (req, res) => {
+  const comments = await Comment.find({POST_ID: req.params.id}).sort({LIKES_COUNT: -1});
+  console.log("Requesting comments list");
+  console.log(comments);
+  res.send(comments);
+});
+
+router.post("/addComment", async (req, res) => {
   try {
-    const user = new User({
-      USER_EMAIL: req.body.USER_EMAIL,
-      USER_PW: req.body.USER_PW,
-      USER_SEX: req.body.USER_SEX
+    const comment = new Comment({
+      POST_ID: req.body.POST_ID,
+      OWNER_ID: req.body.OWNER_ID,
+      CONTENT: req.body.CONTENT,
+      PARENT_ID: req.body.PARENT_ID
     });
-    await user.save();
-    res.send(user);
-    console.log(user);
+    await comment.save();
+    res.send(comment);
+    console.log(comment);
   } catch (error) {
     console.log(error);
   }
     
 });
 
-router.get("/getUser/:email", async (req, res) => {
-  try {
-    const user = await User.findOne({USER_EMAIL: req.params.email});
-    res.send(user);
-    console.log("got user");
-  } catch (error) {
-    console.log(error);
-  }  
-});
 
-router.delete("/deleteUser/:id", async (req, res) => {
+router.delete("/deleteComment/:id", async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
-    console.log("user removed");
+    await Comment.findByIdAndDelete(req.params.id);
+    console.log("comment removed");
   } catch (error) {
     console.log(error);
   }  
 });
 
 //update user
-router.patch("/updateUser/:id", async (req, res) => {
+router.patch("/updateComment/:id", async (req, res) => {
   const id = req.params.id;
 
-  const user;
+  const comment;
   try {
-    user = await User.findById(id);
-    if (req.body.USER_EMAIL) { user.USER_EMAIL = req.body.USER_EMAIL; }
-    if (req.body.USER_USERNAME) { user.USER_USERNAME = req.body.USER_USERNAME; }
-    if (req.body.USER_PW) { user.USER_PW = req.body.USER_PW; }
-    if (req.body.USER_BIRTHDAY) { user.USER_BIRTHDAY = req.body.USER_BIRTHDAY; }
-    if (req.body.USER_DESCRIPTION) { user.USER_DESCRIPTION = req.body.USER_DESCRIPTION; }
-    if (req.body.USER_SEX) { user.USER_SEX = req.body.USER_SEX; }
+    comment = await Comment.findById(id);
+    if (req.body.CONTENT) {
+      comment.CONTENT = req.body.CONTENT;
+    }
 
-    await user.save();
-    console.log(user);
+    await comment.save();
+    console.log(comment);
 
   } catch (error) {
     console.log(error);

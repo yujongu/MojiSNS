@@ -55,3 +55,8 @@ ex) localhost:5000/api/post/getPosts
 /comment/
 TODO:
       getComments/:post_id
+      getCommentsByLikes/:post_id
+      addComment
+
+      deleteComment/:comment_id
+      updateComment/:comment_id

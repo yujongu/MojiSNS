@@ -26,6 +26,10 @@ const commentSchema = new Schema({
       type: Number,
       default: 0
     },
+    
+    LIKED_USERS: {
+      type: [String]  // USER_ID
+    }
 
 }, { timestamps: true });
 
