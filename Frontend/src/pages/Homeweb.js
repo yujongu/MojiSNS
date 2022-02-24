@@ -5,10 +5,31 @@ import { useNavigate } from "react-router-dom";
 
 const Homeweb = () => {
   let navigate = useNavigate();
+  window.onload = function () {
+    var like = document.getElementById("like");
+    var likeNum = document.getElementById("likeNum");
+    var postSet = document.getElementById("postSet");
 
-  var like = document.getElementById("like");
+    var stateLike = 0;
+    like.addEventListener("click", function () {
+      if(stateLike == 1)
+      {
+        like.style.color = "#000000";
+        likeNum.style.color = "#000000";
+        stateLike = 0;
+      }
+      else
+      {
+        like.style.color = "#E26714";
+        likeNum.style.color = "#E26714";
+        stateLike = 1;
+      }
+    });
 
-
+    postSet.addEventListener("click", function() {
+      console.log("postSetting clicked");
+    });
+  }
   return (
     <main className="homewebMain">
       <div className="center1">
@@ -114,7 +135,7 @@ const Homeweb = () => {
                 </h4>
               </div>
               <div className='postSetting'>
-                <i class="fa-solid fa-ellipsis fa-2xl"></i>
+                <i class="fa-solid fa-ellipsis fa-2xl" id="postSet"></i>
               </div>
             </div>
             <div className='postingBody'>
@@ -127,8 +148,8 @@ const Homeweb = () => {
               </div>
               <div className='iconSection'>
                 <div className='likeSection'>
-                    <i class="fa-regular fa-thumbs-up fa-2xl" id='like'></i>
-                  <div className='likeCount'>
+                  <i class="fa-regular fa-thumbs-up fa-2xl" id='like'></i>
+                  <div className='likeCount' id='likeNum'>
                     100
                   </div>
                 </div>
