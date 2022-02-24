@@ -1,6 +1,6 @@
 //const { application } = require("express");
 const express = require("express");
-const mongoose = require("mongoose");
+const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
 const router = express.Router();
 
@@ -148,7 +148,7 @@ router.get("/login", async (req, res) => {
 router.get("/testAdd", async (req, res) => {
   try {
     const user = new User({
-      USER_EMAIL: "test@testmail.com",
+      USER_EMAIL: "test3@testmail.com",
       USER_PW: "password3",
       USER_USERNAME: "testUser3"
     });
