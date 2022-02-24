@@ -108,7 +108,7 @@
   transform: translate(4px, 3px) scale(0.70);
 }
 
-.loginBL {
+button[type=submit] {
   position: relative;
   background-color: #ffc368;
   color: #e26714;
@@ -124,12 +124,12 @@
   font-weight: bold;
 }
 
-.loginBL:hover {
+button[type=submit]:hover {
   background-color: #ffac2e;
 }
 
-.loginBL:focus,
-.loginBL:active {
+button[type=submit]:focus,
+button[type=submit]:active {
   background-color: #fba31f;
   transition: none;
 }

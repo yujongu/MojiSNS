@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Homeweb from "./pages/Homeweb";
 import ForgetID from "./pages/ForgetID";
+import Bio from "./pages/Bio";
+import Interest from "./pages/Interest"
 import * as PageLinks from "./constants/routes"
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
         <Route path={PageLinks.HOME} element={<Home />} />
         <Route path={PageLinks.LOGIN} element={<Login />} />
         <Route path={PageLinks.SIGNUP} element={<Signup />} />
+        <Route path={PageLinks.BIO} element={<Bio />} />
+        <Route path={PageLinks.INTEREST} element={<Interest />} />
         <Route path={PageLinks.HOMEWEB} element={<Homeweb />} />
         <Route path={PageLinks.FORGOTID} element={<ForgetID />} />
       </Routes>
