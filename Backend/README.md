@@ -22,6 +22,7 @@ API
     delete comments when post deleted
     num likes, comments? just use array.length
     add image file to schema? image_id
+    like/dislike post
 
 
 /user/
@@ -30,13 +31,15 @@ API
   http://localhost:5000/api/user/getUser/:email
   http://localhost:5000/api/user/deleteUser/:user_id
   http://localhost:5000/api/user/updateUser/:user_id
-  http://localhost:5000/api/user/followUser/:user_id   -> .patch | adds to user_id.FOLLOWING_USERS
-  http://localhost:5000/api/user/followTopic/:user_id
+  http://localhost:5000/api/user/followUser/:user_id   -> PUT | adds to user_id.FOLLOWING_USERS
+  http://localhost:5000/api/user/followTopic/:user_id   -> PUT
   http://localhost:5000/api/user/unfollowUser/:user_id
   http://localhost:5000/api/user/unfollowTopic/:user_id
   http://localhost:5000/api/user/login                 -> check if user with id/password exist in db
 
   TODO:
+  likePost
+  
     check validity of follow/unfollow
     separate messages for login
     signup check unique email, unique username
