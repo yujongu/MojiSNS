@@ -5,20 +5,30 @@ import { useNavigate } from "react-router-dom";
 
 const Homeweb = () => {
   let navigate = useNavigate();
+
+  var like = document.getElementById("like");
+
+  like.addEventListener("click",function(){
+    like.style.color = "#E26714";
+  });
+
+
   return (
     <main className="homewebMain">
       <div className="center1">
-        <div className="header">
-          <h2 class="titleWeb">
-            Welcome to Moji!
-          </h2>
-        </div>
-        <div className='bt1'>
-          <button
-            class='settings'
-          >
-            Settings
-          </button>
+        <div className='header'>
+          <div className="headerApp">
+            <h2 class="titleWeb">
+              Welcome to Moji!
+            </h2>
+          </div>
+          <div className='bt1'>
+            <button
+              class='settings'
+            >
+              Settings
+            </button>
+          </div>
         </div>
         <div className="tabBar">
           <div class="grid-container">
@@ -62,29 +72,29 @@ const Homeweb = () => {
           </h2>
           <div class="outer">
             <div>
-              <h2 className='topicText'>
+              <button className='btnTopic'>
                 Sports
-              </h2>
+              </button>
             </div>
             <div>
-              <h2 className='topicText'>
+              <button className='btnTopic'>
                 Games
-              </h2>
+              </button>
             </div>
             <div>
-              <h2 className='topicText'>
+              <button className='btnTopic'>
                 Beauty
-              </h2>
+              </button>
             </div>
             <div>
-              <h2 className='topicText'>
+              <button className='btnTopic'>
                 Movies
-              </h2>
+              </button>
             </div>
             <div>
-              <h2 className='topicText'>
+              <button className='btnTopic'>
                 Memes
-              </h2>
+              </button>
             </div>
           </div>
         </div>
@@ -92,6 +102,49 @@ const Homeweb = () => {
           <h2 class="titleWeb2">
             Timeline
           </h2>
+          <div className='postingCard'>
+            <div className='postingHeader'>
+              <div className='postingProfile'>
+                <img className="postPP" src="profile.png" alt="Sample profile"></img>
+              </div>
+              <div className='postingWriter'>
+                <h3>
+                  Hello Name
+                </h3>
+              </div>
+              <div className='dateWritten'>
+                <h4>
+                  Posted 00 hrs ago
+                </h4>
+              </div>
+              <div className='postSetting'>
+                <i class="fa-solid fa-ellipsis fa-2xl"></i>
+              </div>
+            </div>
+            <div className='postingBody'>
+              <div className='postingSection'>
+                <div className='postWords'>
+                  <h3>
+                    Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text
+                  </h3>
+                </div>
+              </div>
+              <div className='iconSection'>
+                <div className='likeSection'>
+                    <i class="fa-regular fa-thumbs-up fa-2xl" id='like'></i>
+                  <div className='likeCount'>
+                    100
+                  </div>
+                </div>
+                <div className='commentSection'>
+                  <i class="fa-regular fa-comment-dots fa-2xl"></i>
+                  <h5 className='commentCount'>
+                    23
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
