@@ -35,11 +35,11 @@ API
   http://localhost:5000/api/user/followTopic/:user_id   -> PUT
   http://localhost:5000/api/user/unfollowUser/:user_id
   http://localhost:5000/api/user/unfollowTopic/:user_id
-  http://localhost:5000/api/user/login                 -> check if user with id/password exist in db
+  http://localhost:5000/api/user/login/:username/:pw                 -> check if user with id/password exist in db
 
   TODO:
   likePost
-  
+
     check validity of follow/unfollow
     separate messages for login
     signup check unique email, unique username

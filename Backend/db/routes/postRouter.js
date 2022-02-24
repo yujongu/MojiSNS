@@ -42,9 +42,8 @@ router.get("/getPost/:id", async (req, res) => {
     const post = await Post.findById(id)
     .populate("USER_ID TOPIC_ID LIKED_USERS");
 
-  
     console.log(post);
-    await res.send(post); 
+    res.send(post); 
   } catch (error) {
     console.log(error);
   }
@@ -57,8 +56,8 @@ router.delete("/deletePost/:id", (req, res) => {
 
   Post.findByIdAndDelete(id)
     .then(result => {
-      console.log("post deleted")
-      //res.send?
+      console.log("post deleted");
+      res.send("post deleted");
     })
     .catch(err => {console.log(err)});
 });// delete all comments
@@ -131,40 +130,6 @@ router.get("/getTopicPosts/:id", async (req, res) => {
     console.log(error);
   }  
 });
-
-
-//////////////////////////////////////TEST
-
-router.get("/testAdd", (req, res) => {
-  console.log("adding post test")
-  const post = new Post({
-    USER_ID: mongoose.Types.ObjectId("621730d77cf288f58cc0edd4"),
-    TOPIC_ID: mongoose.Types.ObjectId("621730ffcd274d12d72c22a6"),
-    BODY: "should be on feed",
-    LIKED_USERS: [mongoose.Types.ObjectId("6217309ae011412017c60aa7"), mongoose.Types.ObjectId("621730d77cf288f58cc0edd4")]
-  });
-  post.save() //save this object to collection in db
-    .then( result => {
-      res.send(post);
-      console.log(result);
-    })
-    .catch(err => {console.log(err)});
-});
-
-///////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
