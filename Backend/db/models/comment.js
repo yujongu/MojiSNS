@@ -3,13 +3,15 @@ const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
     POST_ID: { //post where comment is made
-        type: String,
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+      required: true
     },
 
     OWNER_ID: {
-        type: Number,
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
     },
 
     CONTENT: {
@@ -18,14 +20,22 @@ const commentSchema = new Schema({
     },
 
     PARENT_ID: { // parent comment id
-        type: String,
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+      required: true
     },
     
     LIKES_COUNT: {
       type: Number,
       default: 0
     },
+    
+    LIKED_USERS: {
+      type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }]  // USER_ID
+    }
 
 }, { timestamps: true });
 

@@ -1,42 +1,16 @@
 const express = require("express");
 const User = require("../models/user");
 const Post = require("../models/post");
+const { default: mongoose } = require("mongoose");
 const router = express.Router();
-
-
-//////////////////////////////////////TEST
-
-router.get("/addPostTest", (req, res) => {
-  console.log("adding post test")
-  const post = new Post({
-    USER_ID: "This is user ID",
-    TOPIC_ID: "This is topic ID",
-    BODY: "req.body.BODY"
-  });
-  post.save() //save this object to collection in db
-    .then( result => {
-      res.send(post);
-      console.log(result);
-    })
-    .catch(err => {console.log(err)});
-});
-
-///////////////////////////////
-
-
-
-
-
-
-
-
-
-
 
 //return all posts by newest
 router.get("/getPosts", async (req, res) => {
   console.log("find posts");
-  const posts = await Post.find().sort({createdAt: -1});
+  const posts = await Post.find()
+  .populate("USER_ID TOPIC_ID LIKED_USERS")
+  .sort({createdAt: -1});
+
   console.log(posts);
   res.send(posts);
 });
@@ -46,8 +20,8 @@ router.get("/getPosts", async (req, res) => {
 router.post("/addPost", async (req, res) => {
   try {
     const post = new Post({
-      USER_ID: req.body.USER_ID,
-      TOPIC_ID: req.body.TOPIC_ID,
+      USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+      TOPIC_ID: mongoose.Types.ObjectId(req.body.TOPIC_ID),
       BODY: req.body.BODY
     });
     await post.save(); //save this object to collection in db
@@ -61,15 +35,19 @@ router.post("/addPost", async (req, res) => {
 
 
 //get single post
-router.get("/getPost/:id", (req, res) => {
+router.get("/getPost/:id", async (req, res) => {
   const id =  req.params.id;
 
-  Post.findById(id)
-    .then(result => {
-      console.log(result);
-      res.send(result);
-    })
-    .catch(err => { console.log(err); });
+  try {
+    const post = await Post.findById(id)
+    .populate("USER_ID TOPIC_ID LIKED_USERS");
+
+  
+    console.log(post);
+    await res.send(post); 
+  } catch (error) {
+    console.log(error);
+  }
 
 });
 
@@ -103,7 +81,10 @@ router.patch("/updatePost/:id",  (req, res) => {
 router.get("/getPosts/:id", async (req, res) => {
   console.log("find posts by user");
   const id = req.params.id;
-  const posts = await Post.find({_id: id}).sort({createdAt: -1}); // .exec()?
+  const posts = await Post.find({_id: id})
+  .populate("USER_ID TOPIC_ID LIKED_USERS")
+  .sort({createdAt: -1});
+    
   console.log(posts);
   res.send(posts);
 });
@@ -119,10 +100,15 @@ router.get("/getFeed/:id", async (req, res) => {
           TOPIC_ID: user.FOLLOWING_TOPICS
         },
         {
-          USER_ID: user.FOLLOWING_USERS.USER_ID // I hope this line works
-        }
+          USER_ID: user.FOLLOWING_USERS.map(o => o.USER_ID)
+        },
+        {
+          USER_ID: req.params.id
+        } 
       ]
-     }).sort({createdAt: -1});
+     })
+     .populate("USER_ID TOPIC_ID LIKED_USERS")
+     .sort({createdAt: -1});
 
     res.send(post);
     console.log("got feed");
@@ -135,16 +121,37 @@ router.get("/getFeed/:id", async (req, res) => {
 //get topic posts
 router.get("/getTopicPosts/:id", async (req, res) => {
   try {
-    const post = await Post.find({TOPIC_ID: req.params.id}).sort({createdAt: -1});
+    const post = await Post.find({TOPIC_ID: req.params.id})
+    .populate("USER_ID TOPIC_ID LIKED_USERS")
+    .sort({createdAt: -1});
 
     res.send(post);
-    console.log("got got topic posts");
+    console.log("got topic posts");
   } catch (error) {
     console.log(error);
   }  
 });
 
 
+//////////////////////////////////////TEST
+
+router.get("/testAdd", (req, res) => {
+  console.log("adding post test")
+  const post = new Post({
+    USER_ID: mongoose.Types.ObjectId("621730d77cf288f58cc0edd4"),
+    TOPIC_ID: mongoose.Types.ObjectId("621730ffcd274d12d72c22a6"),
+    BODY: "should be on feed",
+    LIKED_USERS: [mongoose.Types.ObjectId("6217309ae011412017c60aa7"), mongoose.Types.ObjectId("621730d77cf288f58cc0edd4")]
+  });
+  post.save() //save this object to collection in db
+    .then( result => {
+      res.send(post);
+      console.log(result);
+    })
+    .catch(err => {console.log(err)});
+});
+
+///////////////////////////////
 
 
 
