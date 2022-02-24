@@ -47,9 +47,8 @@ router.delete("/deleteComment/:id", async (req, res) => {
 router.patch("/updateComment/:id", async (req, res) => {
   const id = req.params.id;
 
-  const comment;
   try {
-    comment = await Comment.findById(id);
+    const comment = await Comment.findById(id);
     if (req.body.CONTENT) {
       comment.CONTENT = req.body.CONTENT;
     }

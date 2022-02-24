@@ -3,12 +3,14 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema({ // need to add more
     USER_ID: { 
-        type: String,
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
     },
 
     TOPIC_ID: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Topic",
         required: true
     },
 
@@ -27,9 +29,11 @@ const postSchema = new Schema({ // need to add more
         required: true
     },
     
-    LIKED_USERS: {
-        type: [String]  // USER_ID
-    }
+    LIKED_USERS: [{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User"
+    }]  // USER_ID
+    
 
 }, { timestamps: true});
 

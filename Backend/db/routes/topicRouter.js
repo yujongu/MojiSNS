@@ -34,4 +34,24 @@ router.get("/getTopic/:id", async (req, res) => {
   }  
 })
 
+
+
+
+
+////////TEST////////////////////////////
+router.get("/testAdd", async (req, res) => {
+  try {
+    const topic = new Topic({
+      TOPIC_NAME: "FunnyTest",
+      USER_ID: "placeholder"
+    });
+    await topic.save();
+    res.send(topic);
+    console.log("topic added");
+  } catch (error) {
+    console.log(error);
+  }
+    
+});
+
 module.exports = router

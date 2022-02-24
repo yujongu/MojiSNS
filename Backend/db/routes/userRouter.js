@@ -49,9 +49,8 @@ router.delete("/deleteUser/:id", async (req, res) => {
 router.patch("/updateUser/:id", async (req, res) => {
   const id = req.params.id;
 
-  const user;
   try {
-    user = await User.findById(id);
+    const user = await User.findById(id);
     if (req.body.USER_EMAIL) { user.USER_EMAIL = req.body.USER_EMAIL; }
     if (req.body.USER_USERNAME) { user.USER_USERNAME = req.body.USER_USERNAME; }
     if (req.body.USER_PW) { user.USER_PW = req.body.USER_PW; }
@@ -136,5 +135,24 @@ router.get("/login", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+
+
+/////////TEST///////////////
+router.get("/testAdd", async (req, res) => {
+  try {
+    const user = new User({
+      USER_EMAIL: "test3@testmail.com",
+      USER_PW: "password3",
+      USER_USERNAME: "testUser3"
+    });
+    await user.save();
+    res.send(user);
+    console.log(user);
+  } catch (error) {
+    console.log(error);
+  }
+    
 });
 module.exports = router;
