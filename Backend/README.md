@@ -27,7 +27,7 @@ ex) localhost:5000/api/post/getPosts
 
 /user/
       getUsers            -> get all users
-      addUser
+      signup
       getUser/:email
       deleteUser/:user_id
       updateUser/:user_id
@@ -36,11 +36,12 @@ ex) localhost:5000/api/post/getPosts
       followTopic/:user_id
       unfollowUser/:user_id
       unfollowTopic/:user_id
-      
+      login                 -> check if id/password exist in db
 
       TODO:
-      login                 -> check if id/password exist in db
       check validity of follow/unfollow
+      separate messages for login
+      signup check unique email, unique username
 
 
 /topic/
@@ -53,10 +54,8 @@ ex) localhost:5000/api/post/getPosts
 
 
 /comment/
-TODO:
       getComments/:post_id
       getCommentsByLikes/:post_id
       addComment
-
       deleteComment/:comment_id
       updateComment/:comment_id

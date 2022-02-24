@@ -54,70 +54,12 @@ router.patch("/updateComment/:id", async (req, res) => {
       comment.CONTENT = req.body.CONTENT;
     }
 
-    await comment.save();
-    console.log(comment);
+    await user.save();
+    console.log(user);
 
   } catch (error) {
     console.log(error);
   }
 
-});
-
-
-router.patch("/followUser/:id", async (req, res) => {
-  try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $push: {FOLLOWING_USERS: {USER_ID: req.body.USER_ID, FOLLOW_DATE: Date.now()}}}
-    );
-    await User.findOneAndUpdate(
-      { _id: req.body.USER_ID},
-      { $push: {FOLLOWER_USERS: {USER_ID: req.params.id, FOLLOW_DATE: Date.now()}}}
-    )
-    console.log("user followed");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.patch("/followTopic/:id", async (req, res) => {
-  try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $push: {TOPIC_ID: req.body.TOPIC_ID}}
-    );
-    console.log("topic followed");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.patch("/unfollowUser/:id", async (req, res) => {
-  try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $pull: {FOLLOWING_USERS: {USER_ID: req.body.USER_ID}}}
-    );
-    await User.findOneAndUpdate(
-      { _id: req.body.USER_ID},
-      { $pull: {FOLLOWER_USERS: {USER_ID: req.params.id}}}
-    )
-    console.log("user unfollowed");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-
-router.patch("/unfollowTopic/:id", async (req, res) => {
-  try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $pull: {TOPIC_ID: req.body.TOPIC_ID}}
-    );
-    console.log("topic followed");
-  } catch (error) {
-    console.log(error);
-  }
 });
 module.exports = router;

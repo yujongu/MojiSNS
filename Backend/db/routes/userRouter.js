@@ -10,12 +10,12 @@ router.get("/getUsers", async (req, res) => {
     res.send(users);
 });
 
-router.post("/addUser", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     const user = new User({
       USER_EMAIL: req.body.USER_EMAIL,
       USER_PW: req.body.USER_PW,
-      USER_SEX: req.body.USER_SEX
+      USER_USERNAME: req.body.USER_USERNAME
     });
     await user.save();
     res.send(user);
@@ -121,6 +121,18 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
       { $pull: {TOPIC_ID: req.body.TOPIC_ID}}
     );
     console.log("topic followed");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/login", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      USER_USERNAME: req.body.USER_USERNAME,
+      USER_PW: req.body.USER_PW
+    });
+    console.send(user)
   } catch (error) {
     console.log(error);
   }
