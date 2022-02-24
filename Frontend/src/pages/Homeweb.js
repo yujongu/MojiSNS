@@ -8,10 +8,6 @@ const Homeweb = () => {
 
   var like = document.getElementById("like");
 
-  like.addEventListener("click",function(){
-    like.style.color = "#E26714";
-  });
-
 
   return (
     <main className="homewebMain">
