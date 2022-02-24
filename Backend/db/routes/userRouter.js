@@ -1,6 +1,6 @@
 //const { application } = require("express");
 const express = require("express");
-const mongoose = require("mongoose");
+const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
 const router = express.Router();
 
@@ -182,6 +182,20 @@ router.get("/login/:username/:password", async (req, res) => {
         return;
     }
 
+<<<<<<< HEAD
+=======
+
+
+/////////TEST///////////////
+router.get("/testAdd", async (req, res) => {
+  try {
+    const user = new User({
+      USER_EMAIL: "test3@testmail.com",
+      USER_PW: "password3",
+      USER_USERNAME: "testUser3"
+    });
+    await user.save();
+>>>>>>> 63d3885f2dcc57e628087e4e4a0c6e1b0315893c
     res.send(user);
     console.log(user);
   } catch (error) {

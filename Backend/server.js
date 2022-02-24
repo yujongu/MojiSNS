@@ -26,11 +26,6 @@ mongoose
     app.listen(port, () => {
       console.log("Backend server has started!")
     })
-
-    app.use(express.urlencoded({ extended: true }));
-    app.use(express.json())
-
-
     app.use("/api/post", postRoutes);
     app.use("/api/user", userRoutes);
     app.use("/api/topic", topicRoutes);

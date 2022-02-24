@@ -9,14 +9,17 @@ const Homeweb = () => {
     var like = document.getElementById("like");
     var likeNum = document.getElementById("likeNum");
     var postSet = document.getElementById("postSet");
+    var postingImg = document.getElementById("postingImg");
+
 
     var stateLike = 0;
     like.addEventListener("click", function () {
-      if (stateLike == 1) {
+      if (stateLike === 1) {
         like.style.color = "#000000";
         likeNum.style.color = "#000000";
         stateLike = 0;
-      } else {
+      }
+      else {
         like.style.color = "#E26714";
         likeNum.style.color = "#E26714";
         stateLike = 1;
@@ -26,7 +29,20 @@ const Homeweb = () => {
     postSet.addEventListener("click", function () {
       console.log("postSetting clicked");
     });
-  };
+
+    var showWrite = document.getElementById("myDIV");
+    console.log(showWrite.style.display);
+    postingImg.addEventListener("click", function () {
+      if (showWrite.style.display === "none") {
+        showWrite.style.display = "flex";
+        console.log("show");
+      }
+      else {
+        showWrite.style.display = "none";
+        console.log("hide");
+      }
+    });
+  }
   return (
     <main className="homewebMain">
       <div className="center1">
@@ -74,17 +90,15 @@ const Homeweb = () => {
               </a>
             </div>
             <div class="grid-item">
-              <a href="/posting">
-                <img
-                  src="posting.png"
-                  alt="Sample profile"
-                  width="140"
-                  height="140"
-                ></img>
-                <h3 className="tabText">Posting</h3>
-              </a>
+              <img src="posting.png" alt="Sample profile" width="140" height="140" id="postingImg"></img>
+              <h3 className="tabText">
+                Posting
+              </h3>
             </div>
           </div>
+        </div>
+        <div id="myDIV">
+          This is my DIV element.
         </div>
         <div className="viewByTopic">
           <h2 class="titleWeb2">View By Topic</h2>
