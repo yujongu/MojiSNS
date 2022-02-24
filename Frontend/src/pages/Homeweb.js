@@ -1,43 +1,63 @@
 import React from 'react'
-import { Container, Grid } from '@mui/material'
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import EditIcon from '@mui/icons-material/Edit';
-import { makeStyles } from '@mui/material';
+import "./Homeweb.css"
+import { useNavigate } from "react-router-dom";
 
-import Header from './components/Header/Header'
-import TabBar from './components/TabBar/TabBar';
-import TopicView from './components/TopicView/TopicView';
 
 const Homeweb = () => {
+  let navigate = useNavigate();
   return (
-    <Box
-    sx={{
-      backgroundColor: '#CCCCCC'
-    }}
-    >
-      <Container>
-        <Grid container rowSpacing={3}>
-          <Grid item xs={12} >
-            <Header />
-          </Grid>
-          <Grid item xs={12}>
-            <TabBar />
-          </Grid>
-          <Grid item xs={9} style={{ backgroundColor: 'red' }}>
-            Posts
-          </Grid>
-          <Grid item xs style={{ backgroundColor: 'green' }}>
-            Profile
-          </Grid>
-        </Grid>
-        <Box>
-          <Fab color="secondary" aria-label="edit">
-            <EditIcon />
-          </Fab>
-        </Box>
-      </Container>
-    </Box>
+    <main className="homewebMain">
+      <div className="center1">
+        <div className="header">
+          <h2 class="titleWeb">
+            Welcome to Moji!
+          </h2>
+        </div>
+        <div className='bt1'>
+          <button
+            class='settings'
+          >
+            Settings
+          </button>
+        </div>
+        <div className="tabBar">
+          <div class="grid-container">
+            <div class="grid-item">
+              <a href='/profile'>
+                <img src="profile.png" alt="Sample profile" width="140" height="140"></img>
+                <h3 className="tabText">
+                  Profile
+                </h3>
+              </a>
+            </div>
+            <div class="grid-item">
+              <a href='/follower'>
+                <img src="follower.png" alt="Sample profile" width="140" height="140"></img>
+                <h3 className="tabText">
+                  Follower
+                </h3>
+              </a>
+            </div>
+            <div class="grid-item">
+              <a href='/following'>
+                <img src="following.png" alt="Sample profile" width="140" height="140"></img>
+                <h3 className="tabText">
+                  Following
+                </h3>
+              </a>
+            </div>
+            <div class="grid-item">
+              <a href='/posting'>
+                <img src="posting.png" alt="Sample profile" width="140" height="140"></img>
+                <h3 className="tabText">
+                  Posting
+                </h3>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   )
 }
 
