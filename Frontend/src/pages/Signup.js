@@ -50,6 +50,7 @@ function Signup() {
             //store user data to local storage
             setUser(response.data)
             localStorage.setItem('user', JSON.stringify(response.data))
+            navigate("/signup/bio");
           }
         }
       }
@@ -135,9 +136,6 @@ function Signup() {
           <div class="signupS">
             <button
               type="submit"
-              onClick={() => {
-                // navigate("/signup/bio");
-              }}
             >
               Sign Up
             </button>
