@@ -56,6 +56,43 @@ const Homeweb = () => {
             </div>
           </div>
         </div>
+        <div className="viewByTopic">
+          <h2 class="titleWeb2">
+            View By Topic
+          </h2>
+          <div class="outer">
+            <div>
+              <h2 className='topicText'>
+                Sports
+              </h2>
+            </div>
+            <div>
+              <h2 className='topicText'>
+                Games
+              </h2>
+            </div>
+            <div>
+              <h2 className='topicText'>
+                Beauty
+              </h2>
+            </div>
+            <div>
+              <h2 className='topicText'>
+                Movies
+              </h2>
+            </div>
+            <div>
+              <h2 className='topicText'>
+                Memes
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div className='timeline'>
+          <h2 class="titleWeb2">
+            Timeline
+          </h2>
+        </div>
       </div>
     </main>
   )

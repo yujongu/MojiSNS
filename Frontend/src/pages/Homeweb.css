@@ -75,7 +75,7 @@
 
 
 .grid-item {
-    padding: 10px;
+    padding: 2%;
 }
 
 .tabText {
@@ -86,4 +86,55 @@
 a {
     text-decoration: none;
     color: inherit;
+}
+
+.titleWeb2{
+    padding-bottom: 2%;
+}
+
+.viewByTopic {
+    margin-top: 5%;
+    background-color: #f2f2f2;
+}
+
+.container {
+    position: relative;
+    width: 180px;
+    height: 800px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+.outer {
+    height: 100px;
+    white-space: nowrap;
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.outer::-webkit-scrollbar{
+    display: none;
+}
+
+.outer div {
+    width: 20%;
+    background-color: #FFC368;
+    float: none;
+    margin: 0 1%;
+    display: inline-block;
+    zoom: 1;
+    border-radius: 30px;
+}
+
+.topicText{
+    padding-top: 16%;
+    padding-bottom: 16%;
+    text-align: center;
+    color: #E26714;
+}
+
+.timeline{
+    margin-top: 5%;
 }
