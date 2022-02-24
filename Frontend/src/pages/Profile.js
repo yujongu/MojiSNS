@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TopSettingBar from "./components/Header/TopSettingBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/fontawesome-free-solid";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import PostCard from "./components/PostCard";
 function Profile() {
   return (
     <main className="profileContainer">
@@ -42,6 +42,18 @@ function Profile() {
             </div>
           </div>
         </div>
+
+        <p id="myPostTitle">My Posts</p>
+
+        <PostCard
+            userName={"Steve Rogers"}
+            postTime={Date.now()}
+            likeCount={13}
+            commentCount={2}
+            postText={"Hello world"}
+          />
+        
+
       </div>
     </main>
   );
