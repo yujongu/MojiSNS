@@ -1,0 +1,92 @@
+.postingCard{
+    position: relative;
+    background-color: white;
+    border-radius: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.postingHeader{
+    display: flex;
+    width: 100%;
+}
+    
+.postingProfile{
+    position: relative;
+    margin-left: 4%;
+    padding-top: 3%;
+    margin-bottom: 3%;
+    width: 8%;
+}
+
+.postPP{
+    position: relative;
+    width: 100%;
+}
+
+.postingWriter{
+    position: relative;
+    width: 12%;
+    margin-left: 2%;
+    margin-top: 5.5%;
+}
+
+.dateWritten{
+    position: relative;
+    width: 18%;
+    margin-left: 45%;
+    margin-top: 6%;
+}
+
+.postSetting{
+    position: relative;
+    width: 5%;
+    margin-left: 3%;
+    margin-top: 6%;
+}
+
+.postingBody{
+    display: flex;
+    width: 100%;
+}
+
+.postingSection{
+    position: relative;
+    padding: 3%;
+    width: 88%;
+}
+
+.postWords{
+    position: relative;
+}
+
+.iconSection{
+    position: relative;
+    width: 4%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.likeSection{
+    width: 100%;
+    padding-bottom: 20%;
+}
+
+.likeCount{
+    font-size: large;
+    font-weight: bold;
+    padding-top: 15%;
+}
+
+
+.commentSection{
+    width: 100%;
+    padding-top: 20%;
+}
+
+.commentCount{
+    font-size: large;
+    font-weight: bold;
+    padding-top: 15%;
+}
