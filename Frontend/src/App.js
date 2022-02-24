@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Homeweb from "./pages/Homeweb";
 import ForgetID from "./pages/ForgetID";
+import Profile from "./pages/Profile";
 import * as PageLinks from "./constants/routes"
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path={PageLinks.SIGNUP} element={<Signup />} />
         <Route path={PageLinks.HOMEWEB} element={<Homeweb />} />
         <Route path={PageLinks.FORGOTID} element={<ForgetID />} />
+        <Route path={PageLinks.PROFILE} element={<Profile />} />
       </Routes>
     </Router>
   );
