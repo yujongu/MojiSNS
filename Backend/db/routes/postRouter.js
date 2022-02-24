@@ -100,8 +100,11 @@ router.get("/getFeed/:id", async (req, res) => {
           TOPIC_ID: user.FOLLOWING_TOPICS
         },
         {
-          USER_ID: user.FOLLOWING_USERS.USER_ID // I hope this line works
-        }
+          USER_ID: user.FOLLOWING_USERS.map(o => o.USER_ID)
+        },
+        {
+          USER_ID: req.params.id
+        } 
       ]
      })
      .populate("USER_ID TOPIC_ID LIKED_USERS")
@@ -123,7 +126,7 @@ router.get("/getTopicPosts/:id", async (req, res) => {
     .sort({createdAt: -1});
 
     res.send(post);
-    console.log("got got topic posts");
+    console.log("got topic posts");
   } catch (error) {
     console.log(error);
   }  
@@ -135,9 +138,9 @@ router.get("/getTopicPosts/:id", async (req, res) => {
 router.get("/testAdd", (req, res) => {
   console.log("adding post test")
   const post = new Post({
-    USER_ID: mongoose.Types.ObjectId("6217309ae011412017c60aa7"),
+    USER_ID: mongoose.Types.ObjectId("621730d77cf288f58cc0edd4"),
     TOPIC_ID: mongoose.Types.ObjectId("621730ffcd274d12d72c22a6"),
-    BODY: "Post by testUser1 | Topic: FunnyTest\npost # 2",
+    BODY: "should be on feed",
     LIKED_USERS: [mongoose.Types.ObjectId("6217309ae011412017c60aa7"), mongoose.Types.ObjectId("621730d77cf288f58cc0edd4")]
   });
   post.save() //save this object to collection in db
