@@ -68,6 +68,7 @@ function Bio() {
                 <div class="NextB">
                     <button 
                         type="submit"
+                        class="bio"
                         onClick={() => {
                             navigate("/signup/interest")
                             }}    >Next</button>

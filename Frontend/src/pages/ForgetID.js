@@ -2,7 +2,9 @@ import React from 'react'
 
 const ForgetID = () => {
   return (
-    <div>ForgetID</div>
+    <div>ForgetID
+    <p>Sorry to hear that</p>
+    </div>
   )
 }
 

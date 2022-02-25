@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
+  let navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +51,12 @@ function Login() {
             </div>
 
             <div className="loginL">
-                <button type="submit">Log In</button>
+                <button 
+                type="submit"
+                class="login"
+                onClick={() => {
+                    navigate("/home")
+                }}>Log In</button>
             </div>
 
             <div className="forgotpsw">

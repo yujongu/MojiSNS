@@ -23,12 +23,40 @@
     box-shadow: 3px 2px 8px grey;
   }
 
- button[type=submit].sports {
+p4 {
+    color: #ffc368;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.sports {
     position: relative;
     background-color: #FBE5D6;
     color: #000000;
     height: 35px;
-    width: 90px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 20px;
+    /* transition: background-color 0.5s; */
+    border-style: none;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+.game {
+    position: relative;
+    background-color: #FBE5D6;
+    color: #000000;
+    height: 35px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
     margin-top: 20px;
     transition: background-color 0.5s;
     border-style: none;
@@ -40,12 +68,14 @@
     margin-right: 5px;
   }
 
-  button[type=submit].game {
+  .news {
     position: relative;
     background-color: #FBE5D6;
     color: #000000;
     height: 35px;
-    width: 90px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
     margin-top: 20px;
     transition: background-color 0.5s;
     border-style: none;
@@ -57,12 +87,14 @@
     margin-right: 5px;
   }
 
-  button[type=submit].news {
+ .literature {
     position: relative;
     background-color: #FBE5D6;
     color: #000000;
     height: 35px;
-    width: 90px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
     margin-top: 20px;
     transition: background-color 0.5s;
     border-style: none;
@@ -74,11 +106,14 @@
     margin-right: 5px;
   }
 
-  button[type=submit].literature {
+.memes {
     position: relative;
     background-color: #FBE5D6;
     color: #000000;
     height: 35px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
     margin-top: 20px;
     transition: background-color 0.5s;
     border-style: none;
@@ -88,9 +123,66 @@
     font-weight: bold;
     margin-left: 5px;
     margin-right: 5px;
-    }
+ }
+
+.beauty {
+    position: relative;
+    background-color: #FBE5D6;
+    color: #000000;
+    height: 35px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 20px;
+    transition: background-color 0.5s;
+    border-style: none;
+    border-radius: 15px;
+    perspective: 1px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+ }
+
+.movies {
+    position: relative;
+    background-color: #FBE5D6;
+    color: #000000;
+    height: 35px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 20px;
+    transition: background-color 0.5s;
+    border-style: none;
+    border-radius: 15px;
+    perspective: 1px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+ }
+
+ .anonymous {
+    position: relative;
+    background-color: #FBE5D6;
+    color: #000000;
+    height: 35px;
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 20px;
+    transition: background-color 0.5s;
+    border-style: none;
+    border-radius: 15px;
+    perspective: 1px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+ }
   
-  button[type=submit] {
+  button[type=submit].finished {
     position: relative;
     background-color: #ffc368;
     color: #e26714;
@@ -106,13 +198,67 @@
     font-weight: bold;
   }
   
-  button[type=submit]:hover {
+  button[type=submit].finished:hover {
     background-color: #ffac2e;
   }
   
-  button[type=submit]:focus,
-  button[type=submit]:active {
+  button[type=submit].finished:focus,
+  button[type=submit].finished:active {
     background-color: #fba31f;
     transition: none;
   }
-  
+ 
+.sports:focus,
+.sports:active {
+    background-color: #fb1f8d;
+    transition: none;
+
+  }
+
+  .game:focus,
+.game:active {
+    background-color: #fb1f8d;
+    transition: none;
+
+  }
+
+  .news:focus,
+  .news:active {
+      background-color: #fb1f8d;
+      transition: none;
+    }
+
+  .literature:focus,
+.literature:active {
+    background-color: #fb1f8d;
+    transition: none;
+
+  }
+
+  .memes:focus,
+.memes:active {
+    background-color: #fb1f8d;
+    transition: none;
+
+  }
+
+  .beauty:focus,
+.beauty:active {
+    background-color: #fb1f8d;
+    transition: none;
+
+  }
+
+  .movies:focus,
+.movies:active {
+    background-color: #fb1f8d;
+    transition: none;
+
+  }
+
+  .anonymous:focus,
+.anonymous:active {
+    background-color: #fb1f8d;
+    transition: none;
+
+  }
