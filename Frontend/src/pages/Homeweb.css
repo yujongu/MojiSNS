@@ -18,7 +18,7 @@
     height: 10%
 }
 
-.header{
+.header {
     display: flex;
     width: 100%;
     position: relative;
@@ -95,8 +95,114 @@ a {
     color: inherit;
 }
 
-.titleWeb2{
+#writePost {
+    display: none;
+    margin-top: 5%;
+}
+
+.writeTitle {
     padding-bottom: 2%;
+}
+
+.writeCard {
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    margin-bottom: 10%;
+}
+
+textarea {
+    width: 96%;
+    margin-top: 1%;
+    margin-left: 2%;
+    margin-right: auto;
+    background-color: transparent;
+    border: none;
+    border-style: none;
+    outline: none;
+    font-size: 20px;
+    resize: none;
+}
+
+.writeFooter{
+    margin-top: 4%;
+    display: flex;
+    width: 100%;
+}
+
+.btnSelect{
+    position: relative;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    border-radius: 11px;
+    border-style: none;
+    background-color: #FFC368;
+    transition-duration: 0.4s;
+    font-size: large;
+    font-weight: bold;
+    padding: 2%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    color: #E26714;
+}
+
+.btnSelect:hover {
+    background-color: #E26714;
+    color: #f2f2f2;
+}
+
+.btnUpload{
+    position: relative;
+    margin-right: 2%;
+    margin-left: auto;
+    margin-bottom: 2%;
+    border-radius: 11px;
+    border-style: none;
+    background-color: #FFC368;
+    transition-duration: 0.4s;
+    font-size: large;
+    font-weight: bold;
+    padding: 2%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    color: #E26714;
+}
+
+.btnUpload:hover {
+    background-color: #E26714;
+    color: #f2f2f2;
+}
+
+.btnCancel{
+    position: relative;
+    margin-right: 1%;
+    margin-bottom: 2%;
+    border-radius: 11px;
+    border-style: none;
+    background-color: #FFC368;
+    transition-duration: 0.4s;
+    font-size: large;
+    font-weight: bold;
+    padding: 2%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    color: #E26714;
+}
+
+.btnCancel:hover {
+    background-color: #E26714;
+    color: #f2f2f2;
+}
+
+#writeSelectTopic {
+    display: none;
+    margin-top: 2%;
+}
+
+.topicList{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3%;
 }
 
 .viewByTopic {
@@ -121,7 +227,7 @@ a {
     overflow-y: hidden;
 }
 
-.outer::-webkit-scrollbar{
+.outer::-webkit-scrollbar {
     display: none;
 }
 
@@ -135,14 +241,14 @@ a {
     border-radius: 30px;
 }
 
-.topicText{
+.topicText {
     padding-top: 16%;
     padding-bottom: 16%;
     text-align: center;
     color: #E26714;
 }
 
-.btnTopic{
+.btnTopic {
     width: 100%;
     height: 100%;
     border-radius: 30px;
@@ -156,11 +262,107 @@ a {
     color: #E26714;
 }
 
-.btnTopic:hover{
+.btnTopic:hover {
     background-color: #E26714;
     color: #f2f2f2;
 }
 
-.timeline{
+.timeline {
     margin-top: 5%;
+}
+
+.titleWeb2 {
+    padding-bottom: 2%;
+}
+
+.postingCard {
+    position: relative;
+    background-color: white;
+    border-radius: 25px;
+    margin-bottom: 10%;
+}
+
+.postingHeader {
+    display: flex;
+    width: 100%;
+}
+
+.postingProfile {
+    position: relative;
+    margin-left: 4%;
+    padding-top: 3%;
+    margin-bottom: 3%;
+    width: 8%;
+}
+
+.postPP {
+    position: relative;
+    width: 100%;
+}
+
+.postingWriter {
+    position: relative;
+    width: 12%;
+    margin-left: 2%;
+    margin-top: 5.5%;
+}
+
+.dateWritten {
+    position: relative;
+    width: 18%;
+    margin-left: 45%;
+    margin-top: 6%;
+}
+
+.postSetting {
+    position: relative;
+    width: 5%;
+    margin-left: 3%;
+    margin-top: 6%;
+}
+
+.postingBody {
+    display: flex;
+    width: 100%;
+}
+
+.postingSection {
+    position: relative;
+    padding: 3%;
+    width: 88%;
+}
+
+.postWords {
+    position: relative;
+}
+
+.iconSection {
+    position: relative;
+    width: 4%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.likeSection {
+    width: 100%;
+    padding-bottom: 20%;
+}
+
+.likeCount {
+    font-size: large;
+    font-weight: bold;
+    padding-top: 15%;
+}
+
+
+.commentSection {
+    width: 100%;
+    padding-top: 20%;
+}
+
+.commentCount {
+    font-size: large;
+    font-weight: bold;
+    padding-top: 15%;
 }

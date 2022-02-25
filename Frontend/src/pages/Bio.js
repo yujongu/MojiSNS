@@ -34,19 +34,19 @@ function Bio() {
         me.birthday = new Date(myBirthday);
         me.gender = gender;
 
-        const response = await axios.post(
-          `http://localhost:5000/api/user/updateUser/${myId}`,
-          {
-            USER_BIRTHDAY: myBirthday,
-            USER_SEX: gender
-          }
-        );
-        console.log(response);
+        // const response = await axios.post(
+        //   `http://localhost:5000/api/user/updateUser/${myId}`,
+        //   {
+        //     USER_BIRTHDAY: myBirthday,
+        //     USER_SEX: gender,
+        //   }
+        // );
+        // console.log(response);
+        navigate("/signup/interest");
       } else {
         alert("Please check your gender!");
       }
     }
-    // navigate("/signup/interest");
   };
 
   const handleTextChange = (e) => {
