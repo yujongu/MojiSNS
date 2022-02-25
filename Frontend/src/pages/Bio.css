@@ -100,7 +100,7 @@
   }
   
   
-  button[type=submit] {
+  button[type=submit].bio {
     position: relative;
     background-color: #ffc368;
     color: #e26714;
@@ -116,12 +116,12 @@
     font-weight: bold;
   }
   
-  button[type=submit]:hover {
+  button[type=submit].bio:hover {
     background-color: #ffac2e;
   }
   
-  button[type=submit]:focus,
-  button[type=submit]:active {
+  button[type=submit].bio:focus,
+  button[type=submit].bio:active {
     background-color: #fba31f;
     transition: none;
   }
