@@ -13,6 +13,22 @@ router.get("/getUsers", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
+
+  let temp = await User.find({USER_EMAIL: req.body.USER_EMAIL}).count() > 0;
+
+  if (temp) {
+    res.status(400).send('email exists');
+    console.log('email exists');
+    return;
+  }
+  
+  temp = await User.find({USER_USERNAME: req.body.USER_USERNAME}).count() > 0;
+  if (temp) {
+    res.status(400).send('username exists');
+    console.log('username exists');
+    return;
+  }
+
   try {
     const user = new User({
       USER_EMAIL: req.body.USER_EMAIL,
@@ -42,7 +58,8 @@ router.get("/getUser/:email", async (req, res) => {
 router.delete("/deleteUser/:id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
-    console.log("user removed");
+    console.log("delete user");
+    res.send("delete user");
   } catch (error) {
     console.log(error);
   }
@@ -63,7 +80,7 @@ router.patch("/updateUser/:id", async (req, res) => {
 
     await user.save();
     console.log(user);
-
+    res.send(user);
   } catch (error) {
     console.log(error);
   }
@@ -73,6 +90,14 @@ router.patch("/updateUser/:id", async (req, res) => {
 
 router.patch("/followUser/:id", async (req, res) => {
   try {
+    let temp = await User.findOne({_id: req.params.id});
+    
+    if (temp.FOLLOWING_USERS.some(e => e.USER_ID.toString() == req.body.USER_ID)) {
+      res.send("already following");
+      console.log("already following");
+      return;
+    }
+    
     await User.findOneAndUpdate(
       { _id: req.params.id},
       { $push: {FOLLOWING_USERS: {USER_ID: mongoose.Types.ObjectId(req.body.USER_ID), FOLLOW_DATE: Date.now()}}}
@@ -82,6 +107,7 @@ router.patch("/followUser/:id", async (req, res) => {
       { $push: {FOLLOWER_USERS: {USER_ID: mongoose.Types.ObjectId(req.params.id), FOLLOW_DATE: Date.now()}}}
     )
     console.log("user followed");
+    res.send("user followed");
   } catch (error) {
     console.log(error);
   }
@@ -89,11 +115,19 @@ router.patch("/followUser/:id", async (req, res) => {
 
 router.patch("/followTopic/:id", async (req, res) => {
   try {
+    let temp = await User.findOne({_id: req.params.id});
+
+    if (temp.FOLLOWING_TOPICS.some(e => e.toString() == req.body.TOPIC_ID)) {
+      res.send("already following");
+      console.log("already following");
+      return;
+    }
     await User.findOneAndUpdate(
       { _id: req.params.id},
       { $push: {FOLLOWING_TOPICS: req.body.TOPIC_ID}}
     );
     console.log("topic followed");
+    res.send("topic followed");
   } catch (error) {
     console.log(error);
   }
@@ -110,6 +144,8 @@ router.patch("/unfollowUser/:id", async (req, res) => {
       { $pull: {FOLLOWER_USERS: {USER_ID: mongoose.Types.ObjectId(req.params.id)}}}
     )
     console.log("user unfollowed");
+    res.send("user unfollowed");
+
   } catch (error) {
     console.log(error);
   }
@@ -123,25 +159,31 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
       { $pull: {FOLLOWING_TOPICS: mongoose.Types.ObjectId(req.body.TOPIC_ID)}}
     );
     console.log("topic unfollowed");
+    res.send("topic unfollowed");
+
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get("/login", async (req, res) => {
+router.get("/login/:username/:password", async (req, res) => {
   try {
+
+    
     const user = await User.findOne({
-      USER_USERNAME: req.body.USER_USERNAME,
-      USER_PW: req.body.USER_PW
+      USER_USERNAME: req.params.username,
+      USER_PW: req.params.password
     })
     .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
     
-    console.send(user)
-  } catch (error) {
-    console.log(error);
-  }
-});
+    if (!user) {
+        res.status(400).send("User not found");
+        console.log("user not found");
+        return;
+    }
 
+<<<<<<< HEAD
+=======
 
 
 /////////TEST///////////////
@@ -153,39 +195,12 @@ router.get("/testAdd", async (req, res) => {
       USER_USERNAME: "testUser3"
     });
     await user.save();
+>>>>>>> 63d3885f2dcc57e628087e4e4a0c6e1b0315893c
     res.send(user);
     console.log(user);
   } catch (error) {
     console.log(error);
   }
-    
 });
 
-router.get("/testFollow/:id", async (req, res) => {
-  try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $push: {FOLLOWING_USERS: {USER_ID: mongoose.Types.ObjectId("621730d77cf288f58cc0edd4"), FOLLOW_DATE: Date.now()}}}
-    );
-    await User.findOneAndUpdate(
-      { _id: "621730d77cf288f58cc0edd4"},
-      { $push: {FOLLOWER_USERS: {USER_ID: mongoose.Types.ObjectId(req.params.id), FOLLOW_DATE: Date.now()}}}
-    )
-    console.log("user followed");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.get("/testFollowTopic/:id", async (req, res) => {
-  try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $push: {FOLLOWING_TOPICS: "6217308ae011412017c60aa5"}}
-    );
-    console.log("topic followed");
-  } catch (error) {
-    console.log(error);
-  }
-});
 module.exports = router;
