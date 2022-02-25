@@ -67,23 +67,19 @@ router.delete("/deleteUser/:id", async (req, res) => {
 
 //update user
 router.patch("/updateUser/:id", async (req, res) => {
-  const id = req.params.id;
-
   try {
-    const user = await User.findById(id);
-    if (req.body.USER_EMAIL) { user.USER_EMAIL = req.body.USER_EMAIL; }
-    if (req.body.USER_USERNAME) { user.USER_USERNAME = req.body.USER_USERNAME; }
-    if (req.body.USER_PW) { user.USER_PW = req.body.USER_PW; }
-    if (req.body.USER_BIRTHDAY) { user.USER_BIRTHDAY = req.body.USER_BIRTHDAY; }
-    if (req.body.USER_DESCRIPTION) { user.USER_DESCRIPTION = req.body.USER_DESCRIPTION; }
-    if (req.body.USER_SEX) { user.USER_SEX = req.body.USER_SEX; }
+		const post = await User.findOne({ _id: req.params.id });
 
-    await user.save();
-    console.log(user);
-    res.send(user);
-  } catch (error) {
-    console.log(error);
-  }
+		if (req.body.USER_EMAIL) {
+			post.USER_EMAIL = req.body.USER_EMAIL;
+		}
+
+		await post.save()
+		res.send(post)
+	} catch {
+		res.status(404)
+		res.send({ error: "Post doesn't exist!" })
+	}
 
 });
 
@@ -182,20 +178,6 @@ router.get("/login/:username/:password", async (req, res) => {
         return;
     }
 
-<<<<<<< HEAD
-=======
-
-
-/////////TEST///////////////
-router.get("/testAdd", async (req, res) => {
-  try {
-    const user = new User({
-      USER_EMAIL: "test3@testmail.com",
-      USER_PW: "password3",
-      USER_USERNAME: "testUser3"
-    });
-    await user.save();
->>>>>>> 63d3885f2dcc57e628087e4e4a0c6e1b0315893c
     res.send(user);
     console.log(user);
   } catch (error) {
