@@ -11,70 +11,95 @@ function Bio() {
   const [gender, setGender] = useState("");
   const [user, setUser] = useState();
 
-
-/*  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = { USER_EMAIL: email, USER_USERNAME: username, USER_PW: password };
-    // send the username and password to the server
-    const response = await axios.post(
-      "http://localhost:3010/api/user/signup", user
-    );
-    // set the state of the user
-    setUser(response.data)
-    // store the user in localStorage
-    localStorage.setItem('user', response.data)
-    console.log(response.data)
-  };*/
+    //check birthday format
+    const userKeyRegExp =
+      /^(?:0[1-9]|[12][0-9]|3[01])[-/.](?:0[1-9]|1[012])[-/.](?:19\d{2}|20[01][0-9]|2020)$/;
+    const valid = userKeyRegExp.test(birthday);
 
-  function handleTextChange(text) {
-    setBirthday(text);
-    setGender(text);
+    if (!valid) {
+      alert("Please check your birthday format!");
+    } else {
+      if (gender === "Male" || gender === "Female") {
+        //passed all checks
+        //update gender info and birthday info
 
-    if (text !== "") {
+        var me = JSON.parse(localStorage.getItem("user"));
+        var myId = me._id;
+        var bDayArr = birthday.split("/");
+        var myBirthday = bDayArr[2] + "-" + bDayArr[1] + "-" + bDayArr[0];
+        console.log("Birthday: ");
+        console.log(myBirthday);
+        me.birthday = new Date(myBirthday);
+        me.gender = gender;
+
+        const response = await axios.post(
+          `http://localhost:5000/api/user/updateUser/${myId}`,
+          {
+            USER_BIRTHDAY: myBirthday,
+            USER_SEX: gender
+          }
+        );
+        console.log(response);
+      } else {
+        alert("Please check your gender!");
+      }
+    }
+    // navigate("/signup/interest");
+  };
+
+  const handleTextChange = (e) => {
+    console.log(e.target);
+    switch (e.target.name) {
+      case "gender":
+        setGender(e.target.value);
+        break;
+      case "birthday":
+        setBirthday(e.target.value);
+        break;
+    }
+    if (e.target.value !== "") {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }
+  };
   return (
     <main className="bioMain">
-        {/* <form onSubmit={handleSubmit}> */}
+      <form onSubmit={handleSubmit}>
+        <div className="bioContainer">
+          <div class="logo"></div>
 
-            <div className="bioContainer">
-                <div class="logo"></div>
+          <div id="float-label7">
+            <input
+              type="text"
+              value={birthday}
+              onChange={(e) => handleTextChange(e)}
+              name="birthday"
+            />
+            <label className={isActive ? "Active" : ""} htmlFor="birthday">
+              Birthday (DD/MM/YYYY)
+            </label>
+          </div>
 
-                <div id="float-label7">
-                <input
-                    type="text"
-                    value={birthday}
-                    onChange={(e) => handleTextChange(e.target.value)}
-                />
-                <label className={isActive ? "Active" : ""} htmlFor="birthday">
-                    Birthday
-                </label>
-                </div>
+          <div id="float-label8">
+            <input
+              type="text"
+              value={gender}
+              onChange={(e) => handleTextChange(e)}
+              name="gender"
+            />
+            <label className={isActive ? "Active" : ""} htmlFor="gender">
+              Gender (Male or Female)
+            </label>
+          </div>
 
-                <div id="float-label8">
-                <input
-                    type="text"
-                    value1={gender}
-                    onChange={(e) => handleTextChange(e.target.value1)}
-                />
-                <label className={isActive ? "Active" : ""} htmlFor="gender">
-                    Gender
-                </label>
-                </div>
-
-                <div class="NextB">
-                    <button 
-                        type="submit"
-                        onClick={() => {
-                            navigate("/signup/interest")
-                            }}    >Next</button>
-                </div>
-                
-            </div>
-        {/* </form> */}
+          <div class="NextB">
+            <button type="submit">Next</button>
+          </div>
+        </div>
+      </form>
     </main>
   );
 }
