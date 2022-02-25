@@ -105,6 +105,9 @@ router.patch("/updateUser/:id", async (req, res) => {
     if (req.body.USER_SEX) {
       user.USER_SEX = req.body.USER_SEX;
     }
+    if (req.body.FOLLOWING_TOPICS) {
+      user.FOLLOWING_TOPICS = req.body.FOLLOWING_TOPICS;
+    }
 
     await user.save();
     console.log("Passed!!")
@@ -219,6 +222,9 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
 });
 
 router.get("/login/:username/:password", async (req, res) => {
+  console.log("This is parameter")
+  console.log(req.params.username)
+  console.log(req.params.password)
   const user = await User.findOne({
     USER_USERNAME: req.params.username,
     USER_PW: req.params.password
