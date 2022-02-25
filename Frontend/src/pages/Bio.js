@@ -96,7 +96,7 @@ function Bio() {
           </div>
 
           <div class="NextB">
-            <button type="submit">Next</button>
+            <button type="submit" className="bio">Next</button>
           </div>
         </div>
       </form>

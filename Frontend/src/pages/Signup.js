@@ -135,7 +135,11 @@ function Signup() {
 
           <div class="signupS">
             <button
+              className="signup"
               type="submit"
+              onClick={() => {
+                // navigate("/signup/bio");
+              }}
             >
               Sign Up
             </button>
