@@ -1,0 +1,50 @@
+.settingMain{
+    display: block;
+    position: absolute;
+    background-color: #f2f2f2;
+    height: 100vh;
+    width: 100vw;
+}
+
+.center2 {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    background-color: #f2f2f2;
+    width: 45%;
+    padding: 10px;
+    height: 10%
+}
+
+.header2 {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.settingCard {
+    position: relative;
+    background-color: white;
+    border-radius: 25px;
+    margin-bottom: 10%;
+}
+
+.btnSetting {
+    width: 80%;
+    height: 10%;
+    border-radius: 30px;
+    background-color: #f2f2f2;
+    transition-duration: 0.4s;
+    font-size: x-large;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20%;
+    color: #E26714;
+}
+
+.btnSetting:hover {
+    background-color: white;
+    color: #000000;
+}

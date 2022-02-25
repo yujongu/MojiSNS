@@ -1,6 +1,8 @@
 const express = require("express");
 const Topic = require("../models/topic");
 const router = express.Router();
+const mongoose = require("mongoose");
+
 
 router.get("/getTopics", async (req, res) => {
   const topics = await Topic.find();
