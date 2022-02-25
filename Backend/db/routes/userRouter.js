@@ -5,11 +5,12 @@ const User = require("../models/user");
 const router = express.Router();
 
 router.get("/getUsers", async (req, res) => {
-    const users = await User.find()
-    .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
-    console.log("Requesting user list");
-    console.log(users);
-    res.send(users);
+  const users = await User.find().populate(
+    "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+  );
+  console.log("Requesting user list");
+  console.log(users);
+  res.send(users);
 });
 
 router.post("/signup", async (req, res) => {
@@ -33,7 +34,7 @@ router.post("/signup", async (req, res) => {
     const user = new User({
       USER_EMAIL: req.body.USER_EMAIL,
       USER_PW: req.body.USER_PW,
-      USER_USERNAME: req.body.USER_USERNAME
+      USER_USERNAME: req.body.USER_USERNAME,
     });
     await user.save();
     res.send(user);
@@ -41,18 +42,32 @@ router.post("/signup", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-    
 });
 
-router.get("/getUser/:email", async (req, res) => {
+router.get("/getUserByEmail/:email", async (req, res) => {
   try {
-    const user = await User.findOne({USER_EMAIL: req.params.email})
-    .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
+    const user = await User.findOne({ USER_EMAIL: req.params.email }).populate(
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+    );
     res.send(user);
     console.log("got user");
   } catch (error) {
     console.log(error);
-  }  
+  }
+});
+
+router.get("/getUserByUsername/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      USER_USERNAME: req.params.username,
+    }).populate(
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+    );
+    res.send(user);
+    console.log("got user");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.delete("/deleteUser/:id", async (req, res) => {
@@ -71,22 +86,34 @@ router.patch("/updateUser/:id", async (req, res) => {
 
   try {
     const user = await User.findById(id);
-    if (req.body.USER_EMAIL) { user.USER_EMAIL = req.body.USER_EMAIL; }
-    if (req.body.USER_USERNAME) { user.USER_USERNAME = req.body.USER_USERNAME; }
-    if (req.body.USER_PW) { user.USER_PW = req.body.USER_PW; }
-    if (req.body.USER_BIRTHDAY) { user.USER_BIRTHDAY = req.body.USER_BIRTHDAY; }
-    if (req.body.USER_DESCRIPTION) { user.USER_DESCRIPTION = req.body.USER_DESCRIPTION; }
-    if (req.body.USER_SEX) { user.USER_SEX = req.body.USER_SEX; }
+    console.log(user)
+    if (req.body.USER_EMAIL) {
+      user.USER_EMAIL = req.body.USER_EMAIL;
+    }
+    if (req.body.USER_USERNAME) {
+      user.USER_USERNAME = req.body.USER_USERNAME;
+    }
+    if (req.body.USER_PW) {
+      user.USER_PW = req.body.USER_PW;
+    }
+    if (req.body.USER_BIRTHDAY) {
+      user.USER_BIRTHDAY = req.body.USER_BIRTHDAY;
+    }
+    if (req.body.USER_DESCRIPTION) {
+      user.USER_DESCRIPTION = req.body.USER_DESCRIPTION;
+    }
+    if (req.body.USER_SEX) {
+      user.USER_SEX = req.body.USER_SEX;
+    }
 
     await user.save();
+    console.log("Passed!!")
     console.log(user);
     res.send(user);
   } catch (error) {
     console.log(error);
   }
-
 });
-
 
 router.patch("/followUser/:id", async (req, res) => {
   try {
@@ -99,13 +126,27 @@ router.patch("/followUser/:id", async (req, res) => {
     }
     
     await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $push: {FOLLOWING_USERS: {USER_ID: mongoose.Types.ObjectId(req.body.USER_ID), FOLLOW_DATE: Date.now()}}}
+      { _id: req.params.id },
+      {
+        $push: {
+          FOLLOWING_USERS: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+            FOLLOW_DATE: Date.now(),
+          },
+        },
+      }
     );
     await User.findOneAndUpdate(
-      { _id: req.body.USER_ID},
-      { $push: {FOLLOWER_USERS: {USER_ID: mongoose.Types.ObjectId(req.params.id), FOLLOW_DATE: Date.now()}}}
-    )
+      { _id: req.body.USER_ID },
+      {
+        $push: {
+          FOLLOWER_USERS: {
+            USER_ID: mongoose.Types.ObjectId(req.params.id),
+            FOLLOW_DATE: Date.now(),
+          },
+        },
+      }
+    );
     console.log("user followed");
     res.send("user followed");
   } catch (error) {
@@ -123,8 +164,8 @@ router.patch("/followTopic/:id", async (req, res) => {
       return;
     }
     await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $push: {FOLLOWING_TOPICS: req.body.TOPIC_ID}}
+      { _id: req.params.id },
+      { $push: { FOLLOWING_TOPICS: req.body.TOPIC_ID } }
     );
     console.log("topic followed");
     res.send("topic followed");
@@ -136,13 +177,23 @@ router.patch("/followTopic/:id", async (req, res) => {
 router.patch("/unfollowUser/:id", async (req, res) => {
   try {
     await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $pull: {FOLLOWING_USERS: {USER_ID: mongoose.Types.ObjectId(req.body.USER_ID)}}}
+      { _id: req.params.id },
+      {
+        $pull: {
+          FOLLOWING_USERS: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
     );
     await User.findOneAndUpdate(
-      { _id: req.body.USER_ID},
-      { $pull: {FOLLOWER_USERS: {USER_ID: mongoose.Types.ObjectId(req.params.id)}}}
-    )
+      { _id: req.body.USER_ID },
+      {
+        $pull: {
+          FOLLOWER_USERS: { USER_ID: mongoose.Types.ObjectId(req.params.id) },
+        },
+      }
+    );
     console.log("user unfollowed");
     res.send("user unfollowed");
 
@@ -151,12 +202,13 @@ router.patch("/unfollowUser/:id", async (req, res) => {
   }
 });
 
-
 router.patch("/unfollowTopic/:id", async (req, res) => {
   try {
     await User.findOneAndUpdate(
-      { _id: req.params.id},
-      { $pull: {FOLLOWING_TOPICS: mongoose.Types.ObjectId(req.body.TOPIC_ID)}}
+      { _id: req.params.id },
+      {
+        $pull: { FOLLOWING_TOPICS: mongoose.Types.ObjectId(req.body.TOPIC_ID) },
+      }
     );
     console.log("topic unfollowed");
     res.send("topic unfollowed");
@@ -167,40 +219,34 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
 });
 
 router.get("/login/:username/:password", async (req, res) => {
-  try {
-
-    
-    const user = await User.findOne({
-      USER_USERNAME: req.params.username,
-      USER_PW: req.params.password
-    })
-    .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
-    
-    if (!user) {
-        res.status(400).send("User not found");
-        console.log("user not found");
-        return;
-    }
-
-<<<<<<< HEAD
-=======
-
-
-/////////TEST///////////////
-router.get("/testAdd", async (req, res) => {
-  try {
-    const user = new User({
-      USER_EMAIL: "test3@testmail.com",
-      USER_PW: "password3",
-      USER_USERNAME: "testUser3"
-    });
-    await user.save();
->>>>>>> 63d3885f2dcc57e628087e4e4a0c6e1b0315893c
-    res.send(user);
-    console.log(user);
-  } catch (error) {
-    console.log(error);
+  const user = await User.findOne({
+    USER_USERNAME: req.params.username,
+    USER_PW: req.params.password
+  })
+  .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
+  
+  if (!user) {
+      res.status(400).send("User not found");
+      console.log("user not found");
+      return;
   }
 });
 
-module.exports = router;
+
+// /////////TEST///////////////
+// router.get("/testAdd", async (req, res) => {
+//   try {
+//     const user = new User({
+//       USER_EMAIL: "test3@testmail.com",
+//       USER_PW: "password3",
+//       USER_USERNAME: "testUser3",
+//     });
+//     await user.save();
+//     res.send(user);
+//     console.log(user);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+module.exports = router
