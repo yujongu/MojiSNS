@@ -83,21 +83,6 @@ router.delete("/deleteUser/:id", async (req, res) => {
 //update user
 router.patch("/updateUser/:id", async (req, res) => {
   try {
-<<<<<<< HEAD
-		const post = await User.findOne({ _id: req.params.id });
-
-		if (req.body.USER_EMAIL) {
-			post.USER_EMAIL = req.body.USER_EMAIL;
-		}
-
-		await post.save()
-		res.send(post)
-	} catch {
-		res.status(404)
-		res.send({ error: "Post doesn't exist!" })
-	}
-
-=======
     const user = await User.findById(id);
     console.log(user)
     if (req.body.USER_EMAIL) {
@@ -126,7 +111,6 @@ router.patch("/updateUser/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
->>>>>>> 835605c61b3d1c15efabc621a00de332ca3627ed
 });
 
 router.patch("/followUser/:id", async (req, res) => {
@@ -233,7 +217,6 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
 });
 
 router.get("/login/:username/:password", async (req, res) => {
-<<<<<<< HEAD
   try {
 
     
@@ -253,18 +236,6 @@ router.get("/login/:username/:password", async (req, res) => {
     console.log(user);
   } catch (error) {
     console.log(error);
-=======
-  const user = await User.findOne({
-    USER_USERNAME: req.params.username,
-    USER_PW: req.params.password
-  })
-  .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
-  
-  if (!user) {
-      res.status(400).send("User not found");
-      console.log("user not found");
-      return;
->>>>>>> 835605c61b3d1c15efabc621a00de332ca3627ed
   }
 });
 
