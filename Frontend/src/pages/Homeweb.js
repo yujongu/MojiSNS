@@ -10,7 +10,7 @@ const Homeweb = () => {
     var likeNum = document.getElementById("likeNum");
     var postSet = document.getElementById("postSet");
     var postingImg = document.getElementById("postingImg");
-
+    var buttonForSelect = document.getElementById("buttonForSelect");
 
     var stateLike = 0;
     like.addEventListener("click", function () {
@@ -30,17 +30,39 @@ const Homeweb = () => {
       console.log("postSetting clicked");
     });
 
-    var showWrite = document.getElementById("myDIV");
+    var showWrite = document.getElementById("writePost");
     console.log(showWrite.style.display);
     postingImg.addEventListener("click", function () {
-      if (showWrite.style.display === "none") {
-        showWrite.style.display = "flex";
-        console.log("show");
-      }
-      else {
+      if (showWrite.style.display === "block") {
         showWrite.style.display = "none";
         console.log("hide");
       }
+      else {
+        showWrite.style.display = "block";
+        console.log("show");
+      }
+    });
+
+    var showTopicList = document.getElementById("writeSelectTopic");
+    
+    buttonForSelect.addEventListener("click",function topicListShow(){
+      if(showTopicList.style.display === "flex"){
+        showTopicList.style.display = "none";
+        console.log("hide");
+      }
+      else{
+        showTopicList.style.display = "flex";
+        console.log("show");
+      }
+    });
+    
+
+    document.querySelectorAll("textarea").forEach(function (a) {
+      a.addEventListener("input", function () {
+        var setHeight = window.getComputedStyle(this);
+        this.style.height = "auto";
+        this.style.height = (this.scrollHeight + parseInt(setHeight.getPropertyValue("border-top-width")) + parseInt(setHeight.getPropertyValue("border-bottom-width"))) + "px";
+      });
     });
   }
   return (
@@ -97,8 +119,32 @@ const Homeweb = () => {
             </div>
           </div>
         </div>
-        <div id="myDIV">
-          This is my DIV element.
+        <div id="writePost">
+          <h2 class="writeTitle">
+            Write a post!
+          </h2>
+          <div className='writeCard'>
+            <form>
+              <textarea id="postWriteID" placeholder='What do you want to share?'>
+              </textarea>
+            </form>
+            <div className='writeFooter'>
+              <button id="buttonForSelect" className='btnSelect'>
+                Select a topic
+              </button>
+              <button className='btnUpload'>
+                Upload
+              </button>
+              <button className='btnCancel'>
+                Cancel
+              </button>
+            </div>
+            <div id="writeSelectTopic">
+              <div className="topicList">
+                asdfasdfasdf
+              </div>
+            </div>
+          </div>
         </div>
         <div className="viewByTopic">
           <h2 class="titleWeb2">View By Topic</h2>

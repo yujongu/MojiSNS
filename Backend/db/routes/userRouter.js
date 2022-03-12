@@ -82,8 +82,6 @@ router.delete("/deleteUser/:id", async (req, res) => {
 
 //update user
 router.patch("/updateUser/:id", async (req, res) => {
-  const id = req.params.id;
-
   try {
     const user = await User.findById(id);
     console.log(user)
@@ -222,19 +220,25 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
 });
 
 router.get("/login/:username/:password", async (req, res) => {
-  console.log("This is parameter")
-  console.log(req.params.username)
-  console.log(req.params.password)
-  const user = await User.findOne({
-    USER_USERNAME: req.params.username,
-    USER_PW: req.params.password
-  })
-  .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
-  
-  if (!user) {
-      res.status(400).send("User not found");
-      console.log("user not found");
-      return;
+  try {
+
+    
+    const user = await User.findOne({
+      USER_USERNAME: req.params.username,
+      USER_PW: req.params.password
+    })
+    .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
+    
+    if (!user) {
+        res.status(400).send("User not found");
+        console.log("user not found");
+        return;
+    }
+
+    res.send(user);
+    console.log(user);
+  } catch (error) {
+    console.log(error);
   }
 });
 
