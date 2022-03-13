@@ -2,7 +2,9 @@ import React from "react";
 import "./Homeweb.css";
 import { useNavigate } from "react-router-dom";
 import PostCard from "./components/PostCard";
-
+import TopicView from "./components/TopicView/TopicView";
+import TopicItem from "./components/TopicsBtn/TopicItem";
+import { interestList } from "../constants/interests";
 const Homeweb = () => {
   let navigate = useNavigate();
   window.onload = function () {
@@ -18,8 +20,7 @@ const Homeweb = () => {
         like.style.color = "#000000";
         likeNum.style.color = "#000000";
         stateLike = 0;
-      }
-      else {
+      } else {
         like.style.color = "#E26714";
         likeNum.style.color = "#E26714";
         stateLike = 1;
@@ -36,49 +37,67 @@ const Homeweb = () => {
       if (showWrite.style.display === "block") {
         showWrite.style.display = "none";
         console.log("hide");
-      }
-      else {
+      } else {
         showWrite.style.display = "block";
         console.log("show");
       }
     });
 
     var showTopicList = document.getElementById("writeSelectTopic");
-    
-    buttonForSelect.addEventListener("click",function topicListShow(){
-      if(showTopicList.style.display === "flex"){
+
+    buttonForSelect.addEventListener("click", function topicListShow() {
+      if (showTopicList.style.display === "flex") {
         showTopicList.style.display = "none";
         console.log("hide");
-      }
-      else{
+      } else {
         showTopicList.style.display = "flex";
         console.log("show");
       }
     });
-    
 
     document.querySelectorAll("textarea").forEach(function (a) {
       a.addEventListener("input", function () {
         var setHeight = window.getComputedStyle(this);
         this.style.height = "auto";
-        this.style.height = (this.scrollHeight + parseInt(setHeight.getPropertyValue("border-top-width")) + parseInt(setHeight.getPropertyValue("border-bottom-width"))) + "px";
+        this.style.height =
+          this.scrollHeight +
+          parseInt(setHeight.getPropertyValue("border-top-width")) +
+          parseInt(setHeight.getPropertyValue("border-bottom-width")) +
+          "px";
       });
     });
+  };
+
+
+  var selectedItem = -1;
+  var sayHello = (index) => {
+    selectedItem = index;
+    var list = document.querySelectorAll(".topicItems")
+    list.forEach((item) => {
+      var e = item.querySelector("button")
+      if(e.id == selectedItem) {
+        e.style.backgroundColor = "#F4B183"
+      } else {
+        e.style.backgroundColor = "#FBE5D6"
+      }
+    })
   }
+
+
   return (
     <main className="homewebMain">
       <div className="center1">
         <div className="header">
           <div className="headerApp">
-            <h2 class="titleWeb">Welcome to Moji!</h2>
+            <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
           <div className="bt1">
-            <button class="settings">Settings</button>
+            <button className="settings">Settings</button>
           </div>
         </div>
         <div className="tabBar">
-          <div class="grid-container">
-            <div class="grid-item">
+          <div className="grid-container">
+            <div className="grid-item">
               <a href="/profile">
                 <img
                   src="profile.png"
@@ -89,7 +108,7 @@ const Homeweb = () => {
                 <h3 className="tabText">Profile</h3>
               </a>
             </div>
-            <div class="grid-item">
+            <div className="grid-item">
               <a href="/follower">
                 <img
                   src="follower.png"
@@ -100,7 +119,7 @@ const Homeweb = () => {
                 <h3 className="tabText">Follower</h3>
               </a>
             </div>
-            <div class="grid-item">
+            <div className="grid-item">
               <a href="/following">
                 <img
                   src="following.png"
@@ -111,44 +130,51 @@ const Homeweb = () => {
                 <h3 className="tabText">Following</h3>
               </a>
             </div>
-            <div class="grid-item">
-              <img src="posting.png" alt="Sample profile" width="140" height="140" id="postingImg"></img>
-              <h3 className="tabText">
-                Posting
-              </h3>
+            <div className="grid-item">
+              <img
+                src="posting.png"
+                alt="Sample profile"
+                width="140"
+                height="140"
+                id="postingImg"
+              ></img>
+              <h3 className="tabText">Posting</h3>
             </div>
           </div>
         </div>
         <div id="writePost">
-          <h2 class="writeTitle">
-            Write a post!
-          </h2>
-          <div className='writeCard'>
+          <h2 className="writeTitle">Write a post!</h2>
+          <div className="writeCard">
             <form>
-              <textarea id="postWriteID" placeholder='What do you want to share?'>
-              </textarea>
+              <textarea
+                id="postWriteID"
+                placeholder="What do you want to share?"
+              ></textarea>
             </form>
-            <div className='writeFooter'>
-              <button id="buttonForSelect" className='btnSelect'>
+            <div className="writeFooter">
+              <button id="buttonForSelect" className="btnSelect">
                 Select a topic
               </button>
-              <button className='btnUpload'>
-                Upload
-              </button>
-              <button className='btnCancel'>
-                Cancel
-              </button>
+              <button className="btnUpload">Upload</button>
+              <button className="btnCancel">Cancel</button>
             </div>
             <div id="writeSelectTopic">
               <div className="topicList">
-                asdfasdfasdf
+                {interestList.map((interest, index) => (
+                  <div className="topicItems" key={index} onClick={() => {sayHello(index)}}>
+                    <TopicItem
+                      topicName={interest}
+                      index={index}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
         <div className="viewByTopic">
-          <h2 class="titleWeb2">View By Topic</h2>
-          <div class="outer">
+          <h2 className="titleWeb2">View By Topic</h2>
+          <div className="outer">
             <div>
               <button className="btnTopic">Sports</button>
             </div>
@@ -167,7 +193,7 @@ const Homeweb = () => {
           </div>
         </div>
         <div className="timeline">
-          <h2 class="titleWeb2">Timeline</h2>
+          <h2 className="titleWeb2">Timeline</h2>
 
           <PostCard
             userName={"Steve Rogers"}
