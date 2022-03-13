@@ -74,13 +74,38 @@ const Homeweb = () => {
     selectedItem = index;
     var list = document.querySelectorAll(".topicItems")
     list.forEach((item) => {
-      var e = item.querySelector("button")
-      if(e.id == selectedItem) {
-        e.style.backgroundColor = "#F4B183"
+      var itm = item.querySelector("button")
+      if(itm.id == selectedItem) {
+        itm.style.backgroundColor = "#F4B183"
       } else {
-        e.style.backgroundColor = "#FBE5D6"
+        itm.style.backgroundColor = "#FBE5D6"
       }
     })
+  }
+
+  var cancelPost = () => {
+    console.log("post canceled")
+    var a = document.getElementById("postWriteID")
+    a.value = ""
+    selectedItem = -1
+    var itemList = document.querySelectorAll(".topicItems")
+    itemList.forEach((item) => {
+      item.querySelector("button").style.backgroundColor = "#FBE5D6"
+    })
+  }
+
+  var uploadPost = () => {
+    console.log("post upload")
+    var a = document.getElementById("postWriteID")
+    console.log(a.value)
+    console.log(selectedItem)
+    if(a.value === "") {
+      alert("Please type what you want to share")
+    } else if(selectedItem === -1) {
+      alert("Please select a topic")
+    } else {
+      
+    }
   }
 
 
@@ -155,8 +180,8 @@ const Homeweb = () => {
               <button id="buttonForSelect" className="btnSelect">
                 Select a topic
               </button>
-              <button className="btnUpload">Upload</button>
-              <button className="btnCancel">Cancel</button>
+              <button className="btnUpload" onClick={uploadPost}>Upload</button>
+              <button className="btnCancel" onClick={cancelPost}>Cancel</button>
             </div>
             <div id="writeSelectTopic">
               <div className="topicList">
