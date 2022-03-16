@@ -49,7 +49,7 @@ function Signup() {
           if(response.status === 200) {
             //store user data to local storage
             setUser(response.data)
-            localStorage.setItem('user', JSON.stringify(response.data))
+            localStorage.setItem('currentUser', JSON.stringify(response.data))
             navigate("/signup/bio");
           }
         }

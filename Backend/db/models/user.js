@@ -56,9 +56,8 @@ const userSchema = new Schema({
 
     FOLLOWING_TOPICS: {
         type: [{
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Topic"
-        }]  // TOPIC_ID
+          type: String,
+        }]
     }
 
 });

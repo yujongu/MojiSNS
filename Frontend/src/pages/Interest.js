@@ -13,14 +13,19 @@ function Interest() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const response = await axios.post(
-    //       `http://localhost:5000/api/user/updateUser/${myId}`,
-    //       {
-    //         FOLLOWING_TOPICS: intList,
-    //       }
-    //     );
-    //     console.log(response);
-    navigate("/login")
+    var me = JSON.parse(localStorage.getItem("currentUser"));
+    var myId = me._id;
+
+    const response = await axios.patch(
+      `http://localhost:5000/api/user/updateUser/${myId}`,
+      {
+        FOLLOWING_TOPICS: intList,
+      }
+    );
+    console.log(response);
+    if (response.status == 200 && response.data._id === myId) {
+      navigate("/login");
+    }
   };
 
   return (

@@ -25,7 +25,7 @@ function Bio() {
         //passed all checks
         //update gender info and birthday info
 
-        var me = JSON.parse(localStorage.getItem("user"));
+        var me = JSON.parse(localStorage.getItem("currentUser"));
         var myId = me._id;
         var bDayArr = birthday.split("/");
         var myBirthday = bDayArr[2] + "-" + bDayArr[1] + "-" + bDayArr[0];
@@ -34,15 +34,17 @@ function Bio() {
         me.birthday = new Date(myBirthday);
         me.gender = gender;
 
-        // const response = await axios.post(
-        //   `http://localhost:5000/api/user/updateUser/${myId}`,
-        //   {
-        //     USER_BIRTHDAY: myBirthday,
-        //     USER_SEX: gender,
-        //   }
-        // );
-        // console.log(response);
-        navigate("/signup/interest");
+        const response = await axios.patch(
+          `http://localhost:5000/api/user/updateUser/${myId}`,
+          {
+            USER_BIRTHDAY: myBirthday,
+            USER_SEX: gender,
+          }
+        );
+        console.log(response);
+        if(response.data._id === myId) {
+          navigate("/signup/interest");
+        }
       } else {
         alert("Please check your gender!");
       }
