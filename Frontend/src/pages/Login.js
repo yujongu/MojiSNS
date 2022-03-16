@@ -12,7 +12,7 @@ function Login() {
   const [user, setUser] = useState();
 
   const handleTextChange = (e) => {
-    console.log(e.target)
+    console.log(e.target);
     switch (e.target.name) {
       case "username":
         setUsername(e.target.value);
@@ -37,12 +37,16 @@ function Login() {
       if (password === "") {
         alert("Please enter your password");
       } else {
-        // const response = await axios.get(
-        //   `http://localhost:5000/api/user/login/${username}/${password}`
-        // );
-        // console.log(response);
-        navigate("/home");
-
+        axios
+          .get(`http://localhost:5000/api/user/login/${username}/${password}`)
+          .then((res) => {
+            console.log(res);
+            localStorage.setItem("currentUser", JSON.stringify(res.data))
+            navigate("/home");
+          })
+          .catch((error) => {
+            alert("Username and password does not exist in our database")
+          });
       }
     }
   };
@@ -51,7 +55,7 @@ function Login() {
     <main className="loginMain">
       <form onSubmit={handleSubmit}>
         <div className="loginContainer">
-          <div class="logo"></div>
+          <div className="logo"></div>
           <p className="welcomeL">Welcome back!</p>
 
           <div id="float-label">

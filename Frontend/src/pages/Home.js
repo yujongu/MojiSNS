@@ -28,11 +28,11 @@ function Home() {
           </div>
         </div>
         <div className="rh">
-          <div class="logo"></div>
+          <div className="logo"></div>
           <div className="btns">
-            <div class="login">
+            <div className="login">
               <button
-                class="loginB"
+                className="loginB"
                 onClick={() => {
                   navigate("/login");
                 }}
@@ -43,9 +43,9 @@ function Home() {
 
             <p className="homeText">or</p>
 
-            <div class="signup">
+            <div className="signup">
               <button
-                class="signupB"
+                className="signupB"
                 onClick={() => {
                   navigate("/signup");
                 }}

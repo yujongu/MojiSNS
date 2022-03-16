@@ -97,14 +97,23 @@ const Homeweb = () => {
   var uploadPost = () => {
     console.log("post upload")
     var a = document.getElementById("postWriteID")
-    console.log(a.value)
-    console.log(selectedItem)
+    
     if(a.value === "") {
       alert("Please type what you want to share")
     } else if(selectedItem === -1) {
       alert("Please select a topic")
     } else {
-      
+      console.log(a.value)//content
+      console.log(selectedItem)//topic
+      //POST_ID
+      //USER_ID
+      //CREATED_TS
+      //EDITED_TS
+      //LIKE_COUNT
+      //COMMENTS_COUNT
+      //TOPIC_ID
+      //CONTENT
+      //TODO: Upload to db
     }
   }
 
