@@ -24,6 +24,7 @@ function Interest() {
     );
     console.log(response);
     if (response.status == 200 && response.data._id === myId) {
+      localStorage.setItem('currentUser', JSON.stringify(response.data))
       navigate("/login");
     }
   };

@@ -6,10 +6,31 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/fontawesome-free-solid";
 import PostCard from "./components/PostCard";
 function Profile() {
-
-  const currUser = JSON.parse(localStorage.getItem("currentUser"))
-  console.log(currUser)
-  console.log(currUser.USER_BIRTHDAY)
+  const currUser = JSON.parse(localStorage.getItem("currentUser"));
+  console.log(currUser);
+  console.log(currUser.USER_BIRTHDAY);
+  var monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const bday = (currUser.USER_BIRTHDAY.split("T"))[0].split("-")
+  var formattedBday = monthNames[parseInt(bday[1]) - 1] + " " + bday[2] + ", " + bday[0]
+  var topics = ""
+  console.log(currUser.FOLLOWING_TOPICS)
+  currUser.FOLLOWING_TOPICS.forEach(t => {
+    topics += `${t} `
+  });
+  
   return (
     <main className="profileContainer">
       <div className="profileMainContainer">
@@ -36,13 +57,13 @@ function Profile() {
           <div className="infosContainer">
             <div className="birthday">
               <FontAwesomeIcon icon={faBirthdayCake} size="lg" />
-              <p>July 4, 1918</p>
+              <p>{formattedBday}</p>
             </div>
             <div className="interests">
               <p>
                 <i className="fa-solid fa-face-grin-tongue-squint fa-lg"></i>
               </p>
-              <div className="interestList">sports</div>
+              <div className="interestList">{topics}</div>
             </div>
           </div>
         </div>
@@ -50,14 +71,12 @@ function Profile() {
         <p id="myPostTitle">My Posts</p>
 
         <PostCard
-            userName={"Steve Rogers"}
-            postTime={Date.now()}
-            likeCount={13}
-            commentCount={2}
-            postText={"Hello world"}
-          />
-        
-
+          userName={"Steve Rogers"}
+          postTime={Date.now()}
+          likeCount={13}
+          commentCount={2}
+          postText={"Hello world"}
+        />
       </div>
     </main>
   );
