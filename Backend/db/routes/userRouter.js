@@ -227,7 +227,7 @@ router.get("/login/:username/:password", async (req, res) => {
     .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
     
     if (!user) {
-        res.status(400).send("User not found");
+        res.send("User not found");
         console.log("user not found");
         return;
     }
