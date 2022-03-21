@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "./Interest.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { BackendConn } from "../constants/backendConn";
 var intList = [];
 
 function Interest() {
@@ -17,7 +17,7 @@ function Interest() {
     var myId = me._id;
 
     const response = await axios.patch(
-      `http://localhost:5000/api/user/updateUser/${myId}`,
+      `${BackendConn}user/updateUser/${myId}`,
       {
         FOLLOWING_TOPICS: intList,
       }
