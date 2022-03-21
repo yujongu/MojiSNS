@@ -200,9 +200,15 @@ textarea {
 }
 
 .topicList{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3%;
+    padding: 10px;
 }
 
 .viewByTopic {

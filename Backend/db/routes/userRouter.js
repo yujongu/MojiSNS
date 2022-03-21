@@ -83,7 +83,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
 //update user
 router.patch("/updateUser/:id", async (req, res) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(req.params.id);
     console.log(user)
     if (req.body.USER_EMAIL) {
       user.USER_EMAIL = req.body.USER_EMAIL;
@@ -102,6 +102,9 @@ router.patch("/updateUser/:id", async (req, res) => {
     }
     if (req.body.USER_SEX) {
       user.USER_SEX = req.body.USER_SEX;
+    }
+    if (req.body.FOLLOWING_TOPICS) {
+      user.FOLLOWING_TOPICS = req.body.FOLLOWING_TOPICS;
     }
 
     await user.save();
@@ -218,8 +221,6 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
 
 router.get("/login/:username/:password", async (req, res) => {
   try {
-
-    
     const user = await User.findOne({
       USER_USERNAME: req.params.username,
       USER_PW: req.params.password

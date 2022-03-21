@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./Signup.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BackendConn } from "../constants/backendConn";
 
 function Signup() {
   let navigate = useNavigate();
@@ -21,14 +22,14 @@ function Signup() {
     } else {
       //check if email exists
       const response = await axios.get(
-        `http://localhost:5000/api/user/getUserByEmail/${email}`
+        `${BackendConn}user/getUserByEmail/${email}`
       );
       if (response.data !== "") {
         alert("Email already exists!");
       } else {
         //check if username exists
         const response = await axios.get(
-          `http://localhost:5000/api/user/getUserByUsername/${username}`
+          `${BackendConn}user/getUserByUsername/${username}`
         );
         if (response.data !== "") {
           alert("Username already exists!");
@@ -41,7 +42,7 @@ function Signup() {
             USER_PW: password,
           };
           const response = await axios.post(
-            "http://localhost:5000/api/user/signup",
+            `${BackendConn}user/signup`,
             user
           );
           console.log("This is user data: ")
@@ -49,7 +50,7 @@ function Signup() {
           if(response.status === 200) {
             //store user data to local storage
             setUser(response.data)
-            localStorage.setItem('user', JSON.stringify(response.data))
+            localStorage.setItem('currentUser', JSON.stringify(response.data))
             navigate("/signup/bio");
           }
         }
@@ -135,7 +136,11 @@ function Signup() {
 
           <div class="signupS">
             <button
+              className="signup"
               type="submit"
+              onClick={() => {
+                // navigate("/signup/bio");
+              }}
             >
               Sign Up
             </button>
