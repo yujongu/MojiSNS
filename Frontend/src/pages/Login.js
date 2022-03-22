@@ -29,8 +29,7 @@ function Login() {
     }
   };
 
-  function functionForget()
-  {
+  function functionForget() {
 
   }
 
@@ -95,25 +94,28 @@ function Login() {
           </div>
 
           <div className="forgotpsw">
-            <p id="forgetPW" onClick={functionForget}>Forget Password?</p>
+            <a href="#divOne">Forget Password?</a>
           </div>
-          {/* <div class="overlay" id="divOne">
+          <div class="overlay" id="divOne">
             <div class="wrapper">
-              <h2>Please Fill up the Form</h2>
-              <a href="#" class="close">&times;</a>
+              <div class="forgetHeader">
+                <h2>Please Insert Email Address</h2>
+                <a href="#" class="close">&times;</a>
+              </div>
               <div class="content">
-                <div class="container">
+                <div class="contentInside">
                   <form>
                     <label>
                       User Email
                     </label>
-                    <input type="text" placeholder="Your Email Address">
+                    <input type="textF" placeholder="Your Email Address">
                     </input>
+                    <button type="submitF">Submit</button>
                   </form>
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       </form>
     </main>
