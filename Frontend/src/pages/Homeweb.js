@@ -128,6 +128,13 @@ const Homeweb = () => {
           <div className="bt1">
             <button className="settings">Settings</button>
           </div>
+          <div classname="bt2">
+            <button className="logout"
+                    onClick={() => {
+                       navigate("/login");
+                    }}>Log out</button>
+            
+          </div>
         </div>
         <div className="tabBar">
           <div className="grid-container">
