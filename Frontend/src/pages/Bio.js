@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./Bio.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BackendConn } from "../constants/backendConn";
 
 function Bio() {
   let navigate = useNavigate();
@@ -35,7 +36,7 @@ function Bio() {
         me.gender = gender;
 
         const response = await axios.patch(
-          `http://localhost:5000/api/user/updateUser/${myId}`,
+          `${BackendConn}user/updateUser/${myId}`,
           {
             USER_BIRTHDAY: myBirthday,
             USER_SEX: gender,

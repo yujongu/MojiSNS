@@ -3,6 +3,9 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
 const router = express.Router();
+const { scryptSync, randomBytes, timingSafeEqual } = require('crypto');
+
+
 
 router.get("/getUsers", async (req, res) => {
   const users = await User.find().populate(
@@ -22,7 +25,7 @@ router.post("/signup", async (req, res) => {
     console.log('email exists');
     return;
   }
-  
+ 
   temp = await User.find({USER_USERNAME: req.body.USER_USERNAME}).count() > 0;
   if (temp) {
     res.status(400).send('username exists');
@@ -30,10 +33,12 @@ router.post("/signup", async (req, res) => {
     return;
   }
 
+  const salt = randomBytes(16).toString('hex');
+  const hashedPassword = scryptSync(req.body.USER_PW, salt, 64).toString('hex');
   try {
     const user = new User({
       USER_EMAIL: req.body.USER_EMAIL,
-      USER_PW: req.body.USER_PW,
+      USER_PW: `${salt}:${hashedPassword}`,
       USER_USERNAME: req.body.USER_USERNAME,
     });
     await user.save();
@@ -85,6 +90,9 @@ router.patch("/updateUser/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     console.log(user)
+
+    
+
     if (req.body.USER_EMAIL) {
       user.USER_EMAIL = req.body.USER_EMAIL;
     }
@@ -92,7 +100,9 @@ router.patch("/updateUser/:id", async (req, res) => {
       user.USER_USERNAME = req.body.USER_USERNAME;
     }
     if (req.body.USER_PW) {
-      user.USER_PW = req.body.USER_PW;
+      const salt = randomBytes(16).toString('hex');
+      const hashedPassword = scryptSync(req.body.USER_PW, salt, 64).toString('hex');
+      user.USER_PW = `${salt}:${hashedPassword}`;
     }
     if (req.body.USER_BIRTHDAY) {
       user.USER_BIRTHDAY = req.body.USER_BIRTHDAY;
@@ -222,39 +232,34 @@ router.patch("/unfollowTopic/:id", async (req, res) => {
 router.get("/login/:username/:password", async (req, res) => {
   try {
     const user = await User.findOne({
-      USER_USERNAME: req.params.username,
-      USER_PW: req.params.password
-    })
-    .populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
+      USER_USERNAME: req.params.username
+    }).populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
     
     if (!user) {
-        res.status(400).send("User not found");
-        console.log("user not found");
-        return;
+      res.send("User not found");
+      console.log("user not found");
+      return;
     }
+    const [salt, key] = user.USER_PW.split(':');
+    const hashedBuffer = scryptSync(req.params.password, salt, 64);  
+    
+    const keyBuffer = Buffer.from(key, 'hex');
+    const match = timingSafeEqual(hashedBuffer, keyBuffer);
 
-    res.send(user);
-    console.log(user);
+    if (match) {
+      res.send(user);
+      console.log(user);
+      return;
+    } else {
+      res.send("Incorrect password");
+      console.log("Incorrect password");
+      return;
+  }
+
   } catch (error) {
     console.log(error);
   }
 });
 
-
-// /////////TEST///////////////
-// router.get("/testAdd", async (req, res) => {
-//   try {
-//     const user = new User({
-//       USER_EMAIL: "test3@testmail.com",
-//       USER_PW: "password3",
-//       USER_USERNAME: "testUser3",
-//     });
-//     await user.save();
-//     res.send(user);
-//     console.log(user);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
 
 module.exports = router

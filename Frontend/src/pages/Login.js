@@ -44,7 +44,7 @@ function Login() {
         alert("Please enter your password");
       } else {
         axios
-          .get(`http://localhost:5000/api/user/login/${username}/${password}`)
+          .get(`${BackendConn}user/login/${username}/${password}`)
           .then((res) => {
             console.log(res);
             localStorage.setItem("currentUser", JSON.stringify(res.data))

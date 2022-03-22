@@ -1,0 +1,1 @@
+export const BackendConn = "http://localhost:3010/api/"
