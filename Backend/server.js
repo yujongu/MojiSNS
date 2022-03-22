@@ -23,8 +23,6 @@ mongoose
       origin: '*'
     }))
 
-    
-
     app.listen(port, () => {
       console.log("Backend server has started!")
     })
