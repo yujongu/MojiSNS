@@ -29,6 +29,10 @@ function Login() {
     }
   };
 
+  function functionForget() {
+
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,13 +88,33 @@ function Login() {
           </div>
 
           <div className="loginL">
-            <button type="submit" className="login">
+            <button type="submit" className="login" id="1">
               Log In
             </button>
           </div>
 
           <div className="forgotpsw">
-            <p>Forgot Password?</p>
+            <a href="#divOne">Forget Password?</a>
+          </div>
+          <div class="overlay" id="divOne">
+            <div class="wrapper">
+              <div class="forgetHeader">
+                <h2>Please Insert Email Address</h2>
+                <a href="#" class="close">&times;</a>
+              </div>
+              <div class="content">
+                <div class="contentInside">
+                  <form>
+                    <label>
+                      User Email
+                    </label>
+                    <input type="textF" placeholder="Your Email Address">
+                    </input>
+                    <button type="submitF">Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </form>
