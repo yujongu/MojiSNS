@@ -33,13 +33,14 @@ p4 {
 
 .sports {
     position: relative;
-    background-color: #FBE5D6;
     color: #000000;
     height: 35px;
     width: max-content;
     padding-left: 25px;
     padding-right: 25px;
     margin-top: 20px;
+    background-color: #FBE5D6;
+
     /* transition: background-color 0.5s; */
     border-style: none;
     border-radius: 15px;
@@ -206,59 +207,4 @@ p4 {
   button[type=submit].finished:active {
     background-color: #fba31f;
     transition: none;
-  }
- 
-.sports:focus,
-.sports:active {
-    background-color: #F4B183;
-    transition: none;
-
-  }
-
-  .game:focus,
-.game:active {
-    background-color: #F4B183;
-    transition: none;
-
-  }
-
-  .news:focus,
-  .news:active {
-      background-color: #F4B183;
-      transition: none;
-    }
-
-  .literature:focus,
-.literature:active {
-    background-color: #F4B183;
-    transition: none;
-
-  }
-
-  .memes:focus,
-.memes:active {
-    background-color: #F4B183;
-    transition: none;
-
-  }
-
-  .beauty:focus,
-.beauty:active {
-    background-color: #F4B183;
-    transition: none;
-
-  }
-
-  .movies:focus,
-.movies:active {
-    background-color: #F4B183;
-    transition: none;
-
-  }
-
-  .anonymous:focus,
-.anonymous:active {
-    background-color: #F4B183;
-    transition: none;
-
   }

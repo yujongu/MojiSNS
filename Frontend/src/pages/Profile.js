@@ -1,10 +1,13 @@
-import React from "react";
+// import React from "react";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 import TopSettingBar from "./components/Header/TopSettingBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/fontawesome-free-solid";
 import PostCard from "./components/PostCard";
+import React, { useState } from "react";
+
+
 function Profile() {
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   console.log(currUser);
@@ -31,6 +34,10 @@ function Profile() {
     topics += `${t} `
   });
   
+  const [show, setShow] = useState(false);
+  let navigate = useNavigate();
+
+    
   return (
     <main className="profileContainer">
       <div className="profileMainContainer">
@@ -64,6 +71,12 @@ function Profile() {
                 <i className="fa-solid fa-face-grin-tongue-squint fa-lg"></i>
               </p>
               <div className="interestList">{topics}</div>
+              <div className="interestEditBtns">
+                <button className="interestModify"
+                // onClick={() => navigate('/signup/interest')}
+                >+/-</button>
+
+              </div>
             </div>
           </div>
         </div>
