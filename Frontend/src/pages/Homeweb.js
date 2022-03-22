@@ -129,10 +129,8 @@ const Homeweb = () => {
             cancelPost();
 
             //bring and repopulate posts in timeline
-
-            
           } else {
-            alert("Something Went Wrong...")
+            alert("Something Went Wrong...");
           }
         });
     }
@@ -149,11 +147,15 @@ const Homeweb = () => {
             <button className="settings">Settings</button>
           </div>
           <div classname="bt2">
-            <button className="logout"
-                    onClick={() => {
-                       navigate("/login");
-                    }}>Log out</button>
-            
+            <button
+              className="logout"
+              onClick={() => {
+                localStorage.removeItem("currentUser");
+                navigate("/login");
+              }}
+            >
+              Log out
+            </button>
           </div>
         </div>
         <div className="tabBar">
