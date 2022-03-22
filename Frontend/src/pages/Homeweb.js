@@ -15,15 +15,20 @@ const Homeweb = () => {
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
 
+  //window onload
+  React.useEffect(() => {
+    populatePosts();
+  }, [])
+
+
+  //component did update
   React.useEffect(() => {
     if (postData.length != 0) {
       eventListeners();
     }
-  });
-
-  window.onload = function () {
-    populatePosts();
-  };
+  }, [postData]);
+  
+  
 
   var eventListeners = () => {
     var like = document.getElementById("like");
