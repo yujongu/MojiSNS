@@ -88,10 +88,9 @@ router.delete("/deleteUser/:id", async (req, res) => {
 //update user
 router.patch("/updateUser/:id", async (req, res) => {
   try {
+    console.log("wassup")
+    console.log(req.body.USER_EMAIL)
     const user = await User.findById(req.params.id);
-    console.log(user)
-
-    
 
     if (req.body.USER_EMAIL) {
       user.USER_EMAIL = req.body.USER_EMAIL;
@@ -234,7 +233,7 @@ router.get("/login/:username/:password", async (req, res) => {
     const user = await User.findOne({
       USER_USERNAME: req.params.username
     }).populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
-    
+
     if (!user) {
       res.send("User not found");
       console.log("user not found");
