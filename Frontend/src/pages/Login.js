@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BackendConn } from "../constants/backendConn";
 
 function Login() {
   let navigate = useNavigate();
@@ -27,6 +28,11 @@ function Login() {
       setIsActive(false);
     }
   };
+
+  function functionForget()
+  {
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,14 +89,31 @@ function Login() {
           </div>
 
           <div className="loginL">
-            <button type="submit" className="login">
+            <button type="submit" className="login" id="1">
               Log In
             </button>
           </div>
 
           <div className="forgotpsw">
-            <p>Forgot Password?</p>
+            <p id="forgetPW" onClick={functionForget}>Forget Password?</p>
           </div>
+          {/* <div class="overlay" id="divOne">
+            <div class="wrapper">
+              <h2>Please Fill up the Form</h2>
+              <a href="#" class="close">&times;</a>
+              <div class="content">
+                <div class="container">
+                  <form>
+                    <label>
+                      User Email
+                    </label>
+                    <input type="text" placeholder="Your Email Address">
+                    </input>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div> */}
         </div>
       </form>
     </main>
