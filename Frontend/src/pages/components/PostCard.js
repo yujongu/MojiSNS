@@ -2,10 +2,13 @@ import React from "react";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
 
-function PostCard({userName, postTime, likeCount, commentCount, postText}) {
-    var pastTime = Date.now() - postTime;
+function PostCard({ userName, postTime, likeCount, commentCount, postText }) {
+  var pTime = new Date(postTime);
+  
 
-    return (
+  var pastTime = Date.now() - new Date(postTime).toUTCString();
+
+  return (
     <div className="postingCard">
       <div className="postingHeader">
         <div className="postingProfile">
@@ -24,9 +27,7 @@ function PostCard({userName, postTime, likeCount, commentCount, postText}) {
       <div className="postingBody">
         <div className="postingSection">
           <div className="postWords">
-            <h3>
-              {postText}
-            </h3>
+            <h3>{postText}</h3>
           </div>
         </div>
         <div className="iconSection">
