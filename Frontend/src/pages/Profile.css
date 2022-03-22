@@ -137,6 +137,22 @@
     font-weight: 400;
 }
 
+.interestEditBtns {
+    margin-left: 465px; 
+}
+
+.interestModify {
+  position: relative;
+  background-color: #ffc368;
+  color: #e26714;
+  border-style: none;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 #myPostTitle {
     font-size: 25px;
     font-weight: bold;
