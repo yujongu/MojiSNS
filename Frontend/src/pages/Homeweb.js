@@ -5,8 +5,12 @@ import PostCard from "./components/PostCard";
 import TopicView from "./components/TopicView/TopicView";
 import TopicItem from "./components/TopicsBtn/TopicItem";
 import { interestList } from "../constants/interests";
+import { BackendConn } from "../constants/backendConn";
+import axios from "axios";
 const Homeweb = () => {
   let navigate = useNavigate();
+  const currUser = JSON.parse(localStorage.getItem("currentUser"));
+
   window.onload = function () {
     var like = document.getElementById("like");
     var likeNum = document.getElementById("likeNum");
@@ -68,55 +72,71 @@ const Homeweb = () => {
     });
   };
 
-
   var selectedItem = -1;
-  var sayHello = (index) => {
+  var selectedItemName = "";
+  var itemSelectColorChange = (index) => {
     selectedItem = index;
-    var list = document.querySelectorAll(".topicItems")
+    var list = document.querySelectorAll(".topicItems");
     list.forEach((item) => {
-      var itm = item.querySelector("button")
-      if(itm.id == selectedItem) {
-        itm.style.backgroundColor = "#F4B183"
+      var itm = item.querySelector("button");
+      if (itm.id == selectedItem) {
+        itm.style.backgroundColor = "#F4B183";
+        selectedItemName = itm.querySelector("p").innerHTML;
       } else {
-        itm.style.backgroundColor = "#FBE5D6"
+        itm.style.backgroundColor = "#FBE5D6";
       }
-    })
-  }
+    });
+  };
 
   var cancelPost = () => {
-    console.log("post canceled")
-    var a = document.getElementById("postWriteID")
-    a.value = ""
-    selectedItem = -1
-    var itemList = document.querySelectorAll(".topicItems")
+    var a = document.getElementById("postWriteID");
+    a.value = "";
+    selectedItem = -1;
+    selectedItemName = "";
+    var itemList = document.querySelectorAll(".topicItems");
     itemList.forEach((item) => {
-      item.querySelector("button").style.backgroundColor = "#FBE5D6"
-    })
-  }
+      item.querySelector("button").style.backgroundColor = "#FBE5D6";
+    });
+    document.getElementById("writePost").style.display = "none";
+    document.getElementById("writeSelectTopic").style.display = "none";
+  };
 
   var uploadPost = () => {
-    console.log("post upload")
-    var a = document.getElementById("postWriteID")
-    
-    if(a.value === "") {
-      alert("Please type what you want to share")
-    } else if(selectedItem === -1) {
-      alert("Please select a topic")
-    } else {
-      console.log(a.value)//content
-      console.log(selectedItem)//topic
-      //POST_ID
-      //USER_ID
-      //CREATED_TS
-      //EDITED_TS
-      //LIKE_COUNT
-      //COMMENTS_COUNT
-      //TOPIC_ID
-      //CONTENT
-      //TODO: Upload to db
-    }
-  }
+    console.log("post upload");
+    var a = document.getElementById("postWriteID");
 
+    if (a.value === "") {
+      alert("Please type what you want to share");
+    } else if (selectedItem === -1) {
+      alert("Please select a topic");
+    } else {
+      console.log(a.value); //content
+      console.log(selectedItemName); //topic
+      console.log(currUser._id);
+
+      axios
+        .post(`${BackendConn}post/addPost`, {
+          USER_ID: currUser._id,
+          TOPIC_NAME: selectedItemName,
+          BODY: a.value,
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Post updated");
+            console.log(response);
+
+            //clear and hide
+            cancelPost();
+
+            //bring and repopulate posts in timeline
+
+            
+          } else {
+            alert("Something Went Wrong...")
+          }
+        });
+    }
+  };
 
   return (
     <main className="homewebMain">
@@ -189,17 +209,24 @@ const Homeweb = () => {
               <button id="buttonForSelect" className="btnSelect">
                 Select a topic
               </button>
-              <button className="btnUpload" onClick={uploadPost}>Upload</button>
-              <button className="btnCancel" onClick={cancelPost}>Cancel</button>
+              <button className="btnUpload" onClick={uploadPost}>
+                Upload
+              </button>
+              <button className="btnCancel" onClick={cancelPost}>
+                Cancel
+              </button>
             </div>
             <div id="writeSelectTopic">
               <div className="topicList">
                 {interestList.map((interest, index) => (
-                  <div className="topicItems" key={index} onClick={() => {sayHello(index)}}>
-                    <TopicItem
-                      topicName={interest}
-                      index={index}
-                    />
+                  <div
+                    className="topicItems"
+                    key={index}
+                    onClick={() => {
+                      itemSelectColorChange(index);
+                    }}
+                  >
+                    <TopicItem topicName={interest} index={index} />
                   </div>
                 ))}
               </div>
