@@ -27,14 +27,14 @@ const AccountSetting = () => {
                         </h4>
                         <div className='emailSet'>
                             <p id="userEmail">{currUser.USER_EMAIL}</p>
-                            <a href="#divTwo" id="button" class="emailEdit">Edit Email</a>
+                            <a href="?#divTwo" id="button" class="emailEdit">Edit Email</a>
                         </div>
                         <hr class="solid" />
                         <div className='accountDelete'>
                             <h4 className='header4set'>
                                 Account Deletion
                             </h4>
-                            <a href="#divThree" id="button" class="deleteBtn">Delete</a>
+                            <a href="?#divThree" id="button" class="deleteBtn">Delete</a>
                         </div>
                         <div class="overlay" id="divTwo">
                             <div class="wrapperEmail">

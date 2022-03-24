@@ -29,8 +29,20 @@ function Login() {
     }
   };
 
-  function functionForget() {
+  window.onload = functionForget;
 
+  function functionForget() {
+    // console.log(document.getElementById("emailInput").value)
+    var emailAddr = document.getElementById("emailInput").value;
+    const response = axios.post(`${BackendConn}user/auth/requestResetPassword/${emailAddr}`);
+    response.then((response) => {
+      // if (response.status === 200) {
+      //   setLoading(false);
+      //   setPostData(response.data);
+      // } else {
+      //   alert("Something Went Wrong...");
+      // }
+    });
   }
 
   const handleSubmit = async (e) => {
@@ -94,7 +106,7 @@ function Login() {
           </div>
 
           <div className="forgotpsw">
-            <a href="#divOne">Forget Password?</a>
+            <a href="?#divOne">Forget Password?</a>
           </div>
           <div class="overlay" id="divOne">
             <div class="wrapper">
@@ -108,9 +120,9 @@ function Login() {
                     <label>
                       User Email
                     </label>
-                    <input type="textF" placeholder="Your Email Address">
+                    <input type="textF" placeholder="Your Email Address" id="emailInput">
                     </input>
-                    <button type="submitF">Submit</button>
+                    <button type="submitF" onClick={functionForget}>Submit</button>
                   </form>
                 </div>
               </div>
