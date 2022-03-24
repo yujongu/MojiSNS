@@ -7,7 +7,7 @@ const Setting = () => {
             <div className='center2'>
                 <div className="header2">
                     <div className="headerApp">
-                        <h2 class="titleWeb">Settings page</h2>
+                        <h2 class="titleWeb">Settings Page</h2>
                     </div>
                     <div className='settingCard'>
                         <button className="btnSetting">

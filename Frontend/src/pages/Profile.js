@@ -57,7 +57,7 @@ function Profile() {
 
             <div className="profileEditBtns">
               <button className="profile_editButton">Edit Profile</button>
-              <button className="profile_settingButton">Settings</button>
+              <button className="profile_settingButton" onClick={()=>{navigate("/accsetting")}}>Settings</button>
             </div>
           </div>
 

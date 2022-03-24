@@ -1,0 +1,242 @@
+.accMain {
+    display: flex;
+    position: absolute;
+    background-color: #f2f2f2;
+    height: 100vh;
+    width: 100vw;
+}
+
+.center1 {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    background-color: #f2f2f2;
+    width: 45%;
+    padding: 10px;
+    height: 10%
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.headerApp {
+    position: relative;
+    margin-top: 1%;
+    width: 80%;
+}
+
+.titleWeb {
+    font-family: Calibri;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.settingCard {
+    position: relative;
+    background-color: white;
+    border-radius: 25px;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+.settingContainer{
+    position: relative;
+    display: block;
+    padding: 3%;
+}
+
+.accSett{
+    margin-bottom: 2%;
+}
+
+.header4set{
+    margin-bottom: 1%;
+}
+
+hr.solid {
+    border-top: 3px solid #bbb;
+    margin-bottom: 2%;
+  }
+
+.emailSet{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5%;
+}
+
+#userEmail {
+    font-size: large;
+}
+
+.emailEdit {
+    position: relative;
+    background-color: #ffc368;
+    color: #e26714;
+    border-style: none;
+    width: 100px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    transition-duration: 0.4s;
+  }
+  
+  .emailEdit:hover {
+    background-color: #E26714;
+    color: #f2f2f2;
+  }
+  
+  
+  .deleteBtn {
+    position: relative;
+    background-color: red;
+    color: white;
+    border-style: none;
+    width: 100px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    transition-duration: 0.4s;
+  }
+  
+  .deleteBtn:hover {
+    background-color: darkred;
+    color: #f2f2f2;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0,0, 0.8);
+    opacity: 0;
+    transition: opacity 400ms;
+    visibility: hidden;
+  }
+  
+  .overlay:target{
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .wrapperEmail{
+    margin: 15% auto;
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    background: #ffffff;
+    border-radius: 20px;
+    width: 50%;
+    position: relative;
+    transition: all 5% ease-in-out;
+  }
+
+  .forgetHeader{
+    display: flex;
+  }
+  .wrapperEmail h2{
+    margin-top: 0;
+    width: 99%;
+    color: #333;
+  }
+  
+  .wrapperEmail .close{
+    width: 2%;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .wrapper .content{
+    max-height: 30%;
+    overflow: auto;
+  }
+  
+  .contentInside{
+    padding-top: 3%;
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding-bottom: 3%;
+  }
+
+  input[type=textE], textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    width: 60%;
+    margin-left: 3%;
+    resize: vertical;
+  }
+  
+  button[type="submitE"]{
+    background-color: #ffc368;
+    color: #e26714;
+    padding: 7px 15px;
+    border: none;
+    transition: 0.4s;
+    border-radius: 30px;
+    border-style: none;
+    margin-left: 15%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  button[type="submitE"]:hover {
+    background-color: #ffac2e;
+    transition: 500ms;
+  }
+
+  .accountDelete{
+      display: flex;
+      justify-content: space-between;
+  }
+  
+
+  input[type=textD], textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    width: 60%;
+    margin-left: 3%;
+    resize: vertical;
+  }
+  
+  button[type="submitD"]{
+    background-color: red;
+    color:  white;
+    padding: 7px 15px;
+    border: none;
+    transition: 0.4s;
+    border-radius: 15px;
+    border-style: none;
+    margin-left: 15%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  button[type="submitD"]:hover {
+    background-color: darkred;
+    transition: 500ms;
+  }

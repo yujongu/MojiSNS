@@ -103,7 +103,7 @@ function Login() {
                 <a href="#" class="close">&times;</a>
               </div>
               <div class="content">
-                <div class="contentInside">
+                <div class="contentInsideEmail">
                   <form>
                     <label>
                       User Email

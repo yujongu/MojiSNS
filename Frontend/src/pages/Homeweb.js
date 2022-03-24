@@ -146,7 +146,9 @@ const Homeweb = () => {
             <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
           <div className="bt1">
-            <button className="settings">Settings</button>
+            <button className="settings" onClick={()=>{
+              navigate("/setting");
+            }}>Settings</button>
           </div>
           <div classname="bt2">
             <button className="logout"
