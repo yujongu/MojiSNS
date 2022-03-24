@@ -2,6 +2,7 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
+const Post = require("../models/post");
 const Token = require("../models/token");
 const sendEmail = require("../email/sendEmail");
 
@@ -81,6 +82,7 @@ router.get("/getUserByUsername/:username", async (req, res) => {
 router.delete("/deleteUser/:id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
+    await Post.findByIdAndDelete({USER_ID: req.params.id})
     console.log("delete user");
     res.send("delete user");
   } catch (error) {
@@ -285,18 +287,18 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
 
   const link = `http://localhost:5000/api/user/passwordReset?token=${resetToken}&id=${user._id}`;
   sendEmail(user.USER_EMAIL,"Password Reset Request",{name: user.USER_USERNAME,link: link,},"./template/requestResetPassword.handlebars");
-  return link;
+  res.send("email sent");
 
 });
 
 
-router.post("/user/resetPassword", async (req, res) => {
+router.post("/auth/resetPassword", async (req, res) => {
     let passwordResetToken = await Token.findOne({ userId: req.body.userId });
   
     if (!passwordResetToken) {
       return res.send("Invalid or expired password reset token");
     }
-    const [salt, key] = passwordResetToken.USER_PW.split(':');
+    const [salt, key] = passwordResetToken.token.split(':');
     const hashedBuffer = scryptSync(req.body.token, salt, 64);
     
     const keyBuffer = Buffer.from(key, 'hex');
@@ -327,7 +329,7 @@ router.post("/user/resetPassword", async (req, res) => {
       "./template/resetPassword.handlebars"
     );
   
-    await passwordResetToken.deleteOne(); //CHANGE THIS
+    await passwordResetToken.deleteOne();
   
     return res.send("Password reset");
   
