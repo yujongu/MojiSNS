@@ -6,7 +6,7 @@ const userRoutes = require("./db/routes/userRouter");
 const postRoutes = require("./db/routes/postRouter");
 const topicRoutes = require("./db/routes/topicRouter");
 const commentRoutes = require("./db/routes/commentRouter");
-
+const bp = require('body-parser')
 require("dotenv").config({ path: "./config.env" });
 
 const Db = process.env.ATLAS_URI;
@@ -16,12 +16,12 @@ mongoose
   .connect(Db, { useNewUrlParser: true,
   useUnifiedTopology: true})
   .then(() => {
-    app.use(express.json());
+    //app.use(express.json());
+    app.use(bp.json())
+    app.use(bp.urlencoded({ extended: true }))
     app.use(cors({
       origin: '*'
     }))
-
-    
 
     app.listen(port, () => {
       console.log("Backend server has started!")
