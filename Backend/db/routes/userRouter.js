@@ -2,9 +2,12 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
+const Token = require("../models/token");
+const sendEmail = require("../email/sendEmail");
+
 const router = express.Router();
 const { scryptSync, randomBytes, timingSafeEqual } = require('crypto');
-
+//const bcrypt = require("bcrypt");
 
 
 router.get("/getUsers", async (req, res) => {
@@ -88,10 +91,9 @@ router.delete("/deleteUser/:id", async (req, res) => {
 //update user
 router.patch("/updateUser/:id", async (req, res) => {
   try {
+    console.log("wassup")
+    console.log(req.body.USER_EMAIL)
     const user = await User.findById(req.params.id);
-    console.log(user)
-
-    
 
     if (req.body.USER_EMAIL) {
       user.USER_EMAIL = req.body.USER_EMAIL;
@@ -99,11 +101,11 @@ router.patch("/updateUser/:id", async (req, res) => {
     if (req.body.USER_USERNAME) {
       user.USER_USERNAME = req.body.USER_USERNAME;
     }
-    if (req.body.USER_PW) {
+    /*if (req.body.USER_PW) {
       const salt = randomBytes(16).toString('hex');
       const hashedPassword = scryptSync(req.body.USER_PW, salt, 64).toString('hex');
       user.USER_PW = `${salt}:${hashedPassword}`;
-    }
+    }*/
     if (req.body.USER_BIRTHDAY) {
       user.USER_BIRTHDAY = req.body.USER_BIRTHDAY;
     }
@@ -234,7 +236,7 @@ router.get("/login/:username/:password", async (req, res) => {
     const user = await User.findOne({
       USER_USERNAME: req.params.username
     }).populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS");
-    
+
     if (!user) {
       res.send("User not found");
       console.log("user not found");
@@ -261,5 +263,74 @@ router.get("/login/:username/:password", async (req, res) => {
   }
 });
 
+router.post("/auth/requestResetPassword/:email", async (req, res) => {
+  console.log("request reset pw");
+  const user = await User.findOne({USER_EMAIL: req.params.email});
+  if (!user) return res.send("Email does not exist");
+
+  let token = await Token.findOne({ userId: user._id });
+  if (token) await token.deleteOne();
+
+  
+  let resetToken = randomBytes(32).toString("hex");
+
+  const salt = randomBytes(16).toString('hex');
+  const hash = scryptSync(resetToken, salt, 64).toString('hex');
+
+  await new Token({
+    userId: user._id,
+    token:  `${salt}:${hash}`,
+    createdAt: Date.now(),
+  }).save();
+
+  const link = `http://localhost:5000/api/user/passwordReset?token=${resetToken}&id=${user._id}`;
+  sendEmail(user.USER_EMAIL,"Password Reset Request",{name: user.USER_USERNAME,link: link,},"./template/requestResetPassword.handlebars");
+  return link;
+
+});
+
+
+router.post("/user/resetPassword", async (req, res) => {
+    let passwordResetToken = await Token.findOne({ userId: req.body.userId });
+  
+    if (!passwordResetToken) {
+      return res.send("Invalid or expired password reset token");
+    }
+    const [salt, key] = passwordResetToken.USER_PW.split(':');
+    const hashedBuffer = scryptSync(req.body.token, salt, 64);
+    
+    const keyBuffer = Buffer.from(key, 'hex');
+    const match = timingSafeEqual(hashedBuffer, keyBuffer);
+    //const isValid = await bcrypt.compare(token, passwordResetToken.token);
+  
+    if (!match) {
+      return res.send("Invalid or expired password reset token");
+    }
+  
+    const salt2 = randomBytes(16).toString('hex');
+    const hashedPassword = scryptSync(req.body.password, salt2, 64).toString('hex');
+
+    await User.updateOne(
+      { _id: userId },
+      { $set: { USER_PW: `${salt2}:${hashedPassword}` } },
+      { new: true }
+    );
+  
+    const user = await User.findById({ _id: userId });
+  
+    sendEmail(
+      user.USER_EMAIL,
+      "Password Reset Successfully",
+      {
+        name: user.USER_USERNAME,
+      },
+      "./template/resetPassword.handlebars"
+    );
+  
+    await passwordResetToken.deleteOne(); //CHANGE THIS
+  
+    return res.send("Password reset");
+  
+});
 
 module.exports = router

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Homeweb.css";
 import { useNavigate } from "react-router-dom";
+import ReactDOM from "react-dom";
 import PostCard from "./components/PostCard";
 import TopicView from "./components/TopicView/TopicView";
 import TopicItem from "./components/TopicsBtn/TopicItem";
@@ -11,13 +12,30 @@ const Homeweb = () => {
   let navigate = useNavigate();
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  window.onload = function () {
+  const [isLoading, setLoading] = useState(true);
+  const [postData, setPostData] = useState([]);
+
+  //window onload
+  React.useEffect(() => {
+    populatePosts();
+  }, [])
+
+
+  //component did update
+  React.useEffect(() => {
+    if (postData.length != 0) {
+      eventListeners();
+    }
+  }, [postData]);
+  
+  
+
+  var eventListeners = () => {
     var like = document.getElementById("like");
     var likeNum = document.getElementById("likeNum");
     var postSet = document.getElementById("postSet");
     var postingImg = document.getElementById("postingImg");
     var buttonForSelect = document.getElementById("buttonForSelect");
-
     var stateLike = 0;
     like.addEventListener("click", function () {
       if (stateLike === 1) {
@@ -30,11 +48,9 @@ const Homeweb = () => {
         stateLike = 1;
       }
     });
-
     postSet.addEventListener("click", function () {
       console.log("postSetting clicked");
     });
-
     var showWrite = document.getElementById("writePost");
     console.log(showWrite.style.display);
     postingImg.addEventListener("click", function () {
@@ -46,9 +62,7 @@ const Homeweb = () => {
         console.log("show");
       }
     });
-
     var showTopicList = document.getElementById("writeSelectTopic");
-
     buttonForSelect.addEventListener("click", function topicListShow() {
       if (showTopicList.style.display === "flex") {
         showTopicList.style.display = "none";
@@ -58,7 +72,6 @@ const Homeweb = () => {
         console.log("show");
       }
     });
-
     document.querySelectorAll("textarea").forEach(function (a) {
       a.addEventListener("input", function () {
         var setHeight = window.getComputedStyle(this);
@@ -69,6 +82,18 @@ const Homeweb = () => {
           parseInt(setHeight.getPropertyValue("border-bottom-width")) +
           "px";
       });
+    });
+  };
+
+  var populatePosts = () => {
+    const response = axios.get(`${BackendConn}post/getPosts`);
+    response.then((response) => {
+      if (response.status === 200) {
+        setLoading(false);
+        setPostData(response.data);
+      } else {
+        alert("Something Went Wrong...");
+      }
     });
   };
 
@@ -102,7 +127,6 @@ const Homeweb = () => {
   };
 
   var uploadPost = () => {
-    console.log("post upload");
     var a = document.getElementById("postWriteID");
 
     if (a.value === "") {
@@ -110,10 +134,6 @@ const Homeweb = () => {
     } else if (selectedItem === -1) {
       alert("Please select a topic");
     } else {
-      console.log(a.value); //content
-      console.log(selectedItemName); //topic
-      console.log(currUser._id);
-
       axios
         .post(`${BackendConn}post/addPost`, {
           USER_ID: currUser._id,
@@ -122,17 +142,14 @@ const Homeweb = () => {
         })
         .then((response) => {
           if (response.status == 200) {
-            console.log("Post updated");
-            console.log(response);
 
             //clear and hide
             cancelPost();
 
             //bring and repopulate posts in timeline
-
-            
+            populatePosts()
           } else {
-            alert("Something Went Wrong...")
+            alert("Something Went Wrong...");
           }
         });
     }
@@ -150,12 +167,16 @@ const Homeweb = () => {
               navigate("/setting");
             }}>Settings</button>
           </div>
-          <div classname="bt2">
-            <button className="logout"
-                    onClick={() => {
-                       navigate("/login");
-                    }}>Log out</button>
-            
+          <div className="bt2">
+            <button
+              className="logout"
+              onClick={() => {
+                localStorage.removeItem("currentUser");
+                navigate("/login");
+              }}
+            >
+              Log out
+            </button>
           </div>
         </div>
         <div className="tabBar">
@@ -264,22 +285,22 @@ const Homeweb = () => {
         </div>
         <div className="timeline">
           <h2 className="titleWeb2">Timeline</h2>
-
-          <PostCard
-            userName={"Steve Rogers"}
-            postTime={Date.now()}
-            likeCount={13}
-            commentCount={2}
-            postText={"Hello world"}
-          />
-
-          <PostCard
-            userName={"Tony Stark"}
-            postTime={Date.now()}
-            likeCount={37}
-            commentCount={102}
-            postText={"OMG "}
-          />
+          <div id="postHolder">
+            {isLoading ? (
+              <div>Loading</div>
+            ) : (
+              postData.map((singlePost, index) => (
+                <PostCard
+                  key={index}
+                  userName={singlePost.USER_ID.USER_USERNAME}
+                  postTime={singlePost.updatedAt}
+                  likeCount={singlePost.LIKES_COUNT}
+                  commentCount={singlePost.COMMENTS_COUNT}
+                  postText={singlePost.BODY}
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </main>

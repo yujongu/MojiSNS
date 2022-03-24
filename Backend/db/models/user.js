@@ -58,8 +58,11 @@ const userSchema = new Schema({
         type: [{
           type: String,
         }]
-    }
+    },
 
+    PROFILE_PICTURE: {
+      type: Buffer // casted to MongoDB's BSON type: binData
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);
