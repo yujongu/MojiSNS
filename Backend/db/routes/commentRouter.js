@@ -42,8 +42,11 @@ router.post("/addComment", async (req, res) => {
 
 router.delete("/deleteComment/:id", async (req, res) => {
   try {
-    await Comment.findByIdAndDelete(req.params.id);
-    console.send("comment removed");
+    await Comment.updateOne(
+      {_id: req.params.id},
+      { $set: { CONTENT: "-Comment Deleted-" } },
+      );
+    res.send("comment removed");
     console.log("comment removed");
   } catch (error) {
     console.log(error);
