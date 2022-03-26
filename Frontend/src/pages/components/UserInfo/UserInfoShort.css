@@ -1,0 +1,29 @@
+.uInfoShortContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  height: 60px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 20px;
+}
+
+.uInfoShortContainer > button {
+  width: 120px;
+  height: 27px;
+  font-size: large;
+  position: relative;
+  border-radius: 20px;
+  border-style: none;
+  background-color: #ffc368;
+  color: #e26714;
+}
+.uInfoShortContainer > button:hover {
+  background-color: #e26714;
+  color: #f2f2f2;
+}

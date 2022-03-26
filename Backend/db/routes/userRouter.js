@@ -79,6 +79,21 @@ router.get("/getUserByUsername/:username", async (req, res) => {
   }
 });
 
+router.get("/findUserByUsername/:username", async (req, res) => {
+  try {
+    const user = await User.find({
+      USER_USERNAME: { "$regex": `${req.params.username}`, "$options": "i" },
+    }).populate(
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+    );
+    res.send(user);
+    console.log(user)
+    console.log("got user");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.delete("/deleteUser/:id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);

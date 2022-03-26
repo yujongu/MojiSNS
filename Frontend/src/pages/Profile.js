@@ -8,7 +8,9 @@ import PostCard from "./components/PostCard";
 import React, { useState } from "react";
 
 
-function Profile() {
+function Profile({usr}) {
+  console.log("This is user")
+  console.log(usr)
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   console.log(currUser);
   console.log(currUser.USER_BIRTHDAY);

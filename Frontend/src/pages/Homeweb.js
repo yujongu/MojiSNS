@@ -7,7 +7,9 @@ import TopicView from "./components/TopicView/TopicView";
 import TopicItem from "./components/TopicsBtn/TopicItem";
 import { interestList } from "../constants/interests";
 import { BackendConn } from "../constants/backendConn";
+import { SEARCHRES } from "../constants/routes";
 import axios from "axios";
+
 const Homeweb = () => {
   let navigate = useNavigate();
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -129,9 +131,9 @@ const Homeweb = () => {
   };
 
   var uploadPost = () => {
-    var a = document.getElementById("postWriteID");
+    var postWriteID = document.getElementById("postWriteID");
 
-    if (a.value === "") {
+    if (postWriteID.value === "") {
       alert("Please type what you want to share");
     } else if (selectedItem === -1) {
       alert("Please select a topic");
@@ -140,7 +142,7 @@ const Homeweb = () => {
         .post(`${BackendConn}post/addPost`, {
           USER_ID: currUser._id,
           TOPIC_NAME: selectedItemName,
-          BODY: a.value,
+          BODY: postWriteID.value,
         })
         .then((response) => {
           if (response.status == 200) {
@@ -156,6 +158,42 @@ const Homeweb = () => {
     }
   };
 
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+
+  var searchUser = () => {
+    
+    var searchUser = document.querySelector(".searchBox-homeweb > input").value;
+    const $regex = escapeRegExp(searchUser)
+    console.log(searchUser)
+    console.log($regex)
+    
+    axios
+      .get(`${BackendConn}user/findUserByUsername/${$regex}`)
+      .then((res) => {
+        console.log(res);
+        if(res.status === 200) {
+          if(res.data === "") {
+            alert("No user found under that username")
+          } else {
+            //first remove myself from search res if exists
+            var myDataInd = -1;
+            res.data.forEach((item, index) => {
+              if(item._id === currUser._id) {
+                myDataInd = index
+              }
+            })
+            res.data.splice(myDataInd, 1)
+            //store in local storage
+            localStorage.setItem("SearchRes", JSON.stringify(res.data))
+            navigate(SEARCHRES)
+          }
+        }
+        
+      });
+  };
+
   return (
     <main className="homewebMain">
       <div className="center1">
@@ -164,31 +202,30 @@ const Homeweb = () => {
             <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
           <div className="hdrBtnContainer">
-            
             <button
-                className="settings"
-                onClick={() => {
-                  navigate("/setting");
-                }}
-              >
-                Settings
-              </button>
-            
+              className="settings"
+              onClick={() => {
+                navigate("/setting");
+              }}
+            >
+              Settings
+            </button>
+
             <button
-                className="logout"
-                onClick={() => {
-                  localStorage.removeItem("currentUser");
-                  navigate("/login");
-                }}
-              >
-                Log out
-              </button>
+              className="logout"
+              onClick={() => {
+                localStorage.removeItem("currentUser");
+                navigate("/login");
+              }}
+            >
+              Log out
+            </button>
           </div>
         </div>
 
         <div className="searchBox-homeweb">
-          <input type="text" placeholder="Search user"/>
-          <button>Search</button>
+          <input type="text" placeholder="Search user" />
+          <button onClick={searchUser}>Search</button>
         </div>
         <div className="tabBar">
           <div className="grid-container">
