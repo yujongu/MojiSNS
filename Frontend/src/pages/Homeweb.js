@@ -18,39 +18,21 @@ const Homeweb = () => {
   //window onload
   React.useEffect(() => {
     populatePosts();
+    eventListeners();
   }, [])
 
 
   //component did update
   React.useEffect(() => {
     if (postData.length != 0) {
-      eventListeners();
+      postEventListeners();
     }
   }, [postData]);
   
-  
-
   var eventListeners = () => {
-    var like = document.getElementById("like");
-    var likeNum = document.getElementById("likeNum");
-    var postSet = document.getElementById("postSet");
     var postingImg = document.getElementById("postingImg");
     var buttonForSelect = document.getElementById("buttonForSelect");
-    var stateLike = 0;
-    like.addEventListener("click", function () {
-      if (stateLike === 1) {
-        like.style.color = "#000000";
-        likeNum.style.color = "#000000";
-        stateLike = 0;
-      } else {
-        like.style.color = "#E26714";
-        likeNum.style.color = "#E26714";
-        stateLike = 1;
-      }
-    });
-    postSet.addEventListener("click", function () {
-      console.log("postSetting clicked");
-    });
+
     var showWrite = document.getElementById("writePost");
     console.log(showWrite.style.display);
     postingImg.addEventListener("click", function () {
@@ -83,6 +65,29 @@ const Homeweb = () => {
           "px";
       });
     });
+  }
+
+  var postEventListeners = () => {
+    var like = document.getElementById("like");
+    var likeNum = document.getElementById("likeNum");
+    var postSet = document.getElementById("postSet");
+    var stateLike = 0;
+    like.addEventListener("click", function () {
+      if (stateLike === 1) {
+        like.style.color = "#000000";
+        likeNum.style.color = "#000000";
+        stateLike = 0;
+      } else {
+        like.style.color = "#E26714";
+        likeNum.style.color = "#E26714";
+        stateLike = 1;
+      }
+    });
+    postSet.addEventListener("click", function () {
+      console.log("postSetting clicked");
+    });
+
+    
   };
 
   var populatePosts = () => {
