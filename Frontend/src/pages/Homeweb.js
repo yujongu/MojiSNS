@@ -19,8 +19,7 @@ const Homeweb = () => {
   React.useEffect(() => {
     populatePosts();
     eventListeners();
-  }, [])
-
+  }, []);
 
   //component did update
   React.useEffect(() => {
@@ -28,7 +27,7 @@ const Homeweb = () => {
       postEventListeners();
     }
   }, [postData]);
-  
+
   var eventListeners = () => {
     var postingImg = document.getElementById("postingImg");
     var buttonForSelect = document.getElementById("buttonForSelect");
@@ -65,7 +64,7 @@ const Homeweb = () => {
           "px";
       });
     });
-  }
+  };
 
   var postEventListeners = () => {
     var like = document.getElementById("like");
@@ -86,8 +85,6 @@ const Homeweb = () => {
     postSet.addEventListener("click", function () {
       console.log("postSetting clicked");
     });
-
-    
   };
 
   var populatePosts = () => {
@@ -147,12 +144,11 @@ const Homeweb = () => {
         })
         .then((response) => {
           if (response.status == 200) {
-
             //clear and hide
             cancelPost();
 
             //bring and repopulate posts in timeline
-            populatePosts()
+            populatePosts();
           } else {
             alert("Something Went Wrong...");
           }
@@ -167,21 +163,26 @@ const Homeweb = () => {
           <div className="headerApp">
             <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
-          <div className="bt1">
-            <button className="settings" onClick={()=>{
-              navigate("/setting");
-            }}>Settings</button>
-          </div>
-          <div className="bt2">
+          <div className="hdrBtnContainer">
+            
             <button
-              className="logout"
-              onClick={() => {
-                localStorage.removeItem("currentUser");
-                navigate("/login");
-              }}
-            >
-              Log out
-            </button>
+                className="settings"
+                onClick={() => {
+                  navigate("/setting");
+                }}
+              >
+                Settings
+              </button>
+            
+            <button
+                className="logout"
+                onClick={() => {
+                  localStorage.removeItem("currentUser");
+                  navigate("/login");
+                }}
+              >
+                Log out
+              </button>
           </div>
         </div>
         <div className="tabBar">
