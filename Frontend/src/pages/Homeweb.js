@@ -185,6 +185,11 @@ const Homeweb = () => {
               </button>
           </div>
         </div>
+
+        <div className="searchBox-homeweb">
+          <input type="text" placeholder="Search user"/>
+          <button>Search</button>
+        </div>
         <div className="tabBar">
           <div className="grid-container">
             <div className="grid-item">
