@@ -14,6 +14,7 @@ import Setting from "./pages/Setting";
 import AccountSetting from "./pages/AccountSetting"
 import UserSearchResult from './pages/UserSearchResult';
 import * as PageLinks from "./constants/routes"
+import UserProfile from './pages/UserProfile';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path={PageLinks.SEARCHRES} element={<UserSearchResult/>}/>
         <Route path={PageLinks.FORGOTID} element={<ForgetID />} />
         <Route path={PageLinks.PROFILE} element={<Profile />} />
+        <Route path={PageLinks.USERPROFILE} element={<UserProfile/>}/>
         <Route path={PageLinks.SETTING} element={<Setting />} />
         <Route path={PageLinks.ACCSETTING} element={<AccountSetting />} />
       </Routes>

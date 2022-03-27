@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./UserInfoShort.css";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { BackendConn } from "../../../constants/backendConn";
+
 import axios from "axios";
+import { USERPROFILE } from "../../../constants/routes";
 
 function UserInfoShort({ username, uid }) {
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   const [isFollowing, setFollowing] = useState(false);
+  let navigate = useNavigate();
 
   React.useEffect(() => {
     currUser.FOLLOWING_USERS.forEach((following) => {
@@ -16,12 +19,10 @@ function UserInfoShort({ username, uid }) {
     });
   }, []);
 
-  React.useEffect(() => {
-  }, isFollowing);
+  React.useEffect(() => {}, isFollowing);
 
   var redirectToTargetUser = () => {
-    console.log("Clicked");
-    
+    navigate(USERPROFILE, { state: { username: username, uid: uid } });
   };
 
   var followTargetUser = (event) => {
