@@ -283,7 +283,7 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
     createdAt: Date.now(),
   }).save();
 
-  const link = `http://localhost:5000/api/user/passwordReset?token=${resetToken}&id=${user._id}`;
+  const link = `localhost:3000/passwordReset?id=${user._id}`;
   sendEmail(user.USER_EMAIL,"Password Reset Request",{name: user.USER_USERNAME,link: link,},"./template/requestResetPassword.handlebars");
   return link;
 

@@ -8,3 +8,6 @@ export const FORGOTID = "/forget"
 export const PROFILE = "/profile"
 export const SETTING = "/setting"
 export const ACCSETTING = "/accsetting"
+// export const PASSRESET = "/passwordReset"
+export const PASSRESET = "/passwordReset/"
+

@@ -12,6 +12,7 @@ import Interest from "./pages/Interest"
 import Profile from "./pages/Profile";
 import Setting from "./pages/Setting";
 import AccountSetting from "./pages/AccountSetting"
+import PasswordReset from './pages/PasswordReset';
 import * as PageLinks from "./constants/routes"
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path={PageLinks.PROFILE} element={<Profile />} />
         <Route path={PageLinks.SETTING} element={<Setting />} />
         <Route path={PageLinks.ACCSETTING} element={<AccountSetting />} />
+        <Route path={PageLinks.PASSRESET} element={<PasswordReset />} />
       </Routes>
     </Router>
   );

@@ -30,7 +30,18 @@ function Login() {
   };
 
   function functionForget() {
-
+    console.log(document.getElementById("emailInput").value)
+    var emailAddr = document.getElementById("emailInput").value;
+    alert("The password reset email is sent!")
+    const response = axios.post(`${BackendConn}user/auth/requestResetPassword/${emailAddr}`);
+    response.then((response) => {
+      // if (response.status === 200) {
+      //   setLoading(false);
+      //   setPostData(response.data);
+      // } else {
+      //   alert("Something Went Wrong...");
+      // }
+    });
   }
 
   const handleSubmit = async (e) => {
