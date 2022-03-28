@@ -15,6 +15,8 @@ import AccountSetting from "./pages/AccountSetting"
 import UserSearchResult from './pages/UserSearchResult';
 import * as PageLinks from "./constants/routes"
 import UserProfile from './pages/UserProfile';
+import Follower from './pages/Follower';
+import Following from './pages/Following';
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
         <Route path={PageLinks.USERPROFILE} element={<UserProfile/>}/>
         <Route path={PageLinks.SETTING} element={<Setting />} />
         <Route path={PageLinks.ACCSETTING} element={<AccountSetting />} />
+        <Route path={PageLinks.FOLLOWER} element={<Follower />} />
+        <Route path={PageLinks.FOLLOWING} element={<Following />} />
       </Routes>
     </Router>
   );

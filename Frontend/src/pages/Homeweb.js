@@ -8,6 +8,7 @@ import TopicItem from "./components/TopicsBtn/TopicItem";
 import { interestList } from "../constants/interests";
 import { BackendConn } from "../constants/backendConn";
 import { SEARCHRES } from "../constants/routes";
+import { LOGIN, PROFILE, SETTING, FOLLOWER, FOLLOWING } from "../constants/routes";
 import axios from "axios";
 
 const Homeweb = () => {
@@ -22,6 +23,7 @@ const Homeweb = () => {
     populatePosts();
     eventListeners();
   }, []);
+
 
   //component did update
   React.useEffect(() => {
@@ -182,9 +184,10 @@ const Homeweb = () => {
             res.data.forEach((item, index) => {
               if(item._id === currUser._id) {
                 myDataInd = index
+                res.data.splice(myDataInd, 1)
               }
             })
-            res.data.splice(myDataInd, 1)
+            
             //store in local storage
             localStorage.setItem("SearchRes", JSON.stringify(res.data))
             navigate(SEARCHRES)
@@ -205,7 +208,7 @@ const Homeweb = () => {
             <button
               className="settings"
               onClick={() => {
-                navigate("/setting");
+                navigate(SETTING);
               }}
             >
               Settings
@@ -215,7 +218,7 @@ const Homeweb = () => {
               className="logout"
               onClick={() => {
                 localStorage.removeItem("currentUser");
-                navigate("/login");
+                navigate(LOGIN);
               }}
             >
               Log out
@@ -230,7 +233,7 @@ const Homeweb = () => {
         <div className="tabBar">
           <div className="grid-container">
             <div className="grid-item">
-              <a href="/profile">
+              <a href={PROFILE}>
                 <img
                   src="profile.png"
                   alt="Sample profile"
@@ -241,7 +244,7 @@ const Homeweb = () => {
               </a>
             </div>
             <div className="grid-item">
-              <a href="/follower">
+              <a href={FOLLOWER}>
                 <img
                   src="follower.png"
                   alt="Sample profile"
@@ -252,7 +255,7 @@ const Homeweb = () => {
               </a>
             </div>
             <div className="grid-item">
-              <a href="/following">
+              <a href={FOLLOWING}>
                 <img
                   src="following.png"
                   alt="Sample profile"
