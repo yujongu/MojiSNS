@@ -80,7 +80,7 @@ router.patch("/updatePost/:id",  (req, res) => {
 router.get("/getPosts/:id", async (req, res) => {
   console.log("find posts by user");
   const id = req.params.id;
-  const posts = await Post.find({_id: id})
+  const posts = await Post.find({USER_ID: id})
   .populate("USER_ID TOPIC_NAME LIKED_USERS")
   .sort({createdAt: -1});
     
