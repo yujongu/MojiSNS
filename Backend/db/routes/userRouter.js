@@ -82,7 +82,8 @@ router.get("/getUserByUsername/:username", async (req, res) => {
 router.delete("/deleteUser/:id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
-    await Post.findByIdAndDelete({USER_ID: req.params.id})
+    await Post.deleteMany({USER_ID: req.params.id})
+    
     console.log("delete user");
     res.send("delete user");
   } catch (error) {
@@ -330,9 +331,9 @@ router.post("/auth/resetPassword", async (req, res) => {
     );
   
     await passwordResetToken.deleteOne();
-  
+
     return res.send("Password reset");
-  
+    
 });
 
 module.exports = router
