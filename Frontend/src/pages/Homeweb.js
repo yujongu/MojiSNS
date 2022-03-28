@@ -7,7 +7,10 @@ import TopicView from "./components/TopicView/TopicView";
 import TopicItem from "./components/TopicsBtn/TopicItem";
 import { interestList } from "../constants/interests";
 import { BackendConn } from "../constants/backendConn";
+import { SEARCHRES } from "../constants/routes";
+import { LOGIN, PROFILE, SETTING, FOLLOWER, FOLLOWING } from "../constants/routes";
 import axios from "axios";
+
 const Homeweb = () => {
   let navigate = useNavigate();
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -18,39 +21,21 @@ const Homeweb = () => {
   //window onload
   React.useEffect(() => {
     populatePosts();
-  }, [])
+    eventListeners();
+  }, []);
 
 
   //component did update
   React.useEffect(() => {
     if (postData.length != 0) {
-      eventListeners();
+      postEventListeners();
     }
   }, [postData]);
-  
-  
 
   var eventListeners = () => {
-    var like = document.getElementById("like");
-    var likeNum = document.getElementById("likeNum");
-    var postSet = document.getElementById("postSet");
     var postingImg = document.getElementById("postingImg");
     var buttonForSelect = document.getElementById("buttonForSelect");
-    var stateLike = 0;
-    like.addEventListener("click", function () {
-      if (stateLike === 1) {
-        like.style.color = "#000000";
-        likeNum.style.color = "#000000";
-        stateLike = 0;
-      } else {
-        like.style.color = "#E26714";
-        likeNum.style.color = "#E26714";
-        stateLike = 1;
-      }
-    });
-    postSet.addEventListener("click", function () {
-      console.log("postSetting clicked");
-    });
+
     var showWrite = document.getElementById("writePost");
     console.log(showWrite.style.display);
     postingImg.addEventListener("click", function () {
@@ -82,6 +67,27 @@ const Homeweb = () => {
           parseInt(setHeight.getPropertyValue("border-bottom-width")) +
           "px";
       });
+    });
+  };
+
+  var postEventListeners = () => {
+    var like = document.getElementById("like");
+    var likeNum = document.getElementById("likeNum");
+    var postSet = document.getElementById("postSet");
+    var stateLike = 0;
+    like.addEventListener("click", function () {
+      if (stateLike === 1) {
+        like.style.color = "#000000";
+        likeNum.style.color = "#000000";
+        stateLike = 0;
+      } else {
+        like.style.color = "#E26714";
+        likeNum.style.color = "#E26714";
+        stateLike = 1;
+      }
+    });
+    postSet.addEventListener("click", function () {
+      console.log("postSetting clicked");
     });
   };
 
@@ -127,9 +133,9 @@ const Homeweb = () => {
   };
 
   var uploadPost = () => {
-    var a = document.getElementById("postWriteID");
+    var postWriteID = document.getElementById("postWriteID");
 
-    if (a.value === "") {
+    if (postWriteID.value === "") {
       alert("Please type what you want to share");
     } else if (selectedItem === -1) {
       alert("Please select a topic");
@@ -138,21 +144,57 @@ const Homeweb = () => {
         .post(`${BackendConn}post/addPost`, {
           USER_ID: currUser._id,
           TOPIC_NAME: selectedItemName,
-          BODY: a.value,
+          BODY: postWriteID.value,
         })
         .then((response) => {
           if (response.status == 200) {
-
             //clear and hide
             cancelPost();
 
             //bring and repopulate posts in timeline
-            populatePosts()
+            populatePosts();
           } else {
             alert("Something Went Wrong...");
           }
         });
     }
+  };
+
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+
+  var searchUser = () => {
+    
+    var searchUser = document.querySelector(".searchBox-homeweb > input").value;
+    const $regex = escapeRegExp(searchUser)
+    console.log(searchUser)
+    console.log($regex)
+    
+    axios
+      .get(`${BackendConn}user/findUserByUsername/${$regex}`)
+      .then((res) => {
+        console.log(res);
+        if(res.status === 200) {
+          if(res.data === "") {
+            alert("No user found under that username")
+          } else {
+            //first remove myself from search res if exists
+            var myDataInd = -1;
+            res.data.forEach((item, index) => {
+              if(item._id === currUser._id) {
+                myDataInd = index
+                res.data.splice(myDataInd, 1)
+              }
+            })
+            
+            //store in local storage
+            localStorage.setItem("SearchRes", JSON.stringify(res.data))
+            navigate(SEARCHRES)
+          }
+        }
+        
+      });
   };
 
   return (
@@ -162,27 +204,36 @@ const Homeweb = () => {
           <div className="headerApp">
             <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
-          <div className="bt1">
-            <button className="settings" onClick={()=>{
-              navigate("/setting");
-            }}>Settings</button>
-          </div>
-          <div className="bt2">
+          <div className="hdrBtnContainer">
+            <button
+              className="settings"
+              onClick={() => {
+                navigate(SETTING);
+              }}
+            >
+              Settings
+            </button>
+
             <button
               className="logout"
               onClick={() => {
                 localStorage.removeItem("currentUser");
-                navigate("/login");
+                navigate(LOGIN);
               }}
             >
               Log out
             </button>
           </div>
         </div>
+
+        <div className="searchBox-homeweb">
+          <input type="text" placeholder="Search user" />
+          <button onClick={searchUser}>Search</button>
+        </div>
         <div className="tabBar">
           <div className="grid-container">
             <div className="grid-item">
-              <a href="/profile">
+              <a href={PROFILE}>
                 <img
                   src="profile.png"
                   alt="Sample profile"
@@ -193,7 +244,7 @@ const Homeweb = () => {
               </a>
             </div>
             <div className="grid-item">
-              <a href="/follower">
+              <a href={FOLLOWER}>
                 <img
                   src="follower.png"
                   alt="Sample profile"
@@ -204,7 +255,7 @@ const Homeweb = () => {
               </a>
             </div>
             <div className="grid-item">
-              <a href="/following">
+              <a href={FOLLOWING}>
                 <img
                   src="following.png"
                   alt="Sample profile"

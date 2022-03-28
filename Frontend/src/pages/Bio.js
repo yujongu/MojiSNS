@@ -32,6 +32,7 @@ function Bio() {
         var myBirthday = bDayArr[2] + "-" + bDayArr[1] + "-" + bDayArr[0];
         console.log("Birthday: ");
         console.log(myBirthday);
+        console.log(gender)
         me.birthday = new Date(myBirthday);
         me.gender = gender;
 

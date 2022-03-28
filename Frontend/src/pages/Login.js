@@ -29,11 +29,10 @@ function Login() {
     }
   };
 
-  window.onload = functionForget;
-
   function functionForget() {
-    // console.log(document.getElementById("emailInput").value)
+    console.log(document.getElementById("emailInput").value)
     var emailAddr = document.getElementById("emailInput").value;
+    alert("The password reset email is sent!")
     const response = axios.post(`${BackendConn}user/auth/requestResetPassword/${emailAddr}`);
     response.then((response) => {
       // if (response.status === 200) {
