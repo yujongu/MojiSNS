@@ -13,7 +13,11 @@ import Profile from "./pages/Profile";
 import Setting from "./pages/Setting";
 import AccountSetting from "./pages/AccountSetting"
 import PasswordReset from './pages/PasswordReset';
+import UserSearchResult from './pages/UserSearchResult';
 import * as PageLinks from "./constants/routes"
+import UserProfile from './pages/UserProfile';
+import Follower from './pages/Follower';
+import Following from './pages/Following';
 
 function App() {
   return (
@@ -25,11 +29,15 @@ function App() {
         <Route path={PageLinks.BIO} element={<Bio />} />
         <Route path={PageLinks.INTEREST} element={<Interest />} />
         <Route path={PageLinks.HOMEWEB} element={<Homeweb />} />
+        <Route path={PageLinks.SEARCHRES} element={<UserSearchResult/>}/>
         <Route path={PageLinks.FORGOTID} element={<ForgetID />} />
         <Route path={PageLinks.PROFILE} element={<Profile />} />
+        <Route path={PageLinks.USERPROFILE} element={<UserProfile/>}/>
         <Route path={PageLinks.SETTING} element={<Setting />} />
         <Route path={PageLinks.ACCSETTING} element={<AccountSetting />} />
         <Route path={PageLinks.PASSRESET} element={<PasswordReset />} />
+        <Route path={PageLinks.FOLLOWER} element={<Follower />} />
+        <Route path={PageLinks.FOLLOWING} element={<Following />} />
       </Routes>
     </Router>
   );
