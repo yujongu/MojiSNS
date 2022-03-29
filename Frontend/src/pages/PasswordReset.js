@@ -60,7 +60,7 @@ const PasswordReset = (props) => {
                         user
                       );
                       alert("Password has changed!");
-                      navigate("/signin");
+                      navigate("/login");
                 }
                 // axios
                 //     .get(`${BackendConn}user/login/${username}/${password}`)
