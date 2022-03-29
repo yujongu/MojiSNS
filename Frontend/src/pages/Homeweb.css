@@ -40,6 +40,27 @@
   display: flex;
 }
 
+.notification {
+  position: relative;
+  background-color: white;
+  border-color: white;
+  border-style: none;
+  border-radius: 20px;
+  padding: 3px 40px;
+  text-align: center;
+  font-size: 17px;
+  font-family: Calibri;
+  transition-duration: 0.4s;
+  color: #a6a6a6;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-left: 10px;  
+}
+.notification:hover {
+  background-color: white;
+  color: black;
+}
+
 .settings {
   position: relative;
   background-color: white;
@@ -53,6 +74,9 @@
   transition-duration: 0.4s;
   color: #a6a6a6;
   font-weight: bold;
+  white-space: nowrap;
+  margin-left: 10px;
+
 }
 
 .settings:hover {

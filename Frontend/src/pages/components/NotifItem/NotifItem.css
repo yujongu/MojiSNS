@@ -1,0 +1,40 @@
+.notifItem {
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+
+
+.notifHaveRead {
+    background-color: transparent;
+    width: 5px;
+    margin-right: 10px;
+}
+
+.notifHaveNotRead {
+    background-color: #FFC368;
+    width: 5px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.notifGoodStuff {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: white;
+  padding: 10px;
+  border-radius: 15px;
+}
+.notification_title {
+    display: flex;
+    flex-direction: row;
+    font-size: larger;
+}
+.notification_title div:first-child{
+    font-weight: bolder;
+}
+
+.notifTime {
+    font-size: 12px;
+}
