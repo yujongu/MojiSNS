@@ -132,7 +132,7 @@ router.patch("/updateUser/:id", async (req, res) => {
       user.USER_DESCRIPTION = req.body.USER_DESCRIPTION;
     }
     if (req.body.USER_SEX) {
-      user.USER_SEX = req.body.USER_SEX;
+      console.log(req.body);
     }
     if (req.body.FOLLOWING_TOPICS) {
       user.FOLLOWING_TOPICS = req.body.FOLLOWING_TOPICS;

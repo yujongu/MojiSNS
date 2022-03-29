@@ -75,6 +75,28 @@ hr.solid {
   margin-bottom: 5%;
 }
 
+.birthdaySet{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5%;
+}
+
+.rightBirth{
+  width: 45%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.customBday{
+  background-color: #ffc368;
+  border-radius: 15px;
+  border-style: none;
+  color: #e26714;
+  font-weight: bold;
+  padding-left: 3%;
+  padding-right: 2%;
+}
+
 select{
   background-color: #ffc368;
   width: 100%;
@@ -87,6 +109,26 @@ select{
   line-height: 1;
   border-radius: 15px;
   height: 22px;
+  }
+
+  button[type="submitBirth"]{
+    position: relative;
+    background-color: #ffc368;
+    color: #e26714;
+    border-style: none;
+    width: 100px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    transition-duration: 0.4s;
+  }
+  
+  button[type="submitBirth"]:hover {
+    background-color: #ffac2e;
+    transition: 500ms;
   }
 
 
