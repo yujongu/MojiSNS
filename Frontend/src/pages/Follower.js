@@ -52,6 +52,11 @@ function Follower() {
       <div className="followerContainer">
         <h1>Follower List</h1>
         <div className="followingToolbox">
+          {followerData.length === 1 ? (
+            <p>{followerData.length} user follows you</p>
+          ) : (
+            <p>{followerData.length} users follow you</p>
+          )}
           <p>Followed today: {todayCount}</p>
         </div>
         <div className="followerInnerContainer">

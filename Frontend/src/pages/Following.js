@@ -49,8 +49,12 @@ function Following() {
     <main className="followingMain">
       <div className="followingContainer">
         <h1>Following List</h1>
-
         <div className="followingToolbox">
+          {followingData.length === 1 ? (
+            <p>You follow {followingData.length} user</p>
+          ) : (
+            <p>You follow {followingData.length} users</p>
+          )}
           <p>Followed today: {todayCount}</p>
         </div>
 
