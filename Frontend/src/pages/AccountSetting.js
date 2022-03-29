@@ -34,18 +34,25 @@ const AccountSetting = () => {
         const user = {
             USER_EMAIL: newEmailAddr
         };
-        const response = await axios.patch(
-            `${BackendConn}user/updateUser/${currUser._id}`, user
-        ).then((res) => {
-            console.log(res);
-            localStorage.setItem("currentUser", JSON.stringify(res.data))
-            navigate("/accsetting#");
-        })
-            .catch((error) => {
-                alert("Email has not been updated!")
-            });
+        const response = await axios.get(
+            `${BackendConn}user/getUserByEmail/${newEmailAddr}`
+        );
+        if (response.data !== "") {
+            alert("Email already exists!");
+        } else {
+            const response = await axios.patch(
+                `${BackendConn}user/updateUser/${currUser._id}`, user
+            ).then((res) => {
+                console.log(res);
+                localStorage.setItem("currentUser", JSON.stringify(res.data))
+                navigate("/accsetting#");
+            })
+                .catch((error) => {
+                    alert("Email has not been updated!")
+                });
 
-        alert("Email has been updated!");
+            alert("Email has been updated!");
+        }
     }
 
     async function functionGender() {
@@ -67,7 +74,7 @@ const AccountSetting = () => {
         alert("Gender has been updated!");
     }
 
-    async function functionBirth(){
+    async function functionBirth() {
         var newBday = document.getElementById("birthday").value;
         console.log(newBday);
         const user = {
@@ -90,9 +97,11 @@ const AccountSetting = () => {
         var deleteMsg = document.getElementById("deleteMessage").value;
         console.log(deleteMsg);
         if (deleteMsg === "Delete My Account") {
-            const response = await axios.patch(
+            const response = await axios.delete(
                 `${BackendConn}user/deleteUser/${currUser._id}`
             )
+            localStorage.removeItem("currentUser");
+            navigate("/login");
             alert("Account has been deleted");
         }
         else {

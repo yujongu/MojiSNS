@@ -95,7 +95,7 @@ router.get("/findUserByUsername/:username", async (req, res) => {
 
 router.delete("/deleteUser/:id", async (req, res) => {
   try {
-    const user = User.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     sendEmail(
       user.USER_EMAIL,
       "Your Moji Account is Deleted.",
