@@ -96,7 +96,8 @@ router.get("/findUserByUsername/:username", async (req, res) => {
 router.delete("/deleteUser/:id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
-    await Post.findByIdAndDelete({ USER_ID: req.params.id });
+    await Post.deleteMany({USER_ID: req.params.id})
+    
     console.log("delete user");
     res.send("delete user");
   } catch (error) {
@@ -147,7 +148,7 @@ router.patch("/updateUser/:id", async (req, res) => {
 router.get("/getMyFollowings/:id", async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id })
-      .select("FOLLOWING_USERS")
+      //.select("FOLLOWING_USERS")
       .populate("FOLLOWING_USERS.USER_ID")
       .sort({"FOLLOWING_USERS.FOLLOW_DATE": 1});
 
@@ -280,7 +281,7 @@ router.get("/login/:username/:password", async (req, res) => {
 
     const keyBuffer = Buffer.from(key, "hex");
     const match = timingSafeEqual(hashedBuffer, keyBuffer);
-
+    
     if (match) {
       res.send(user);
       console.log(user);
@@ -321,12 +322,17 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
 });
 
 router.post("/auth/resetPassword", async (req, res) => {
-  let passwordResetToken = await Token.findOne({ userId: req.body.userId });
+  let passwordResetToken = await Token.findOne({ userId: req.body.userid });
   console.log("hello");
   console.log(req.body);
   if (!passwordResetToken) {
+    console.log("Invalid or expired password reset token1234")
     return res.send("Invalid or expired password reset token");
   }
+
+
+
+  
   const [salt, key] = passwordResetToken.token.split(":");
   const hashedBuffer = scryptSync(req.body.token, salt, 64);
 
@@ -334,7 +340,13 @@ router.post("/auth/resetPassword", async (req, res) => {
   const match = timingSafeEqual(hashedBuffer, keyBuffer);
   //const isValid = await bcrypt.compare(token, passwordResetToken.token);
 
+  //console.log(hashedBuffer)
+  console.log(keyBuffer)
+  
+
+  console.log(match)
   if (!match) {
+    console.log("Invalid or expired password reset token")
     return res.send("Invalid or expired password reset token");
   }
 
@@ -343,13 +355,11 @@ router.post("/auth/resetPassword", async (req, res) => {
     "hex"
   );
 
-  await User.updateOne(
-    { _id: userId },
-    { $set: { USER_PW: `${salt2}:${hashedPassword}` } },
-    { new: true }
-  );
 
-  const user = await User.findById({ _id: userId });
+  const user = await User.findById(req.body.userid);
+  user.USER_PW = `${salt2}:${hashedPassword}`;
+  
+  await user.save();
 
   sendEmail(
     user.USER_EMAIL,
@@ -362,7 +372,26 @@ router.post("/auth/resetPassword", async (req, res) => {
 
   await passwordResetToken.deleteOne();
 
-  return res.send("Password reset");
+  res.send("Password reset");
 });
+
+
+router.post("/addProfilePicture/:id", async (req, res) => {
+  console.log("body =")
+  console.log(req.body);
+
+  try {
+    await User.updateOne(
+      { _id: req.params.id },
+      { $set: { PROFILE_PICTURE: req.body.FILE } },
+      { new: true }
+    );
+    console.log(req.body.FILE);
+    res.send("file uploaded");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 
 module.exports = router;
