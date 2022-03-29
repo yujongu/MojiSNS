@@ -6,6 +6,14 @@
   width: 100vw;
 }
 
+.zeroNotificationContainer {
+  background-color: white;
+  font-size: x-large;
+  padding: 10px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
 .notifContainer {
   display: block;
   position: relative;
