@@ -5,7 +5,7 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const Token = require("../models/token");
 const sendEmail = require("../email/sendEmail");
-
+const axios = require('axios');
 const router = express.Router();
 const { scryptSync, randomBytes, timingSafeEqual } = require("crypto");
 //const bcrypt = require("bcrypt");
@@ -95,9 +95,28 @@ router.get("/findUserByUsername/:username", async (req, res) => {
 
 router.delete("/deleteUser/:id", async (req, res) => {
   try {
+    const user = User.findById(req.params.id);
+    sendEmail(
+      user.USER_EMAIL,
+      "Your Moji Account is Deleted.",
+      {
+        name: user.USER_USERNAME,
+      },
+      "./template/deleteEmail.handlebars"
+    );
+
     await User.findByIdAndDelete(req.params.id);
     await Post.deleteMany({USER_ID: req.params.id})
     
+    axios.delete(`http://localhost:5000/api/comment/deleteUser/${req.params.id}`)
+    .then(response => {
+      console.log(response.data.url);
+      //console.log(response.data.explanation);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
     console.log("delete user");
     res.send("delete user");
   } catch (error) {

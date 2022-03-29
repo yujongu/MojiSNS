@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./UserInfoShort.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BackendConn } from "../../../constants/backendConn";
 
 import axios from "axios";
 import { USERPROFILE } from "../../../constants/routes";
 import datePretty from "../../../helperFunctions/datePretty";
+import { NOTIFTYPE_FOLLOW } from "../../../constants/notificationTypes";
 
 function UserInfoShort({ ind, username, uid, showTime, time }) {
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -37,8 +38,16 @@ function UserInfoShort({ ind, username, uid, showTime, time }) {
     axios
       .patch(`${BackendConn}user/followUser/${currUser._id}`, { USER_ID: uid })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log("Added!");
+          //notify user about the follow
+          axios.post(`${BackendConn}notification/sendNotification`, {
+            RECEP_USER_ID: uid,
+            SENDER_USER_ID: currUser._id,
+            NOTIF_TYPE: NOTIFTYPE_FOLLOW,
+            BODY: "",
+          });
+
           updateCurrUserInfo(currUser.USER_USERNAME);
           setFollowing(true);
         } else {
@@ -46,6 +55,7 @@ function UserInfoShort({ ind, username, uid, showTime, time }) {
         }
       });
   };
+
   var unfollowTargetUser = (event) => {
     event.stopPropagation();
     axios
@@ -53,7 +63,19 @@ function UserInfoShort({ ind, username, uid, showTime, time }) {
         USER_ID: uid,
       })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
+          //delete followed notification
+          axios
+            .get(
+              `${BackendConn}notification/getFollowingNotification/${currUser._id}/${uid}`
+            )
+            .then((res) => {
+              console.log(res);
+
+              console.log(res.data._id);
+              axios.delete(`${BackendConn}notification//deleteNotification/${res.data._id}`)
+            });
+
           updateCurrUserInfo(currUser.USER_USERNAME);
           setFollowing(false);
         } else {
@@ -67,7 +89,7 @@ function UserInfoShort({ ind, username, uid, showTime, time }) {
       .get(`${BackendConn}user/getUserByUsername/${username}`)
       .then((res) => {
         console.log(res);
-        if (res.status == 200) {
+        if (res.status === 200) {
           localStorage.setItem("currentUser", JSON.stringify(res.data));
         }
       })

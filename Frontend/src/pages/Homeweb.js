@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./Homeweb.css";
 import { useNavigate } from "react-router-dom";
-import ReactDOM from "react-dom";
 import PostCard from "./components/PostCard";
-import TopicView from "./components/TopicView/TopicView";
 import TopicItem from "./components/TopicsBtn/TopicItem";
 import { interestList } from "../constants/interests";
 import { BackendConn } from "../constants/backendConn";
-import { SEARCHRES } from "../constants/routes";
-import { LOGIN, PROFILE, SETTING, FOLLOWER, FOLLOWING } from "../constants/routes";
+import { NOTIFICATION, SEARCHRES } from "../constants/routes";
+import {
+  LOGIN,
+  PROFILE,
+  SETTING,
+  FOLLOWER,
+  FOLLOWING,
+} from "../constants/routes";
 import axios from "axios";
 
 const Homeweb = () => {
@@ -23,7 +27,6 @@ const Homeweb = () => {
     populatePosts();
     eventListeners();
   }, []);
-
 
   //component did update
   React.useEffect(() => {
@@ -161,40 +164,36 @@ const Homeweb = () => {
   };
 
   function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
   }
 
   var searchUser = () => {
-    
     var searchUser = document.querySelector(".searchBox-homeweb > input").value;
-    const $regex = escapeRegExp(searchUser)
-    console.log(searchUser)
-    console.log($regex)
-    
-    axios
-      .get(`${BackendConn}user/findUserByUsername/${$regex}`)
-      .then((res) => {
-        console.log(res);
-        if(res.status === 200) {
-          if(res.data === "") {
-            alert("No user found under that username")
-          } else {
-            //first remove myself from search res if exists
-            var myDataInd = -1;
-            res.data.forEach((item, index) => {
-              if(item._id === currUser._id) {
-                myDataInd = index
-                res.data.splice(myDataInd, 1)
-              }
-            })
-            
-            //store in local storage
-            localStorage.setItem("SearchRes", JSON.stringify(res.data))
-            navigate(SEARCHRES)
-          }
+    const $regex = escapeRegExp(searchUser);
+    console.log(searchUser);
+    console.log($regex);
+
+    axios.get(`${BackendConn}user/findUserByUsername/${$regex}`).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        if (res.data === "") {
+          alert("No user found under that username");
+        } else {
+          //first remove myself from search res if exists
+          var myDataInd = -1;
+          res.data.forEach((item, index) => {
+            if (item._id === currUser._id) {
+              myDataInd = index;
+              res.data.splice(myDataInd, 1);
+            }
+          });
+
+          //store in local storage
+          localStorage.setItem("SearchRes", JSON.stringify(res.data));
+          navigate(SEARCHRES);
         }
-        
-      });
+      }
+    });
   };
 
   return (
@@ -205,6 +204,16 @@ const Homeweb = () => {
             <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
           <div className="hdrBtnContainer">
+            
+            <button
+              className="notification"
+              onClick={() => {
+                navigate(NOTIFICATION);
+              }}
+            >
+              Notifications
+            </button>
+
             <button
               className="settings"
               onClick={() => {
