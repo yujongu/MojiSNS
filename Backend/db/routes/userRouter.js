@@ -110,7 +110,9 @@ router.patch("/updateUser/:id", async (req, res) => {
   try {
     console.log("wassup");
     console.log(req.body.USER_EMAIL);
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).populate(
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+    );
 
     if (req.body.USER_EMAIL) {
       user.USER_EMAIL = req.body.USER_EMAIL;
