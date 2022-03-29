@@ -6,6 +6,7 @@ const userRoutes = require("./db/routes/userRouter");
 const postRoutes = require("./db/routes/postRouter");
 const topicRoutes = require("./db/routes/topicRouter");
 const commentRoutes = require("./db/routes/commentRouter");
+const notificationRouter = require("./db/routes/notificationRouter");
 const bp = require('body-parser')
 require("dotenv").config({ path: "./config.env" });
 
@@ -30,5 +31,6 @@ mongoose
     app.use("/api/user", userRoutes);
     app.use("/api/topic", topicRoutes);
     app.use("/api/comment", commentRoutes);
+    app.use("/api/notification", notificationRouter);
   })
 
