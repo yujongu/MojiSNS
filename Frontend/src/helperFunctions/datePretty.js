@@ -19,12 +19,13 @@ var datePretty = (time) => {
     } else {
       //hours
       timeDiff = Math.floor(timeDiff / 60);
-      if (timeDiff >= 0 && timeDiff < 60) {
+      if (timeDiff >= 0 && timeDiff < 24) {
         pastTime = `${timeDiff} hrs`;
       } else {
         //days
         timeDiff = Math.floor(timeDiff / 24);
-        if (timeDiff >= 0 && timeDiff < 60) {
+        //todo: fix 31 to represent month day number
+        if (timeDiff >= 0 && timeDiff < 31) {
           pastTime = `${timeDiff} days`;
         } else {
           //years
