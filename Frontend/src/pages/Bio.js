@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./Bio.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BackendConn } from "../constants/backendConn";
 
 function Bio() {
   let navigate = useNavigate();
@@ -25,24 +26,28 @@ function Bio() {
         //passed all checks
         //update gender info and birthday info
 
-        var me = JSON.parse(localStorage.getItem("user"));
+        var me = JSON.parse(localStorage.getItem("currentUser"));
         var myId = me._id;
         var bDayArr = birthday.split("/");
         var myBirthday = bDayArr[2] + "-" + bDayArr[1] + "-" + bDayArr[0];
         console.log("Birthday: ");
         console.log(myBirthday);
+        console.log(gender)
         me.birthday = new Date(myBirthday);
         me.gender = gender;
 
-        // const response = await axios.post(
-        //   `http://localhost:5000/api/user/updateUser/${myId}`,
-        //   {
-        //     USER_BIRTHDAY: myBirthday,
-        //     USER_SEX: gender,
-        //   }
-        // );
-        // console.log(response);
-        navigate("/signup/interest");
+        const response = await axios.patch(
+          `${BackendConn}user/updateUser/${myId}`,
+          {
+            USER_BIRTHDAY: myBirthday,
+            USER_SEX: gender,
+          }
+        );
+        console.log(response);
+        if(response.data._id === myId) {
+          localStorage.setItem('currentUser', JSON.stringify(response.data))
+          navigate("/signup/interest");
+        }
       } else {
         alert("Please check your gender!");
       }
@@ -96,7 +101,7 @@ function Bio() {
           </div>
 
           <div class="NextB">
-            <button type="submit">Next</button>
+            <button type="submit" className="bio">Next</button>
           </div>
         </div>
       </form>

@@ -8,9 +8,8 @@ const postSchema = new Schema({ // need to add more
       required: true
     },
 
-    TOPIC_ID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Topic",
+    TOPIC_NAME: {
+        type: String,
         required: true
     },
 

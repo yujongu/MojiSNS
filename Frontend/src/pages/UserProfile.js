@@ -1,5 +1,5 @@
 // import React from "react";
-import "./Profile.css";
+import "./UserProfile.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import TopSettingBar from "./components/Header/TopSettingBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,41 +9,22 @@ import React, { useState } from "react";
 import { BackendConn } from "../constants/backendConn";
 import axios from "axios";
 
-function Profile() {
-  console.log("This is user");
+function UserProfile() {
+  const location = useLocation();
   let navigate = useNavigate();
 
-  const currUser = JSON.parse(localStorage.getItem("currentUser"));
-  //todo get curr user posts.
-  var monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const bday = currUser.USER_BIRTHDAY.split("T")[0].split("-");
-  var formattedBday =
-    monthNames[parseInt(bday[1]) - 1] + " " + bday[2] + ", " + bday[0];
-  var topics = "";
-  console.log(currUser.FOLLOWING_TOPICS);
-  currUser.FOLLOWING_TOPICS.forEach((t) => {
-    topics += `${t} `;
-  });
+  var targetUsername = location.state.username;
+  var targetUserId = location.state.uid;
 
-  const [show, setShow] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
+  const [userData, setUserData] = useState([]);
+  var formattedBday = "";
+  var topics = "";
 
   React.useEffect(() => {
     populatePosts();
+    getTargetUser();
   }, []);
 
   //component did update
@@ -53,13 +34,31 @@ function Profile() {
     }
   }, [postData]);
 
+  React.useEffect(() => {
+    if (userData.length != 0) {
+      userEventListeners();
+    }
+  }, [userData]);
+
   var populatePosts = () => {
-    const response = axios.get(`${BackendConn}post/getPosts/${currUser._id}`);
+    const response = axios.get(`${BackendConn}post/getPosts/${targetUserId}`);
     response.then((response) => {
       if (response.status === 200) {
         setLoading(false);
         setPostData(response.data);
-        console.log(response);
+      } else {
+        alert("Something Went Wrong...");
+      }
+    });
+  };
+
+  var getTargetUser = () => {
+    const response = axios.get(
+      `${BackendConn}user/getUserByUsername/${targetUsername}`
+    );
+    response.then((response) => {
+      if (response.status === 200) {
+        setUserData(response.data);
       } else {
         alert("Something Went Wrong...");
       }
@@ -86,6 +85,37 @@ function Profile() {
       console.log("postSetting clicked");
     });
   };
+
+  var userEventListeners = () => {
+    var monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const bday = userData.USER_BIRTHDAY.split("T")[0].split("-");
+    formattedBday =
+      monthNames[parseInt(bday[1]) - 1] + " " + bday[2] + ", " + bday[0];
+
+    userData.FOLLOWING_TOPICS.forEach((t) => {
+      topics += `${t} `;
+    });
+
+    var bdayContainer = document.querySelector(".birthday > p");
+    bdayContainer.textContent = formattedBday;
+
+    var interestList = document.querySelector(".interestList");
+    interestList.textContent = topics;
+  };
+
   return (
     <main className="profileContainer">
       <div className="profileMainContainer">
@@ -98,21 +128,9 @@ function Profile() {
               </div>
 
               <div className="nameInfos">
-                <p id="prof_name">{currUser.USER_USERNAME}</p>
-                <p id="prof_username">{currUser.USER_EMAIL}</p>
+                <p id="prof_name">{userData.USER_USERNAME}</p>
+                <p id="prof_username">{userData.USER_EMAIL}</p>
               </div>
-            </div>
-
-            <div className="profileEditBtns">
-              <button className="profile_editButton">Edit Profile</button>
-              <button
-                className="profile_settingButton"
-                onClick={() => {
-                  navigate("/accsetting");
-                }}
-              >
-                Settings
-              </button>
             </div>
           </div>
 
@@ -126,19 +144,11 @@ function Profile() {
                 <i className="fa-solid fa-face-grin-tongue-squint fa-lg"></i>
               </p>
               <div className="interestList">{topics}</div>
-              <div className="interestEditBtns">
-                <button
-                  className="interestModify"
-                  // onClick={() => navigate('/signup/interest')}
-                >
-                  +/-
-                </button>
-              </div>
             </div>
           </div>
         </div>
 
-        <p id="myPostTitle">My Posts</p>
+        <p id="myPostTitle">{targetUsername}'s Posts</p>
 
         <div id="postHolder">
           {isLoading ? (
@@ -161,4 +171,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default UserProfile;

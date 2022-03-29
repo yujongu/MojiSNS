@@ -56,11 +56,13 @@ const userSchema = new Schema({
 
     FOLLOWING_TOPICS: {
         type: [{
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Topic"
-        }]  // TOPIC_ID
-    }
+          type: String,
+        }]
+    },
 
+    PROFILE_PICTURE: {
+      type: Buffer // casted to MongoDB's BSON type: binData
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

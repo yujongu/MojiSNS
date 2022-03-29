@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/getPosts", async (req, res) => {
   console.log("find posts");
   const posts = await Post.find()
-  .populate("USER_ID TOPIC_ID LIKED_USERS")
+  .populate("USER_ID TOPIC_NAME LIKED_USERS")
   .sort({createdAt: -1});
 
   console.log(posts);
@@ -21,7 +21,7 @@ router.post("/addPost", async (req, res) => {
   try {
     const post = new Post({
       USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
-      TOPIC_ID: mongoose.Types.ObjectId(req.body.TOPIC_ID),
+      TOPIC_NAME: req.body.TOPIC_NAME,
       BODY: req.body.BODY
     });
     await post.save(); //save this object to collection in db
@@ -40,7 +40,7 @@ router.get("/getPost/:id", async (req, res) => {
 
   try {
     const post = await Post.findById(id)
-    .populate("USER_ID TOPIC_ID LIKED_USERS");
+    .populate("USER_ID TOPIC_NAME LIKED_USERS");
 
     console.log(post);
     res.send(post); 
@@ -80,8 +80,8 @@ router.patch("/updatePost/:id",  (req, res) => {
 router.get("/getPosts/:id", async (req, res) => {
   console.log("find posts by user");
   const id = req.params.id;
-  const posts = await Post.find({_id: id})
-  .populate("USER_ID TOPIC_ID LIKED_USERS")
+  const posts = await Post.find({USER_ID: id})
+  .populate("USER_ID TOPIC_NAME LIKED_USERS")
   .sort({createdAt: -1});
     
   console.log(posts);

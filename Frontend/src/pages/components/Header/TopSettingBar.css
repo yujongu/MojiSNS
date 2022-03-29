@@ -20,4 +20,10 @@
   border-radius: 30px;
   font-size: 12px;
   font-weight: bold;
+  transition-duration: 0.4s;
+}
+
+#topSettingBar_container button:hover {
+  background-color: white;
+  color: black;
 }

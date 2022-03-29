@@ -1,11 +1,13 @@
 import React from "react";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
+import datePretty from "../../helperFunctions/datePretty";
 
-function PostCard({userName, postTime, likeCount, commentCount, postText}) {
-    var pastTime = Date.now() - postTime;
+function PostCard({ userName, postTime, likeCount, commentCount, postText }) {
 
-    return (
+  var pastTime = datePretty(postTime)
+
+  return (
     <div className="postingCard">
       <div className="postingHeader">
         <div className="postingProfile">
@@ -15,29 +17,27 @@ function PostCard({userName, postTime, likeCount, commentCount, postText}) {
           <h3>{userName}</h3>
         </div>
         <div className="dateWritten">
-          <h4>Posted {pastTime} hrs ago</h4>
+          <h4>Posted {pastTime} ago</h4>
         </div>
         <div className="postSetting">
-          <i class="fa-solid fa-ellipsis fa-2xl" id="postSet"></i>
+          <i className="fa-solid fa-ellipsis fa-2xl" id="postSet"></i>
         </div>
       </div>
       <div className="postingBody">
         <div className="postingSection">
           <div className="postWords">
-            <h3>
-              {postText}
-            </h3>
+            <h3>{postText}</h3>
           </div>
         </div>
         <div className="iconSection">
           <div className="likeSection">
-            <i class="fa-regular fa-thumbs-up fa-2xl" id="like"></i>
+            <i className="fa-regular fa-thumbs-up fa-2xl" id="like"></i>
             <div className="likeCount" id="likeNum">
               {likeCount}
             </div>
           </div>
           <div className="commentSection">
-            <i class="fa-regular fa-comment-dots fa-2xl"></i>
+            <i className="fa-regular fa-comment-dots fa-2xl"></i>
             <h5 className="commentCount">{commentCount}</h5>
           </div>
         </div>

@@ -1,63 +1,239 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Homeweb.css";
 import { useNavigate } from "react-router-dom";
+import ReactDOM from "react-dom";
 import PostCard from "./components/PostCard";
+import TopicView from "./components/TopicView/TopicView";
+import TopicItem from "./components/TopicsBtn/TopicItem";
+import { interestList } from "../constants/interests";
+import { BackendConn } from "../constants/backendConn";
+import { SEARCHRES } from "../constants/routes";
+import { LOGIN, PROFILE, SETTING, FOLLOWER, FOLLOWING } from "../constants/routes";
+import axios from "axios";
 
 const Homeweb = () => {
   let navigate = useNavigate();
-  window.onload = function () {
+  const currUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const [isLoading, setLoading] = useState(true);
+  const [postData, setPostData] = useState([]);
+
+  //window onload
+  React.useEffect(() => {
+    populatePosts();
+    eventListeners();
+  }, []);
+
+
+  //component did update
+  React.useEffect(() => {
+    if (postData.length != 0) {
+      postEventListeners();
+    }
+  }, [postData]);
+
+  var eventListeners = () => {
+    var postingImg = document.getElementById("postingImg");
+    var buttonForSelect = document.getElementById("buttonForSelect");
+
+    var showWrite = document.getElementById("writePost");
+    console.log(showWrite.style.display);
+    postingImg.addEventListener("click", function () {
+      if (showWrite.style.display === "block") {
+        showWrite.style.display = "none";
+        console.log("hide");
+      } else {
+        showWrite.style.display = "block";
+        console.log("show");
+      }
+    });
+    var showTopicList = document.getElementById("writeSelectTopic");
+    buttonForSelect.addEventListener("click", function topicListShow() {
+      if (showTopicList.style.display === "flex") {
+        showTopicList.style.display = "none";
+        console.log("hide");
+      } else {
+        showTopicList.style.display = "flex";
+        console.log("show");
+      }
+    });
+    document.querySelectorAll("textarea").forEach(function (a) {
+      a.addEventListener("input", function () {
+        var setHeight = window.getComputedStyle(this);
+        this.style.height = "auto";
+        this.style.height =
+          this.scrollHeight +
+          parseInt(setHeight.getPropertyValue("border-top-width")) +
+          parseInt(setHeight.getPropertyValue("border-bottom-width")) +
+          "px";
+      });
+    });
+  };
+
+  var postEventListeners = () => {
     var like = document.getElementById("like");
     var likeNum = document.getElementById("likeNum");
     var postSet = document.getElementById("postSet");
-    var postingImg = document.getElementById("postingImg");
-
-
     var stateLike = 0;
     like.addEventListener("click", function () {
       if (stateLike === 1) {
         like.style.color = "#000000";
         likeNum.style.color = "#000000";
         stateLike = 0;
-      }
-      else {
+      } else {
         like.style.color = "#E26714";
         likeNum.style.color = "#E26714";
         stateLike = 1;
       }
     });
-
     postSet.addEventListener("click", function () {
       console.log("postSetting clicked");
     });
+  };
 
-    var showWrite = document.getElementById("myDIV");
-    console.log(showWrite.style.display);
-    postingImg.addEventListener("click", function () {
-      if (showWrite.style.display === "none") {
-        showWrite.style.display = "flex";
-        console.log("show");
-      }
-      else {
-        showWrite.style.display = "none";
-        console.log("hide");
+  var populatePosts = () => {
+    const response = axios.get(`${BackendConn}post/getPosts`);
+    response.then((response) => {
+      if (response.status === 200) {
+        setLoading(false);
+        setPostData(response.data);
+      } else {
+        alert("Something Went Wrong...");
       }
     });
+  };
+
+  var selectedItem = -1;
+  var selectedItemName = "";
+  var itemSelectColorChange = (index) => {
+    selectedItem = index;
+    var list = document.querySelectorAll(".topicItems");
+    list.forEach((item) => {
+      var itm = item.querySelector("button");
+      if (itm.id == selectedItem) {
+        itm.style.backgroundColor = "#F4B183";
+        selectedItemName = itm.querySelector("p").innerHTML;
+      } else {
+        itm.style.backgroundColor = "#FBE5D6";
+      }
+    });
+  };
+
+  var cancelPost = () => {
+    var a = document.getElementById("postWriteID");
+    a.value = "";
+    selectedItem = -1;
+    selectedItemName = "";
+    var itemList = document.querySelectorAll(".topicItems");
+    itemList.forEach((item) => {
+      item.querySelector("button").style.backgroundColor = "#FBE5D6";
+    });
+    document.getElementById("writePost").style.display = "none";
+    document.getElementById("writeSelectTopic").style.display = "none";
+  };
+
+  var uploadPost = () => {
+    var postWriteID = document.getElementById("postWriteID");
+
+    if (postWriteID.value === "") {
+      alert("Please type what you want to share");
+    } else if (selectedItem === -1) {
+      alert("Please select a topic");
+    } else {
+      axios
+        .post(`${BackendConn}post/addPost`, {
+          USER_ID: currUser._id,
+          TOPIC_NAME: selectedItemName,
+          BODY: postWriteID.value,
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            //clear and hide
+            cancelPost();
+
+            //bring and repopulate posts in timeline
+            populatePosts();
+          } else {
+            alert("Something Went Wrong...");
+          }
+        });
+    }
+  };
+
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
   }
+
+  var searchUser = () => {
+    
+    var searchUser = document.querySelector(".searchBox-homeweb > input").value;
+    const $regex = escapeRegExp(searchUser)
+    console.log(searchUser)
+    console.log($regex)
+    
+    axios
+      .get(`${BackendConn}user/findUserByUsername/${$regex}`)
+      .then((res) => {
+        console.log(res);
+        if(res.status === 200) {
+          if(res.data === "") {
+            alert("No user found under that username")
+          } else {
+            //first remove myself from search res if exists
+            var myDataInd = -1;
+            res.data.forEach((item, index) => {
+              if(item._id === currUser._id) {
+                myDataInd = index
+                res.data.splice(myDataInd, 1)
+              }
+            })
+            
+            //store in local storage
+            localStorage.setItem("SearchRes", JSON.stringify(res.data))
+            navigate(SEARCHRES)
+          }
+        }
+        
+      });
+  };
+
   return (
     <main className="homewebMain">
       <div className="center1">
         <div className="header">
           <div className="headerApp">
-            <h2 class="titleWeb">Welcome to Moji!</h2>
+            <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
-          <div className="bt1">
-            <button class="settings">Settings</button>
+          <div className="hdrBtnContainer">
+            <button
+              className="settings"
+              onClick={() => {
+                navigate(SETTING);
+              }}
+            >
+              Settings
+            </button>
+
+            <button
+              className="logout"
+              onClick={() => {
+                localStorage.removeItem("currentUser");
+                navigate(LOGIN);
+              }}
+            >
+              Log out
+            </button>
           </div>
         </div>
+
+        <div className="searchBox-homeweb">
+          <input type="text" placeholder="Search user" />
+          <button onClick={searchUser}>Search</button>
+        </div>
         <div className="tabBar">
-          <div class="grid-container">
-            <div class="grid-item">
-              <a href="/profile">
+          <div className="grid-container">
+            <div className="grid-item">
+              <a href={PROFILE}>
                 <img
                   src="profile.png"
                   alt="Sample profile"
@@ -67,8 +243,8 @@ const Homeweb = () => {
                 <h3 className="tabText">Profile</h3>
               </a>
             </div>
-            <div class="grid-item">
-              <a href="/follower">
+            <div className="grid-item">
+              <a href={FOLLOWER}>
                 <img
                   src="follower.png"
                   alt="Sample profile"
@@ -78,8 +254,8 @@ const Homeweb = () => {
                 <h3 className="tabText">Follower</h3>
               </a>
             </div>
-            <div class="grid-item">
-              <a href="/following">
+            <div className="grid-item">
+              <a href={FOLLOWING}>
                 <img
                   src="following.png"
                   alt="Sample profile"
@@ -89,20 +265,58 @@ const Homeweb = () => {
                 <h3 className="tabText">Following</h3>
               </a>
             </div>
-            <div class="grid-item">
-              <img src="posting.png" alt="Sample profile" width="140" height="140" id="postingImg"></img>
-              <h3 className="tabText">
-                Posting
-              </h3>
+            <div className="grid-item">
+              <img
+                src="posting.png"
+                alt="Sample profile"
+                width="140"
+                height="140"
+                id="postingImg"
+              ></img>
+              <h3 className="tabText">Posting</h3>
             </div>
           </div>
         </div>
-        <div id="myDIV">
-          This is my DIV element.
+        <div id="writePost">
+          <h2 className="writeTitle">Write a post!</h2>
+          <div className="writeCard">
+            <form>
+              <textarea
+                id="postWriteID"
+                placeholder="What do you want to share?"
+              ></textarea>
+            </form>
+            <div className="writeFooter">
+              <button id="buttonForSelect" className="btnSelect">
+                Select a topic
+              </button>
+              <button className="btnUpload" onClick={uploadPost}>
+                Upload
+              </button>
+              <button className="btnCancel" onClick={cancelPost}>
+                Cancel
+              </button>
+            </div>
+            <div id="writeSelectTopic">
+              <div className="topicList">
+                {interestList.map((interest, index) => (
+                  <div
+                    className="topicItems"
+                    key={index}
+                    onClick={() => {
+                      itemSelectColorChange(index);
+                    }}
+                  >
+                    <TopicItem topicName={interest} index={index} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="viewByTopic">
-          <h2 class="titleWeb2">View By Topic</h2>
-          <div class="outer">
+          <h2 className="titleWeb2">View By Topic</h2>
+          <div className="outer">
             <div>
               <button className="btnTopic">Sports</button>
             </div>
@@ -121,23 +335,23 @@ const Homeweb = () => {
           </div>
         </div>
         <div className="timeline">
-          <h2 class="titleWeb2">Timeline</h2>
-
-          <PostCard
-            userName={"Steve Rogers"}
-            postTime={Date.now()}
-            likeCount={13}
-            commentCount={2}
-            postText={"Hello world"}
-          />
-
-          <PostCard
-            userName={"Tony Stark"}
-            postTime={Date.now()}
-            likeCount={37}
-            commentCount={102}
-            postText={"OMG "}
-          />
+          <h2 className="titleWeb2">Timeline</h2>
+          <div id="postHolder">
+            {isLoading ? (
+              <div>Loading</div>
+            ) : (
+              postData.map((singlePost, index) => (
+                <PostCard
+                  key={index}
+                  userName={singlePost.USER_ID.USER_USERNAME}
+                  postTime={singlePost.updatedAt}
+                  likeCount={singlePost.LIKES_COUNT}
+                  commentCount={singlePost.COMMENTS_COUNT}
+                  postText={singlePost.BODY}
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </main>
