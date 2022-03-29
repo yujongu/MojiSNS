@@ -315,10 +315,16 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
     createdAt: Date.now(),
   }).save();
 
-  const link = `localhost:3000/passwordReset?id=${user._id}`;
-  sendEmail(user.USER_EMAIL,"Password Reset Request",{name: user.USER_USERNAME,link: link,},"./template/requestResetPassword.handlebars");
-  return link;
-
+  //console.log(resetToken);
+  const link = `http://localhost:5000/api/user/passwordReset?token=${resetToken}&id=${user._id}`;
+  sendEmail(
+    user.USER_EMAIL,
+    "Password Reset Request",
+    { name: user.USER_USERNAME, link: link },
+    "./template/requestResetPassword.handlebars"
+  );
+  //console.log(link);
+  res.send("email sent");
 });
 
 router.post("/auth/resetPassword", async (req, res) => {
@@ -364,5 +370,24 @@ router.post("/auth/resetPassword", async (req, res) => {
 
   return res.send("Password reset");
 });
+
+
+router.post("/addProfilePicture/:id", async (req, res) => {
+  console.log("body =")
+  console.log(req.body);
+
+  try {
+    await User.updateOne(
+      { _id: req.params.id },
+      { $set: { PROFILE_PICTURE: req.body.FILE } },
+      { new: true }
+    );
+    console.log(req.body.FILE);
+    res.send("file uploaded");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 
 module.exports = router;

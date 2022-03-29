@@ -37,8 +37,8 @@ const sendEmail = async (email, subject, payload, template) => {
         html: compiledTemplate(payload),
     };
     //console.log(mailOptions.to);
-    //console.log(mailOptions.subject);
-
+    // console.log(mailOptions.subject);
+    //console.log(payload);
 
 
     // Send email
