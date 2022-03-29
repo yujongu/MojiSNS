@@ -6,7 +6,7 @@ const AccountSetting = () => {
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
     function functionGender() {
-        alert("Gender has been updated!")
+        alert("Gender has been updated!");
         console.log(document.getElementById("genders").value);
     }
 
