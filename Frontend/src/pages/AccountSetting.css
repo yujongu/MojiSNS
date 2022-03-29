@@ -69,6 +69,47 @@ hr.solid {
     margin-bottom: 5%;
 }
 
+.genderSet{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5%;
+}
+
+select{
+  background-color: #ffc368;
+  width: 100%;
+  padding: 2px;
+  font-size: 12px;
+
+  font-weight:500;
+  color: #e26714;
+  text-align: center;
+  line-height: 1;
+  border-radius: 15px;
+  height: 22px;
+  }
+
+
+button[type="submitG"]{
+  position: relative;
+  background-color: #ffc368;
+  color: #e26714;
+  border-style: none;
+  width: 100px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  transition-duration: 0.4s;
+}
+
+button[type="submitG"]:hover {
+  background-color: #ffac2e;
+  transition: 500ms;
+}
+
 #userEmail {
     font-size: large;
 }
