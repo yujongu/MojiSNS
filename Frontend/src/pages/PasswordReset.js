@@ -59,9 +59,8 @@ const PasswordReset = (props) => {
                         `${BackendConn}user/auth/resetPassword`,
                         user
                       );
-
-                      alert("Password has changed!")
-
+                      alert("Password has changed!");
+                      navigate("/signin");
                 }
                 // axios
                 //     .get(`${BackendConn}user/login/${username}/${password}`)

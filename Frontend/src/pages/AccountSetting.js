@@ -5,6 +5,11 @@ import "./AccountSetting.css";
 const AccountSetting = () => {
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
+    function functionGender() {
+        alert("Gender has been updated!")
+        console.log(document.getElementById("genders").value);
+    }
+
     return (
         <main className="accMain">
             <div className="center1">
@@ -28,6 +33,24 @@ const AccountSetting = () => {
                         <div className='emailSet'>
                             <p id="userEmail">{currUser.USER_EMAIL}</p>
                             <a href="?#divTwo" id="button" class="emailEdit">Edit Email</a>
+                        </div>
+                        <h4 className='header4set'>
+                            Gender
+                        </h4>
+                        <div className='genderSet'>
+                            <p id="userGender">{currUser.USER_SEX}</p>
+                            <div>
+                                <div>
+                                    <select class="customGender" id="genders">
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="unidentify">Unidentify</option>
+                                    </select>
+                                </div>
+                                <br>
+                                </br>
+                                <button type="submitG" onClick={functionGender}>Submit</button>
+                            </div>
                         </div>
                         <hr class="solid" />
                         <div className='accountDelete'>
