@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import { BackendConn } from "../constants/backendConn";
 import axios from "axios";
 import UserInfoShort from "./components/UserInfo/UserInfoShort";
+import datePretty from "../helperFunctions/datePretty";
 
 function Follower() {
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   const [followerData, setFollowerData] = useState([]);
+  const [todayCount, setTodayCount] = useState(0);
 
   //window onload
   React.useEffect(() => {
@@ -15,7 +17,20 @@ function Follower() {
   }, []);
 
   //component did update
-  React.useEffect(() => {}, [followerData]);
+  React.useEffect(() => {
+    if (followerData.length != 0) {
+      var count = followerData.length;
+      followerData.forEach((element) => {
+        if (
+          datePretty(element.FOLLOW_DATE).includes("days") ||
+          datePretty(element.FOLLOW_DATE).includes("years")
+        ) {
+          count--;
+        }
+      });
+      setTodayCount(count);
+    }
+  }, [followerData]);
 
   var retrieveFollowers = () => {
     axios
@@ -36,6 +51,9 @@ function Follower() {
     <main className="followerMain">
       <div className="followerContainer">
         <h1>Follower List</h1>
+        <div className="followingToolbox">
+          <p>Followed today: {todayCount}</p>
+        </div>
         <div className="followerInnerContainer">
           {followerData.map((singleUser, index) => (
             <UserInfoShort

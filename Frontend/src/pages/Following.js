@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { BackendConn } from "../constants/backendConn";
 import axios from "axios";
 import UserInfoShort from "./components/UserInfo/UserInfoShort";
+import datePretty from "../helperFunctions/datePretty";
 
 function Following() {
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const [followingData, setFollowingData] = useState([]);
-
+  const [todayCount, setTodayCount] = useState(0);
   //window onload
   React.useEffect(() => {
     retrieveFollowings();
@@ -17,7 +18,18 @@ function Following() {
 
   //component did update
   React.useEffect(() => {
-      
+    if (followingData.length != 0) {
+      var count = followingData.length;
+      followingData.forEach((element) => {
+        if (
+          datePretty(element.FOLLOW_DATE).includes("days") ||
+          datePretty(element.FOLLOW_DATE).includes("years")
+        ) {
+          count--;
+        }
+      });
+      setTodayCount(count);
+    }
   }, [followingData]);
 
   var retrieveFollowings = () => {
@@ -28,11 +40,8 @@ function Following() {
           if (res.data === "") {
             alert("No user found under that username");
           } else {
-            //first remove myself from search res if exists
             setFollowingData(res.data.FOLLOWING_USERS);
-            localStorage.setItem("currentUser", JSON.stringify(res.data));
           }
-        console.log(res)
         }
       });
   };
@@ -40,6 +49,11 @@ function Following() {
     <main className="followingMain">
       <div className="followingContainer">
         <h1>Following List</h1>
+
+        <div className="followingToolbox">
+          <p>Followed today: {todayCount}</p>
+        </div>
+
         <div className="followingInnerContainer">
           {followingData.map((singleUser, index) => (
             <UserInfoShort

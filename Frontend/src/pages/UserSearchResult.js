@@ -5,6 +5,8 @@ import UserInfoShort from "./components/UserInfo/UserInfoShort";
 function UserSearchResult() {
   let navigate = useNavigate();
   var d = JSON.parse(localStorage.getItem("SearchRes"));
+  console.log("This is SearchRes");
+  console.log(d);
   return (
     <main className="searchResMain">
       <div className="searchResContainer">
@@ -13,8 +15,11 @@ function UserSearchResult() {
           {d.map((singleUser, index) => (
             <UserInfoShort
               key={index}
+              ind={index}
               username={singleUser.USER_USERNAME}
               uid={singleUser._id}
+              showTime={false}
+              time={""}
             />
           ))}
         </div>
