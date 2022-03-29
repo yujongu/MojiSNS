@@ -90,6 +90,9 @@ const AccountSetting = () => {
         var deleteMsg = document.getElementById("deleteMessage").value;
         console.log(deleteMsg);
         if (deleteMsg === "Delete My Account") {
+            const response = await axios.patch(
+                `${BackendConn}user/deleteUser/${currUser._id}`
+            )
             alert("Account has been deleted");
         }
         else {
