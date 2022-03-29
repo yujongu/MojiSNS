@@ -1,26 +1,36 @@
 .followingMain {
-    display: flex;
-    position: absolute;
-    background-color: #f2f2f2;
-    height: 100vh;
-    width: 100vw;
-  }
-  
-  .followingContainer {
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1%;
-    background-color: #f2f2f2;
-    width: 45%;
-    padding: 10px;
-    height: auto;
-  }
-  
-  .followingInnerContainer {
-      background-color: white;
-      border-radius: 30px;
-      padding: 20px;
-  }
-  
+  display: flex;
+  position: absolute;
+  background-color: #f2f2f2;
+  height: 100vh;
+  width: 100vw;
+}
+
+.followingContainer {
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+  background-color: #f2f2f2;
+  width: 45%;
+  padding: 10px;
+  height: auto;
+}
+
+.followingInnerContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: white;
+  border-radius: 30px;
+  padding: 20px;
+}
+
+.followingToolbox {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-style: dotted;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
