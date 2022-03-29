@@ -1,13 +1,37 @@
 import React from 'react'
 import "./AccountSetting.css";
-
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { BackendConn } from "../constants/backendConn";
 
 const AccountSetting = () => {
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    function functionGender() {
-        alert("Gender has been updated!")
+    async function updateEmail() {
+        var newEmailAddr = document.getElementById("updatedEmail").value;
+        console.log(newEmailAddr);
+        const user = {
+            USER_EMAIL: newEmailAddr
+        };
+        const response = await axios.patch(
+            `${BackendConn}user/updateUser/${currUser._id}`, user
+        );
+        alert("Email has been updated!");
+    }
+
+    async function functionGender() {
+        alert("Gender has been updated!");
         console.log(document.getElementById("genders").value);
+        var newGender = document.getElementById("genders").value;
+        console.log(newGender);
+        const user={
+            USER_SEX: newGender
+        };
+        const response = await axios.patch(
+            `${BackendConn}user/updateUser/${currUser._id}`, user
+        );
+        alert("Gender has been updated!");
     }
 
     return (
@@ -71,9 +95,9 @@ const AccountSetting = () => {
                                             <label>
                                                 User Email
                                             </label>
-                                            <input type="textE" placeholder={currUser.USER_EMAIL}>
+                                            <input type="textE" placeholder={currUser.USER_EMAIL} id="updatedEmail">
                                             </input>
-                                            <button type="submitE">Update</button>
+                                            <button type="submitE" onClick={updateEmail}>Update</button>
                                         </form>
                                     </div>
                                 </div>
