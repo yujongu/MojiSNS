@@ -281,7 +281,7 @@ router.get("/login/:username/:password", async (req, res) => {
 
     const keyBuffer = Buffer.from(key, "hex");
     const match = timingSafeEqual(hashedBuffer, keyBuffer);
-
+    
     if (match) {
       res.send(user);
       console.log(user);
@@ -322,12 +322,17 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
 });
 
 router.post("/auth/resetPassword", async (req, res) => {
-  let passwordResetToken = await Token.findOne({ userId: req.body.userId });
+  let passwordResetToken = await Token.findOne({ userId: req.body.userid });
   console.log("hello");
   console.log(req.body);
   if (!passwordResetToken) {
+    console.log("Invalid or expired password reset token1234")
     return res.send("Invalid or expired password reset token");
   }
+
+
+
+  
   const [salt, key] = passwordResetToken.token.split(":");
   const hashedBuffer = scryptSync(req.body.token, salt, 64);
 
@@ -335,7 +340,13 @@ router.post("/auth/resetPassword", async (req, res) => {
   const match = timingSafeEqual(hashedBuffer, keyBuffer);
   //const isValid = await bcrypt.compare(token, passwordResetToken.token);
 
+  //console.log(hashedBuffer)
+  console.log(keyBuffer)
+  
+
+  console.log(match)
   if (!match) {
+    console.log("Invalid or expired password reset token")
     return res.send("Invalid or expired password reset token");
   }
 
@@ -344,13 +355,11 @@ router.post("/auth/resetPassword", async (req, res) => {
     "hex"
   );
 
-  await User.updateOne(
-    { _id: userId },
-    { $set: { USER_PW: `${salt2}:${hashedPassword}` } },
-    { new: true }
-  );
 
-  const user = await User.findById({ _id: userId });
+  const user = await User.findById(req.body.userid);
+  user.USER_PW = `${salt2}:${hashedPassword}`;
+  
+  await user.save();
 
   sendEmail(
     user.USER_EMAIL,
@@ -363,7 +372,7 @@ router.post("/auth/resetPassword", async (req, res) => {
 
   await passwordResetToken.deleteOne();
 
-  return res.send("Password reset");
+  res.send("Password reset");
 });
 
 
