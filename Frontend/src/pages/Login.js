@@ -57,10 +57,15 @@ function Login() {
           .get(`${BackendConn}user/login/${username}/${password}`)
           .then((res) => {
             console.log(res);
-            localStorage.setItem("currentUser", JSON.stringify(res.data))
-            navigate("/home");
+            if (res.data === "User not found") {
+              alert("Username or Password is not valid!");
+            }
+            else {
+              localStorage.setItem("currentUser", JSON.stringify(res.data))
+              navigate("/home");
+            }
           })
-          .catch((error) => {
+          .catch((Error) => {
             alert("Username and password does not exist in our database")
           });
       }
