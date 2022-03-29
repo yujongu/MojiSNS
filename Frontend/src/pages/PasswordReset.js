@@ -1,6 +1,6 @@
 import React from 'react'
 import "./PasswordReset.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { BackendConn } from "../constants/backendConn";
@@ -10,8 +10,13 @@ const PasswordReset = (props) => {
     const [isActive, setIsActive] = useState(false);
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const { userId, token } = useParams();
+    console.log(userId);
+    console.log(token);
     const [user, setUser] = useState();
-    console.log(props.match.params.id);
+    // console.log(props.match.params.id);
+
+
 
     const handleTextChange = (e) => {
         console.log(e.target);
@@ -45,7 +50,18 @@ const PasswordReset = (props) => {
                 }
                 else
                 {
-                    
+                    const user = {
+                        userid: userId,
+                        token: token,
+                        password: newPassword,
+                      };
+                      const response = await axios.post(
+                        `${BackendConn}user/auth/resetPassword`,
+                        user
+                      );
+
+                      alert("Password has changed!")
+
                 }
                 // axios
                 //     .get(`${BackendConn}user/login/${username}/${password}`)

@@ -314,7 +314,7 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
     createdAt: Date.now(),
   }).save();
 
-  const link = `localhost:3000/passwordReset?id=${user._id}`;
+  const link = `localhost:3000/passwordReset/${user._id}/${resetToken}`;
   sendEmail(user.USER_EMAIL,"Password Reset Request",{name: user.USER_USERNAME,link: link,},"./template/requestResetPassword.handlebars");
   return link;
 
@@ -322,7 +322,8 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
 
 router.post("/auth/resetPassword", async (req, res) => {
   let passwordResetToken = await Token.findOne({ userId: req.body.userId });
-
+  console.log("hello");
+  console.log(req.body);
   if (!passwordResetToken) {
     return res.send("Invalid or expired password reset token");
   }
