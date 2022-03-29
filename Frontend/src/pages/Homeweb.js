@@ -95,7 +95,8 @@ const Homeweb = () => {
   };
 
   var populatePosts = () => {
-    const response = axios.get(`${BackendConn}post/getPosts`);
+    // const response = axios.get(`${BackendConn}post/getPosts`);
+    const response = axios.get(`${BackendConn}post/getFeed/${currUser._id}`);
     response.then((response) => {
       if (response.status === 200) {
         setLoading(false);

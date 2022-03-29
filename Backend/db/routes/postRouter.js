@@ -96,9 +96,6 @@ router.get("/getFeed/:id", async (req, res) => {
     const post = await Post.find({
       $or: [
         {
-          TOPIC_ID: user.FOLLOWING_TOPICS
-        },
-        {
           USER_ID: user.FOLLOWING_USERS.map(o => o.USER_ID)
         },
         {
@@ -106,7 +103,7 @@ router.get("/getFeed/:id", async (req, res) => {
         } 
       ]
      })
-     .populate("USER_ID TOPIC_ID LIKED_USERS")
+     .populate("USER_ID LIKED_USERS")
      .sort({createdAt: -1});
 
     res.send(post);
