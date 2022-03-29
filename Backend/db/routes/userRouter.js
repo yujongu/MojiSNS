@@ -315,21 +315,16 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
     createdAt: Date.now(),
   }).save();
 
-  //console.log(resetToken);
-  const link = `http://localhost:5000/api/user/passwordReset?token=${resetToken}&id=${user._id}`;
-  sendEmail(
-    user.USER_EMAIL,
-    "Password Reset Request",
-    { name: user.USER_USERNAME, link: link },
-    "./template/requestResetPassword.handlebars"
-  );
-  //console.log(link);
-  res.send("email sent");
+  const link = `localhost:3000/passwordReset/${user._id}/${resetToken}`;
+  sendEmail(user.USER_EMAIL,"Password Reset Request",{name: user.USER_USERNAME,link: link,},"./template/requestResetPassword.handlebars");
+  return link;
+
 });
 
 router.post("/auth/resetPassword", async (req, res) => {
   let passwordResetToken = await Token.findOne({ userId: req.body.userId });
-
+  console.log("hello");
+  console.log(req.body);
   if (!passwordResetToken) {
     return res.send("Invalid or expired password reset token");
   }

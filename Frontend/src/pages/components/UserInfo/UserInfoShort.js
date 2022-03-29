@@ -11,10 +11,12 @@ function UserInfoShort({ ind, username, uid, showTime, time }) {
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   const [isFollowing, setFollowing] = useState(false);
   let navigate = useNavigate();
-  var pTime = datePretty(time)
+  var pTime = datePretty(time);
   React.useEffect(() => {
     if (showTime) {
-      var followBtn = document.querySelector(`.uInfoShortContainer:nth-child(${ind + 1}) > button`);
+      var followBtn = document.querySelector(
+        `.uInfoShortContainer:nth-child(${ind + 1}) > button`
+      );
       followBtn.style.display = "none";
     }
     currUser.FOLLOWING_USERS.forEach((following) => {
@@ -64,7 +66,10 @@ function UserInfoShort({ ind, username, uid, showTime, time }) {
     axios
       .get(`${BackendConn}user/getUserByUsername/${username}`)
       .then((res) => {
-        localStorage.setItem("currentUser", JSON.stringify(res.data));
+        console.log(res);
+        if (res.status == 200) {
+          localStorage.setItem("currentUser", JSON.stringify(res.data));
+        }
       })
       .catch((error) => {
         alert("Something Went Wrong...");

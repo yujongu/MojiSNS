@@ -105,7 +105,7 @@ function Login() {
           </div>
 
           <div className="forgotpsw">
-            <a href="#divOne">Forget Password?</a>
+            <a href="?#divOne">Forget Password?</a>
           </div>
           <div class="overlay" id="divOne">
             <div class="wrapper">
@@ -119,9 +119,9 @@ function Login() {
                     <label>
                       User Email
                     </label>
-                    <input type="textF" placeholder="Your Email Address">
+                    <input type="textF" placeholder="Your Email Address" id="emailInput">
                     </input>
-                    <button type="submitF">Submit</button>
+                    <button type="submitF" onClick={functionForget}>Submit</button>
                   </form>
                 </div>
               </div>
