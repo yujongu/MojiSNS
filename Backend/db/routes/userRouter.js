@@ -128,11 +128,14 @@ router.delete("/deleteUser/:id", async (req, res) => {
 router.patch("/updateUser/:id", async (req, res) => {
   try {
     console.log("wassup");
-    console.log(req.body.USER_EMAIL);
+    console.log(req.body.FOLLOWING_TOPICS)
     const user = await User.findById(req.params.id).populate(
       "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
     );
 
+    if(user) {
+      console.log(user)
+    }
     if (req.body.USER_EMAIL) {
       user.USER_EMAIL = req.body.USER_EMAIL;
     }
