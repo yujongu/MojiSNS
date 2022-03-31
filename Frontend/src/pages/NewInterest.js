@@ -10,7 +10,6 @@ console.log(initUser.FOLLOWING_TOPICS);
 initUser.FOLLOWING_TOPICS.forEach((x) => {
   inittopics += `${x} `;
 });
- console.log("첫"+intList);
  var intList = inittopics.split(" ");
 //var intList =[];
 
@@ -23,7 +22,6 @@ function NewInterest() {
   currUser.FOLLOWING_TOPICS.forEach((t) => {
     topics += `${t} `;
   });
-  console.log("그냥: "+topics);
 
   var initsports = "";
   if (topics.indexOf("sports") != -1) {
