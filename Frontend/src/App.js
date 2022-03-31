@@ -11,6 +11,7 @@ import Bio from "./pages/Bio";
 import Interest from "./pages/Interest"
 import Profile from "./pages/Profile";
 import Setting from "./pages/Setting";
+import NewInterest from "./pages/NewInterestS";
 import * as PageLinks from "./constants/routes"
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path={PageLinks.FORGOTID} element={<ForgetID />} />
         <Route path={PageLinks.PROFILE} element={<Profile />} />
         <Route path={PageLinks.SETTING} element={<Setting />} />
+        <Route path={PageLinks.NEWINTEREST} element={<NewInterest />} />
       </Routes>
     </Router>
   );

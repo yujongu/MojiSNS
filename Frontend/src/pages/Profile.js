@@ -7,7 +7,6 @@ import { faBirthdayCake } from "@fortawesome/fontawesome-free-solid";
 import PostCard from "./components/PostCard";
 import React, { useState } from "react";
 
-
 function Profile() {
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   console.log(currUser);
@@ -73,7 +72,7 @@ function Profile() {
               <div className="interestList">{topics}</div>
               <div className="interestEditBtns">
                 <button className="interestModify"
-                // onClick={() => navigate('/signup/interest')}
+                 onClick={() => navigate("/newinterest")}
                 >+/-</button>
 
               </div>
