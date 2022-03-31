@@ -9,6 +9,7 @@ const axios = require('axios');
 const router = express.Router();
 const { scryptSync, randomBytes, timingSafeEqual } = require("crypto");
 //const bcrypt = require("bcrypt");
+const Notification = require("../models/notification");
 
 router.get("/getUsers", async (req, res) => {
   const users = await User.find().populate(
@@ -104,6 +105,43 @@ router.delete("/deleteUser/:id", async (req, res) => {
       },
       "./template/deleteEmail.handlebars"
     );
+    //remove following list
+    user.FOLLOWER_USERS.forEach( async (element) => {
+      await User.findOneAndUpdate(
+        { _id: element.USER_ID },
+        {
+          $pull: {
+            FOLLOWING_USERS: {
+              USER_ID: mongoose.Types.ObjectId(user._id),
+            },
+          },
+        }
+      );
+    });
+    
+    user.FOLLOWING_USERS.forEach(async (element) => {
+      await User.findOneAndUpdate(
+        { _id: element.USER_ID },
+        {
+          $pull: {
+            FOLLOWER_USERS: {
+              USER_ID: mongoose.Types.ObjectId(user._id),
+            },
+          },
+        }
+      );
+    });
+
+    await Notification.deleteMany({
+      $or: [
+        {
+          RECEP_USER_ID: mongoose.Types.ObjectId(user._id)
+        },
+        {
+          SENDER_USER_ID: mongoose.Types.ObjectId(user._id)
+        } 
+      ]
+    })
 
     await User.findByIdAndDelete(req.params.id);
     await Post.deleteMany({USER_ID: req.params.id})
@@ -116,6 +154,9 @@ router.delete("/deleteUser/:id", async (req, res) => {
     .catch(error => {
       console.log(error);
     });
+
+
+    
 
     console.log("delete user");
     res.send("delete user");
