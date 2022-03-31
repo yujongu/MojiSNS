@@ -11,7 +11,7 @@ const bp = require('body-parser')
 require("dotenv").config({ path: "./config.env" });
 
 const Db = process.env.ATLAS_URI;
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 mongoose
   .connect(Db, { useNewUrlParser: true,

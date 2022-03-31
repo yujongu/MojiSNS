@@ -129,7 +129,7 @@ function Profile() {
               <div className="interestEditBtns">
                 <button
                   className="interestModify"
-                  // onClick={() => navigate('/signup/interest')}
+                  onClick={() => navigate('/newinterest')}
                 >
                   +/-
                 </button>
