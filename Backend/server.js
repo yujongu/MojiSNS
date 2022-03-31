@@ -13,6 +13,14 @@ require("dotenv").config({ path: "./config.env" });
 const Db = process.env.ATLAS_URI;
 const port = process.env.PORT;
 
+const fs = require('fs')
+const morgan = require('morgan')
+const path = require('path')
+
+// create a write stream (in append mode)
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
+
 mongoose
   .connect(Db, { useNewUrlParser: true,
   useUnifiedTopology: true})
@@ -27,6 +35,7 @@ mongoose
     app.listen(port, () => {
       console.log("Backend server has started!")
     })
+    app.use(morgan('combined', { stream: accessLogStream }))
     app.use("/api/post", postRoutes);
     app.use("/api/user", userRoutes);
     app.use("/api/topic", topicRoutes);
