@@ -5,37 +5,27 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BackendConn } from "../constants/backendConn";
 
+
+
 //var intList =[];
 
-const initUser = JSON.parse(localStorage.getItem("currentUser"));
+function NewInterest() {
+  const initUser = JSON.parse(localStorage.getItem("currentUser"));
 var inittopics = "";
 console.log(initUser.FOLLOWING_TOPICS);
-
-console.log(initUser.FOLLOWING_TOPICS.length);
-
-initUser.FOLLOWING_TOPICS.forEach((x, index) => {
-  if(index !== initUser.FOLLOWING_TOPICS.length - 1) {
-    inittopics += `${x} `;
-
-  } else {
-    inittopics += `${x}`;
-  }
-});
-console.log("첫"+intList);
-var intList = inittopics.split(" ");
-
-function NewInterest() {
-
-
-  
   let navigate = useNavigate();
-
+  initUser.FOLLOWING_TOPICS.forEach((x) => {
+    inittopics += `${x} `;
+  });
+   console.log("첫"+intList);
+   var intList = inittopics.split(" ");
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   var topics = "";
   console.log(currUser.FOLLOWING_TOPICS);
   currUser.FOLLOWING_TOPICS.forEach((t) => {
     topics += `${t} `;
   });
+  console.log("그냥: "+topics);
 
   var initsports = "";
   if (topics.indexOf("sports") != -1) {
@@ -102,19 +92,16 @@ function NewInterest() {
     var me = JSON.parse(localStorage.getItem("currentUser"));
     var myId = me._id;
 
-    console.log(intList)
-
     const response = await axios.patch(
       `${BackendConn}user/updateUser/${myId}`,
       {
         FOLLOWING_TOPICS: intList,
       }
-    )
+    );
     console.log(response);
     if (response.status == 200 && response.data._id === myId) {
       localStorage.setItem('currentUser', JSON.stringify(response.data))
       navigate("/profile");
-      alert("Success!")
     }
   };
 
