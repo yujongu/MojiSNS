@@ -1,404 +1,439 @@
 .homewebMain {
-    display: flex;
-    position: absolute;
-    background-color: #f2f2f2;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  position: absolute;
+  background-color: #f2f2f2;
+  height: 100vh;
+  width: 100vw;
 }
 
 .center1 {
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1%;
-    background-color: #f2f2f2;
-    width: 45%;
-    padding: 10px;
-    height: 10%
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+  background-color: #f2f2f2;
+  width: 45%;
+  padding: 10px;
+  height: 10%;
 }
 
 .header {
-    display: flex;
-    width: 100%;
-    position: relative;
+  display: flex;
+  width: 100%;
+  position: relative;
 }
 
 .headerApp {
-    position: relative;
-    margin-top: 1%;
-    width: 80%;
+  position: relative;
+  margin-top: 1%;
+  width: 80%;
 }
 
 .titleWeb {
-    font-family: Calibri;
-    font-size: 30px;
-    font-weight: bolder;
+  font-family: Calibri;
+  font-size: 30px;
+  font-weight: bolder;
 }
 
-.bt1 {
-    position: relative;
-    margin-left: 13%;
-    margin-top: 1%;
+.hdrBtnContainer {
+  display: flex;
+}
+
+.notification {
+  position: relative;
+  background-color: white;
+  border-color: white;
+  border-style: none;
+  border-radius: 20px;
+  padding: 3px 40px;
+  text-align: center;
+  font-size: 17px;
+  font-family: Calibri;
+  transition-duration: 0.4s;
+  color: #a6a6a6;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-left: 10px;  
+}
+.notification:hover {
+  background-color: white;
+  color: black;
 }
 
 .settings {
-    position: relative;
-    background-color: white;
-    border-color: white;
-    border-style: none;
-    border-radius: 20px;
-    padding: 5px 40px;
-    text-align: center;
-    font-size: 17px;
-    font-family: Calibri;
-    transition-duration: 0.4s;
-    color: #A6A6A6;
-    font-weight: bold;
+  position: relative;
+  background-color: white;
+  border-color: white;
+  border-style: none;
+  border-radius: 20px;
+  padding: 3px 40px;
+  text-align: center;
+  font-size: 17px;
+  font-family: Calibri;
+  transition-duration: 0.4s;
+  color: #a6a6a6;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-left: 10px;
+
 }
 
 .settings:hover {
-    background-color: white;
-    color: black;
-}
-
-.bt2 {
-    position: relative;
-    margin-left: 13%;
-    margin-top: 1%;
+  background-color: white;
+  color: black;
 }
 
 .logout {
-    position: relative;
-    background-color: white;
-    border-color: white;
-    border-style: none;
-    border-radius: 20px;
-    padding: 5px 40px;
-    text-align: center;
-    font-size: 17px;
-    font-family: Calibri;
-    transition-duration: 0.4s;
-    color: #A6A6A6;
-    font-weight: bold;
-    white-space: nowrap;
-    margin-top: 10px;
-    margin-left: 10px;
+  position: relative;
+  background-color: white;
+  border-color: white;
+  border-style: none;
+  border-radius: 20px;
+  padding: 3px 40px;
+  text-align: center;
+  font-size: 17px;
+  font-family: Calibri;
+  transition-duration: 0.4s;
+  color: #a6a6a6;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-left: 10px;
 }
 
 .logout:hover {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
+.searchBox-homeweb {
+  position: relative;
+}
+.searchBox-homeweb > input {
+  width: 100%;
+  margin-top: 10px;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 15px;
+  font-size: 15px;
+}
+
+.searchBox-homeweb > button {
+  position: absolute;
+  right: 30px;
+  bottom: 10px;
+  width: 50px;
+  background-color: transparent;
+}
 
 .tabBar {
-    position: relative;
-    margin-top: 5%;
+  position: relative;
+  margin-top: 5%;
 }
 
 .grid-container {
-    display: grid;
-    position: relative;
-    grid-template-columns: auto auto auto auto;
-    background-color: #f2f2f2;
-    margin: auto;
-    width: 85%;
-    padding: 10px;
-    justify-items: center;
-    align-items: center;
-    text-align: center;
+  display: grid;
+  position: relative;
+  grid-template-columns: auto auto auto auto;
+  background-color: #f2f2f2;
+  margin: auto;
+  width: 85%;
+  padding: 10px;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
 }
 
-
 .grid-item {
-    padding: 2%;
+  padding: 2%;
 }
 
 .tabText {
-    font-size: 25px;
-    font-weight: bold;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 #writePost {
-    display: none;
-    margin-top: 5%;
+  display: none;
+  margin-top: 5%;
 }
 
 .writeTitle {
-    padding-bottom: 2%;
+  padding-bottom: 2%;
 }
 
 .writeCard {
-    position: relative;
-    background-color: white;
-    border-radius: 15px;
-    margin-bottom: 10%;
+  position: relative;
+  background-color: white;
+  border-radius: 15px;
+  margin-bottom: 10%;
+  box-sizing: border-box;
 }
 
+#postWriteID {
+  position: relative;
+  background-color: transparent;
+  width: 95%;
+}
 textarea {
-    width: 96%;
-    margin-top: 1%;
-    margin-left: 2%;
-    margin-right: auto;
-    background-color: transparent;
-    border: none;
-    border-style: none;
-    outline: none;
-    font-size: 20px;
-    resize: none;
+  margin-top: 1%;
+  margin-left: 2%;
+  background-color: transparent;
+  border: none;
+  border-style: none;
+  outline: none;
+  font-size: 20px;
+  resize: none;
 }
 
-.writeFooter{
-    margin-top: 4%;
-    display: flex;
-    width: 100%;
+.writeFooter {
+  margin-top: 4%;
+  display: flex;
+  width: 100%;
 }
 
-.btnSelect{
-    position: relative;
-    margin-left: 2%;
-    margin-bottom: 2%;
-    border-radius: 11px;
-    border-style: none;
-    background-color: #FFC368;
-    transition-duration: 0.4s;
-    font-size: large;
-    font-weight: bold;
-    padding: 2%;
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
-    color: #E26714;
+.btnSelect {
+  position: relative;
+  margin-left: 2%;
+  margin-bottom: 2%;
+  border-radius: 11px;
+  border-style: none;
+  background-color: #ffc368;
+  transition-duration: 0.4s;
+  font-size: large;
+  font-weight: bold;
+  padding: 2%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  color: #e26714;
 }
 
 .btnSelect:hover {
-    background-color: #E26714;
-    color: #f2f2f2;
+  background-color: #e26714;
+  color: #f2f2f2;
 }
 
-.btnUpload{
-    position: relative;
-    margin-right: 2%;
-    margin-left: auto;
-    margin-bottom: 2%;
-    border-radius: 11px;
-    border-style: none;
-    background-color: #FFC368;
-    transition-duration: 0.4s;
-    font-size: large;
-    font-weight: bold;
-    padding: 2%;
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
-    color: #E26714;
+.btnUpload {
+  position: relative;
+  margin-right: 2%;
+  margin-left: auto;
+  margin-bottom: 2%;
+  border-radius: 11px;
+  border-style: none;
+  background-color: #ffc368;
+  transition-duration: 0.4s;
+  font-size: large;
+  font-weight: bold;
+  padding: 2%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  color: #e26714;
 }
 
 .btnUpload:hover {
-    background-color: #E26714;
-    color: #f2f2f2;
+  background-color: #e26714;
+  color: #f2f2f2;
 }
 
-.btnCancel{
-    position: relative;
-    margin-right: 1%;
-    margin-bottom: 2%;
-    border-radius: 11px;
-    border-style: none;
-    background-color: #FFC368;
-    transition-duration: 0.4s;
-    font-size: large;
-    font-weight: bold;
-    padding: 2%;
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
-    color: #E26714;
+.btnCancel {
+  position: relative;
+  margin-right: 1%;
+  margin-bottom: 2%;
+  border-radius: 11px;
+  border-style: none;
+  background-color: #ffc368;
+  transition-duration: 0.4s;
+  font-size: large;
+  font-weight: bold;
+  padding: 2%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  color: #e26714;
 }
 
 .btnCancel:hover {
-    background-color: #E26714;
-    color: #f2f2f2;
+  background-color: #e26714;
+  color: #f2f2f2;
 }
 
 #writeSelectTopic {
-    display: none;
-    margin-top: 2%;
+  display: none;
+  margin-top: 2%;
 }
 
-.topicList{
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 3%;
-    padding: 10px;
+.topicList {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3%;
+  padding: 10px;
 }
 
 .viewByTopic {
-    margin-top: 5%;
-    background-color: #f2f2f2;
+  margin-top: 5%;
+  background-color: #f2f2f2;
 }
 
 .container {
-    position: relative;
-    width: 180px;
-    height: 800px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
+  position: relative;
+  width: 180px;
+  height: 800px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .outer {
-    height: 100px;
-    white-space: nowrap;
-    position: relative;
-    overflow-x: scroll;
-    overflow-y: hidden;
+  height: 100px;
+  white-space: nowrap;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .outer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .outer div {
-    width: 20%;
-    background-color: #FFC368;
-    float: none;
-    margin: 0 1%;
-    display: inline-block;
-    zoom: 1;
-    border-radius: 30px;
+  width: 20%;
+  background-color: #ffc368;
+  float: none;
+  margin: 0 1%;
+  display: inline-block;
+  zoom: 1;
+  border-radius: 30px;
 }
 
 .topicText {
-    padding-top: 16%;
-    padding-bottom: 16%;
-    text-align: center;
-    color: #E26714;
+  padding-top: 16%;
+  padding-bottom: 16%;
+  text-align: center;
+  color: #e26714;
 }
 
 .btnTopic {
-    width: 100%;
-    height: 100%;
-    border-radius: 30px;
-    border-style: none;
-    background-color: #FFC368;
-    transition-duration: 0.4s;
-    font-size: x-large;
-    font-weight: bold;
-    padding-top: 16%;
-    padding-bottom: 16%;
-    color: #E26714;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  border-style: none;
+  background-color: #ffc368;
+  transition-duration: 0.4s;
+  font-size: x-large;
+  font-weight: bold;
+  padding-top: 16%;
+  padding-bottom: 16%;
+  color: #e26714;
 }
 
 .btnTopic:hover {
-    background-color: #E26714;
-    color: #f2f2f2;
+  background-color: #e26714;
+  color: #f2f2f2;
 }
 
 .timeline {
-    margin-top: 5%;
+  margin-top: 5%;
 }
 
 .titleWeb2 {
-    padding-bottom: 2%;
+  padding-bottom: 2%;
 }
 
 .postingCard {
-    position: relative;
-    background-color: white;
-    border-radius: 25px;
-    margin-bottom: 10%;
+  position: relative;
+  background-color: white;
+  border-radius: 25px;
+  margin-bottom: 10%;
 }
 
 .postingHeader {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .postingProfile {
-    position: relative;
-    margin-left: 4%;
-    padding-top: 3%;
-    margin-bottom: 3%;
-    width: 8%;
+  position: relative;
+  margin-left: 4%;
+  padding-top: 3%;
+  margin-bottom: 3%;
+  width: 8%;
 }
 
 .postPP {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .postingWriter {
-    position: relative;
-    width: 12%;
-    margin-left: 2%;
-    margin-top: 5.5%;
+  position: relative;
+  width: 12%;
+  margin-left: 2%;
+  margin-top: 5.5%;
 }
 
 .dateWritten {
-    position: relative;
-    width: 18%;
-    margin-left: 45%;
-    margin-top: 6%;
+  position: relative;
+  width: 18%;
+  margin-left: 45%;
+  margin-top: 6%;
 }
 
 .postSetting {
-    position: relative;
-    width: 5%;
-    margin-left: 3%;
-    margin-top: 6%;
+  position: relative;
+  width: 5%;
+  margin-left: 3%;
+  margin-top: 6%;
 }
 
 .postingBody {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .postingSection {
-    position: relative;
-    padding: 3%;
-    width: 88%;
+  position: relative;
+  padding: 3%;
+  width: 88%;
 }
 
 .postWords {
-    position: relative;
+  position: relative;
 }
 
 .iconSection {
-    position: relative;
-    width: 4%;
-    margin-right: auto;
-    margin-left: auto;
-    text-align: center;
+  position: relative;
+  width: 4%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 }
 
 .likeSection {
-    width: 100%;
-    padding-bottom: 20%;
+  width: 100%;
+  padding-bottom: 20%;
 }
 
 .likeCount {
-    font-size: large;
-    font-weight: bold;
-    padding-top: 15%;
+  font-size: large;
+  font-weight: bold;
+  padding-top: 15%;
 }
 
-
 .commentSection {
-    width: 100%;
-    padding-top: 20%;
+  width: 100%;
+  padding-top: 20%;
 }
 
 .commentCount {
-    font-size: large;
-    font-weight: bold;
-    padding-top: 15%;
+  font-size: large;
+  font-weight: bold;
+  padding-top: 15%;
 }

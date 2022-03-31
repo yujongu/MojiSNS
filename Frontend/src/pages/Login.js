@@ -29,6 +29,21 @@ function Login() {
     }
   };
 
+  function functionForget() {
+    console.log(document.getElementById("emailInput").value)
+    var emailAddr = document.getElementById("emailInput").value;
+    alert("The password reset email is sent!")
+    const response = axios.post(`${BackendConn}user/auth/requestResetPassword/${emailAddr}`);
+    response.then((response) => {
+      // if (response.status === 200) {
+      //   setLoading(false);
+      //   setPostData(response.data);
+      // } else {
+      //   alert("Something Went Wrong...");
+      // }
+    });
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,10 +57,15 @@ function Login() {
           .get(`${BackendConn}user/login/${username}/${password}`)
           .then((res) => {
             console.log(res);
-            localStorage.setItem("currentUser", JSON.stringify(res.data))
-            navigate("/home");
+            if (res.data === "User not found") {
+              alert("Username or Password is not valid!");
+            }
+            else {
+              localStorage.setItem("currentUser", JSON.stringify(res.data))
+              navigate("/home");
+            }
           })
-          .catch((error) => {
+          .catch((Error) => {
             alert("Username and password does not exist in our database")
           });
       }
@@ -84,13 +104,33 @@ function Login() {
           </div>
 
           <div className="loginL">
-            <button type="submit" className="login">
+            <button type="submit" className="login" id="1">
               Log In
             </button>
           </div>
 
           <div className="forgotpsw">
-            <p>Forgot Password?</p>
+            <a href="?#divOne">Forget Password?</a>
+          </div>
+          <div class="overlay" id="divOne">
+            <div class="wrapper">
+              <div class="forgetHeader">
+                <h2>Please Insert Email Address</h2>
+                <a href="#" class="close">&times;</a>
+              </div>
+              <div class="content">
+                <div class="contentInsideEmail">
+                  <form>
+                    <label>
+                      User Email
+                    </label>
+                    <input type="textF" placeholder="Your Email Address" id="emailInput">
+                    </input>
+                    <button type="submitF" onClick={functionForget}>Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </form>

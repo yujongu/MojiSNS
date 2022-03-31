@@ -1,11 +1,13 @@
 import React from "react";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
+import datePretty from "../../helperFunctions/datePretty";
 
-function PostCard({userName, postTime, likeCount, commentCount, postText}) {
-    var pastTime = Date.now() - postTime;
+function PostCard({ userName, postTime, likeCount, commentCount, postText }) {
 
-    return (
+  var pastTime = datePretty(postTime)
+
+  return (
     <div className="postingCard">
       <div className="postingHeader">
         <div className="postingProfile">
@@ -15,7 +17,7 @@ function PostCard({userName, postTime, likeCount, commentCount, postText}) {
           <h3>{userName}</h3>
         </div>
         <div className="dateWritten">
-          <h4>Posted {pastTime} hrs ago</h4>
+          <h4>Posted {pastTime} ago</h4>
         </div>
         <div className="postSetting">
           <i className="fa-solid fa-ellipsis fa-2xl" id="postSet"></i>
@@ -24,9 +26,7 @@ function PostCard({userName, postTime, likeCount, commentCount, postText}) {
       <div className="postingBody">
         <div className="postingSection">
           <div className="postWords">
-            <h3>
-              {postText}
-            </h3>
+            <h3>{postText}</h3>
           </div>
         </div>
         <div className="iconSection">

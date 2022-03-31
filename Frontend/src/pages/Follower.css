@@ -1,0 +1,27 @@
+.followerMain {
+  display: flex;
+  position: absolute;
+  background-color: #f2f2f2;
+  height: 100vh;
+  width: 100vw;
+}
+
+.followerContainer {
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+  background-color: #f2f2f2;
+  width: 45%;
+  padding: 10px;
+  height: auto;
+}
+
+.followerInnerContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: white;
+  border-radius: 30px;
+  padding: 20px;
+}
