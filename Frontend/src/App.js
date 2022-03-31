@@ -12,6 +12,7 @@ import Interest from "./pages/Interest";
 import Profile from "./pages/Profile";
 import Setting from "./pages/Setting";
 import AccountSetting from "./pages/AccountSetting";
+import NewInterest from "./pages/NewInterest";
 import PasswordReset from "./pages/PasswordReset";
 import UserSearchResult from "./pages/UserSearchResult";
 import UserProfile from "./pages/UserProfile";
@@ -37,6 +38,7 @@ function App() {
         <Route path={PageLinks.USERPROFILE} element={<UserProfile />} />
         <Route path={PageLinks.SETTING} element={<Setting />} />
         <Route path={PageLinks.ACCSETTING} element={<AccountSetting />} />
+        <Route path={PageLinks.NEWINTEREST} element={<NewInterest />} />
         <Route path={PageLinks.PASSRESET} element={<PasswordReset />} />
         <Route path={PageLinks.FOLLOWER} element={<Follower />} />
         <Route path={PageLinks.FOLLOWING} element={<Following />} />
