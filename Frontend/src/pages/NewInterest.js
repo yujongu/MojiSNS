@@ -36,7 +36,6 @@ function NewInterest() {
   currUser.FOLLOWING_TOPICS.forEach((t) => {
     topics += `${t} `;
   });
-  console.log("그냥: "+topics);
 
   var initsports = "";
   if (topics.indexOf("sports") != -1) {
