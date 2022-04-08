@@ -146,7 +146,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     await Post.deleteMany({USER_ID: req.params.id})
     
-    axios.delete(`http://localhost:3010/api/comment/deleteUser/${req.params.id}`)
+    axios.delete(`http://localhost:5000/api/comment/deleteUser/${req.params.id}`)
     .then(response => {
       console.log(response.data.url);
       //console.log(response.data.explanation);
