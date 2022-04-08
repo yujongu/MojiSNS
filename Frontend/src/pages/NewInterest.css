@@ -25,166 +25,6 @@
 .topics {
   margin-bottom: 10px;
 }
-
-p4 {
-    color: #ffc368;
-    font-size: 30px;
-    font-style: italic;
-    font-weight: bold;
-    margin-bottom: 3px;
-}
-
-.sports {
-    position: relative;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    /* background-color: #FBE5D6; */
-
-    /* transition: background-color 0.5s; */
-    border-style: none;
-    border-radius: 15px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-.game {
-    position: relative;
-    background-color: #FBE5D6;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    transition: background-color 0.5s;
-    border-style: none;
-    border-radius: 15px;
-    perspective: 1px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-  .news {
-    position: relative;
-    background-color: #FBE5D6;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    transition: background-color 0.5s;
-    border-style: none;
-    border-radius: 15px;
-    perspective: 1px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
- .literature {
-    position: relative;
-    background-color: #FBE5D6;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    transition: background-color 0.5s;
-    border-style: none;
-    border-radius: 15px;
-    perspective: 1px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-.memes {
-    position: relative;
-    background-color: #FBE5D6;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    transition: background-color 0.5s;
-    border-style: none;
-    border-radius: 15px;
-    perspective: 1px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
- }
-
-.beauty {
-    position: relative;
-    background-color: #FBE5D6;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    transition: background-color 0.5s;
-    border-style: none;
-    border-radius: 15px;
-    perspective: 1px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
- }
-
-.movies {
-    position: relative;
-    background-color: #FBE5D6;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    transition: background-color 0.5s;
-    border-style: none;
-    border-radius: 15px;
-    perspective: 1px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
- }
-
- .anonymous {
-    position: relative;
-    background-color: #FBE5D6;
-    color: #000000;
-    height: 35px;
-    width: max-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-top: 20px;
-    transition: background-color 0.5s;
-    border-style: none;
-    border-radius: 15px;
-    perspective: 1px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
- }
   
   button[type=submit].finished {
     position: relative;
@@ -211,3 +51,22 @@ p4 {
     background-color: #fba31f;
     transition: none;
   }
+
+
+.Interests {
+  display: grid;
+  grid-template-columns: 150px 150px;
+  grid-gap: 5px;
+  margin-top: 10px;
+}
+
+.interests_buttons {
+  background-color: #FBE5D6;
+  border-color: transparent;
+  width: 150px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 20px;
+  border-radius: 10px;
+
+}
