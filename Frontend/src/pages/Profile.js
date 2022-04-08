@@ -34,8 +34,8 @@ function Profile() {
     monthNames[parseInt(bday[1]) - 1] + " " + bday[2] + ", " + bday[0];
   var topics = "";
   console.log(currUser.FOLLOWING_TOPICS);
-  currUser.FOLLOWING_TOPICS.forEach((t) => {
-    topics += `${t} `;
+  currUser.FOLLOWING_TOPICS_Obj.forEach((t) => {
+    topics += `${t.TOPIC_NAME} `;
   });
 
   const [show, setShow] = useState(false);
@@ -129,7 +129,7 @@ function Profile() {
               <div className="interestEditBtns">
                 <button
                   className="interestModify"
-                  onClick={() => navigate('/newinterest')}
+                  onClick={() => navigate("/newinterest")}
                 >
                   +/-
                 </button>

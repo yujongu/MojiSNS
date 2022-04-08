@@ -335,7 +335,7 @@ router.get("/login/:username/:password", async (req, res) => {
     const user = await User.findOne({
       USER_USERNAME: req.params.username,
     }).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS FOLLOWING_TOPICS_Obj"
     );
 
     if (!user) {
