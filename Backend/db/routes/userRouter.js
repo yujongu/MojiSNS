@@ -169,7 +169,7 @@ router.patch("/updateUser/:id", async (req, res) => {
     console.log("wassup");
     console.log(req.body.FOLLOWING_TOPICS);
     const user = await User.findById(req.params.id).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS FOLLOWING_TOPICS_Obj"
     );
 
     if (user) {
@@ -197,6 +197,10 @@ router.patch("/updateUser/:id", async (req, res) => {
     }
     if (req.body.FOLLOWING_TOPICS) {
       user.FOLLOWING_TOPICS = req.body.FOLLOWING_TOPICS;
+    }
+
+    if (req.body.FOLLOWING_TOPICS_Obj) {
+      user.FOLLOWING_TOPICS_Obj = req.body.FOLLOWING_TOPICS_Obj;
     }
 
     await user.save();

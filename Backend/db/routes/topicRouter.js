@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 router.get("/getTopics", async (req, res) => {
   const topics = await Topic.find();
   console.log("Requesting topic list");
-  console.log(topics);
   res.send(topics);
 });
 
