@@ -470,7 +470,7 @@ router.patch("/blockUser/:id", async (req, res) => {
       return;
     }
 
-    await User.findOneAndUpdate(
+    await User.findOneAndUpdate( //add to blocklist
       { _id: req.params.id },
       {
         $push: {
@@ -480,7 +480,26 @@ router.patch("/blockUser/:id", async (req, res) => {
         },
       }
     );
-    
+
+    await User.findOneAndUpdate( //unfollow user
+      { _id: req.params.id },
+      {
+        $pull: {
+          FOLLOWING_USERS: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
+    );
+    await User.findOneAndUpdate(
+      { _id: req.body.USER_ID },
+      {
+        $pull: {
+          FOLLOWER_USERS: { USER_ID: mongoose.Types.ObjectId(req.params.id) },
+        },
+      }
+    );
+
     console.log("user blocked");
     res.send("user blocked");
   } catch (error) {
