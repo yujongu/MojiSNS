@@ -62,6 +62,15 @@ const userSchema = new Schema({
 
     PROFILE_PICTURE: {
       type: Buffer // casted to MongoDB's BSON type: binData
+    },
+
+    USER_BLOCKLIST: {
+      type: [{
+        USER_ID: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+      }]
     }
 });
 

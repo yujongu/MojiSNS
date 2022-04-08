@@ -458,5 +458,53 @@ router.post("/addProfilePicture/:id", async (req, res) => {
   }
 });
 
+router.patch("/blockUser/:id", async (req, res) => {
+  try {
+    let temp = await User.findOne({ _id: req.params.id });
 
+    if (
+      temp.USER_BLOCKLIST.some((e) => e.USER_ID.toString() == req.body.USER_ID)
+    ) {
+      res.send("already blocked");
+      console.log("already blocked");
+      return;
+    }
+
+    await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: {
+          USER_BLOCKLIST: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
+    );
+    
+    console.log("user blocked");
+    res.send("user blocked");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.patch("/unblockUser/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: {
+          USER_BLOCKLIST: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
+    );
+
+    console.log("user unblocked");
+    res.send("user unblocked");
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
