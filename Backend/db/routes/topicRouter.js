@@ -3,7 +3,6 @@ const Topic = require("../models/topic");
 const router = express.Router();
 const mongoose = require("mongoose");
 
-
 router.get("/getTopics", async (req, res) => {
   const topics = await Topic.find();
   console.log("Requesting topic list");
@@ -15,7 +14,7 @@ router.post("/addTopic", async (req, res) => {
   try {
     const topic = new Topic({
       TOPIC_NAME: req.body.TOPIC_NAME,
-      USER_ID: req.body.USER_ID
+      USER_ID: req.body.USER_ID,
     });
     await topic.save();
     res.send(topic);
@@ -23,7 +22,6 @@ router.post("/addTopic", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-    
 });
 
 router.get("/getTopic/:id", async (req, res) => {
@@ -33,19 +31,15 @@ router.get("/getTopic/:id", async (req, res) => {
     console.log(topic);
   } catch (error) {
     console.log(error);
-  }  
-})
-
-
-
-
+  }
+});
 
 ////////TEST////////////////////////////
 router.get("/testAdd", async (req, res) => {
   try {
     const topic = new Topic({
       TOPIC_NAME: "FunnyTest",
-      USER_ID: "placeholder"
+      USER_ID: "placeholder",
     });
     await topic.save();
     res.send(topic);
@@ -53,7 +47,6 @@ router.get("/testAdd", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-    
 });
 
-module.exports = router
+module.exports = router;
