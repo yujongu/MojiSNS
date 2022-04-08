@@ -38,10 +38,12 @@ function NewInterest() {
     var handleItemInsert = (element) => {
         if(topics.indexOf(element.target.textContent) == -1) {
             setTopics([...topics, element.target.textContent]);
+            console.log(topics)
         } else {
             var nTopics = topics
             nTopics.splice(topics.indexOf(element.target.textContent), 1)
             setTopics([...nTopics])
+            console.log(topics)
         }
     }
 
@@ -51,17 +53,32 @@ function NewInterest() {
     var me = JSON.parse(localStorage.getItem("currentUser"));
     var myId = me._id;
 
+    topics.push(moreInterest);
 
     const response = await axios.patch(
       `${BackendConn}user/updateUser/${myId}`,
       {
-        FOLLOWING_TOPICS: topics,
+        FOLLOWING_TOPICS: topics
       }
     )
     if (response.status == 200 && response.data._id === myId) {
       localStorage.setItem('currentUser', JSON.stringify(response.data))
       navigate("/profile");
       alert("Success!")
+    }
+  };
+
+  const [isActive, setIsActive] = useState(false);
+  const [moreInterest, setMoreInterest] = useState("");
+
+  const handleTextChange = (e) => {
+    console.log(e.target);
+    setMoreInterest(e.target.value)
+
+    if (e.target.value !== "") {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
     }
   };
 
@@ -75,14 +92,25 @@ function NewInterest() {
         <div className="Interests">
         {
           totalTopics.map((element, index) => (
-
         <button key={index} type="submit" className="interests_buttons" onClick={handleItemInsert}>
           {element}
         </button>
           ))
-          
         }
         </div>
+
+        <div id="float-label">
+            <input
+              type="text"
+              value={moreInterest}
+              onChange={(e) => handleTextChange(e)}
+              name="moreInterest"
+            ></input>
+            <label className={isActive ? "Active" : ""} htmlFor="addmore">
+              New topic to add
+            </label>
+          </div>
+
         
         <div className="Finish">
           <button type="submit" className="finished" onClick={handleSubmit}>
