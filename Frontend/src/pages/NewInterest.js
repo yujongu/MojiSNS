@@ -9,42 +9,57 @@ function NewInterest() {
   let navigate = useNavigate();
 
   const initUser = JSON.parse(localStorage.getItem("currentUser"));
-  const [topics, setTopics] = useState(initUser.FOLLOWING_TOPICS);
+  const [isLoading, setLoading] = useState(true);
+  const [fetchedTopics, setFetchedTopics] = useState([]);
 
-  var totalTopics = [
-    "sports",
-    "game",
-    "movies",
-    "news",
-    "memes",
-    "literature",
-    "beauty",
-    "anonymous",
-  ];
+  const [topics, setTopics] = useState([]);
 
   React.useEffect(() => {
+    getAvailableTopics();
+    // setTopics(initUser.FOLLOWING_TOPICS);
+    var tHolder = [];
+    initUser.FOLLOWING_TOPICS_Obj.forEach((element) => {
+      console.log(element);
+      tHolder.push(element.TOPIC_NAME);
+    });
+    console.log(tHolder);
+    setTopics(tHolder);
+
     var a = document.querySelectorAll(".interests_buttons");
     a.forEach((element) => {
+      console.log(element);
       if (topics.indexOf(element.textContent) != -1) {
         element.style.backgroundColor = "#F4B183";
       }
     });
-    setTopics(initUser.FOLLOWING_TOPICS);
   }, []);
 
   //component did update
   React.useEffect(() => {
     var a = document.querySelectorAll(".interests_buttons");
     a.forEach((element) => {
-      if (topics.indexOf(element.textContent) != -1) {
-        element.style.backgroundColor = "#F4B183";
-      } else {
-        element.style.backgroundColor = "#FBE5D6";
-      }
+      // if (topics.indexOf(element.textContent) != -1) {
+      //   element.style.backgroundColor = "#F4B183";
+      // } else {
+      //   element.style.backgroundColor = "#FBE5D6";
+      // }
     });
   }, [topics]);
 
+  var getAvailableTopics = () => {
+    const response = axios.get(`${BackendConn}topic/getTopics`);
+    response.then((response) => {
+      if (response.status === 200) {
+        setFetchedTopics(response.data);
+        setLoading(false);
+      } else {
+        alert("Something Went Wrong...");
+      }
+    });
+  };
+
   var handleItemInsert = (element) => {
+    console.log(element.target);
     if (topics.indexOf(element.target.textContent) == -1) {
       setTopics([...topics, element.target.textContent]);
     } else {
@@ -80,16 +95,20 @@ function NewInterest() {
         </div>
 
         <div className="Interests">
-          {totalTopics.map((element, index) => (
-            <button
-              key={index}
-              type="submit"
-              className="interests_buttons"
-              onClick={handleItemInsert}
-            >
-              {element}
-            </button>
-          ))}
+          {isLoading ? (
+            <div>Loading</div>
+          ) : (
+            fetchedTopics.map((element, index) => (
+              <button
+                key={index}
+                type="submit"
+                className="interests_buttons"
+                onClick={handleItemInsert}
+              >
+                {element.TOPIC_NAME}
+              </button>
+            ))
+          )}
         </div>
 
         <div className="Finish">
