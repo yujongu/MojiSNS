@@ -70,7 +70,7 @@ router.get("/getUserByUsername/:username", async (req, res) => {
     const user = await User.findOne({
       USER_USERNAME: req.params.username,
     }).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS FOLLOWING_TOPICS_Obj"
     );
     res.send(user);
     console.log("got user");
