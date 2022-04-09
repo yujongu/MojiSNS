@@ -205,8 +205,11 @@ router.patch("/updateUser/:id", async (req, res) => {
 
     await user.save();
     console.log("Passed!!");
-    console.log(user);
-    res.send(user);
+    const updatedUser = await User.findById(req.params.id).populate(
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS FOLLOWING_TOPICS_Obj"
+    );
+    
+    res.send(updatedUser);
   } catch (error) {
     console.log(error);
   }

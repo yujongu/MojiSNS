@@ -16,33 +16,35 @@ function NewInterest() {
 
   React.useEffect(() => {
     getAvailableTopics();
-    // setTopics(initUser.FOLLOWING_TOPICS);
     var tHolder = [];
     initUser.FOLLOWING_TOPICS_Obj.forEach((element) => {
       console.log(element);
       tHolder.push(element.TOPIC_NAME);
     });
-    console.log(tHolder);
     setTopics(tHolder);
+  }, []);
 
+  React.useEffect(() => {
+    setLoading(false);
     var a = document.querySelectorAll(".interests_buttons");
     a.forEach((element) => {
-      console.log(element);
       if (topics.indexOf(element.textContent) != -1) {
         element.style.backgroundColor = "#F4B183";
+      } else {
+        element.style.backgroundColor = "#FBE5D6";
       }
     });
-  }, []);
+  }, [fetchedTopics])
 
   //component did update
   React.useEffect(() => {
     var a = document.querySelectorAll(".interests_buttons");
     a.forEach((element) => {
-      // if (topics.indexOf(element.textContent) != -1) {
-      //   element.style.backgroundColor = "#F4B183";
-      // } else {
-      //   element.style.backgroundColor = "#FBE5D6";
-      // }
+      if (topics.indexOf(element.textContent) != -1) {
+        element.style.backgroundColor = "#F4B183";
+      } else {
+        element.style.backgroundColor = "#FBE5D6";
+      }
     });
   }, [topics]);
 
@@ -51,7 +53,6 @@ function NewInterest() {
     response.then((response) => {
       if (response.status === 200) {
         setFetchedTopics(response.data);
-        setLoading(false);
       } else {
         alert("Something Went Wrong...");
       }
@@ -59,7 +60,6 @@ function NewInterest() {
   };
 
   var handleItemInsert = (element) => {
-    console.log(element.target);
     if (topics.indexOf(element.target.textContent) == -1) {
       setTopics([...topics, element.target.textContent]);
     } else {
@@ -74,11 +74,18 @@ function NewInterest() {
 
     var me = JSON.parse(localStorage.getItem("currentUser"));
     var myId = me._id;
+    console.log(fetchedTopics)
 
+    var topicsId = [];
+    fetchedTopics.forEach((element) => {
+      if (topics.indexOf(element.TOPIC_NAME) != -1) {
+        topicsId.push(element._id);
+      }
+    });
     const response = await axios.patch(
       `${BackendConn}user/updateUser/${myId}`,
       {
-        FOLLOWING_TOPICS: topics,
+        FOLLOWING_TOPICS_Obj: topicsId,
       }
     );
     if (response.status == 200 && response.data._id === myId) {

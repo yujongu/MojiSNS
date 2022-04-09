@@ -68,8 +68,6 @@ function Interest() {
 
     var me = JSON.parse(localStorage.getItem("currentUser"));
     var myId = me._id;
-    console.log(topics);
-    console.log(fetchedTopics);
     var topicsId = [];
     fetchedTopics.forEach((element) => {
       if (topics.indexOf(element.TOPIC_NAME) != -1) {
