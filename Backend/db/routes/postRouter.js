@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const Post = require("../models/post");
+const Topic = require("../models/topic")
 const { default: mongoose } = require("mongoose");
 const router = express.Router();
 
@@ -23,7 +24,12 @@ router.post("/addPost", async (req, res) => {
       TOPIC_ID: mongoose.Types.ObjectId(req.body.TOPIC_ID),
       BODY: req.body.BODY,
     });
+
+    const topic = await Topic.findById(req.body.TOPIC_ID);
+    topic.TOPIC_TRAFFIC_COUNT = topic.TOPIC_TRAFFIC_COUNT + 1;
+
     await post.save(); //save this object to collection in db
+    await topic.save();
     res.send(post);
     console.log("post added");
   } catch (error) {

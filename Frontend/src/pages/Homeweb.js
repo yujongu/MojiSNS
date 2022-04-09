@@ -3,7 +3,6 @@ import "./Homeweb.css";
 import { useNavigate } from "react-router-dom";
 import PostCard from "./components/PostCard";
 import TopicItem from "./components/TopicsBtn/TopicItem";
-import { interestList } from "../constants/interests";
 import { BackendConn } from "../constants/backendConn";
 import { NOTIFICATION, SEARCHRES } from "../constants/routes";
 import {
@@ -21,9 +20,10 @@ const Homeweb = () => {
 
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
-
+  const [interestList, setInterestList] = useState([]);
   //window onload
   React.useEffect(() => {
+    fetchTopics();
     populatePosts();
     eventListeners();
   }, []);
@@ -34,6 +34,9 @@ const Homeweb = () => {
       postEventListeners();
     }
   }, [postData]);
+
+  React.useEffect(() => {
+  }, [interestList])
 
   var eventListeners = () => {
     var postingImg = document.getElementById("postingImg");
@@ -107,8 +110,18 @@ const Homeweb = () => {
     });
   };
 
+  var fetchTopics = () => {
+    const response = axios.get(`${BackendConn}topic/getTopics`);
+    response.then((response) => {
+      if (response.status === 200) {
+        setInterestList(response.data);
+      } else {
+        alert("Something Went Wrong...");
+      }
+    });
+  }
+
   var selectedItem = -1;
-  var selectedItemName = "";
   var itemSelectColorChange = (index) => {
     selectedItem = index;
     var list = document.querySelectorAll(".topicItems");
@@ -116,7 +129,6 @@ const Homeweb = () => {
       var itm = item.querySelector("button");
       if (itm.id == selectedItem) {
         itm.style.backgroundColor = "#F4B183";
-        selectedItemName = itm.querySelector("p").innerHTML;
       } else {
         itm.style.backgroundColor = "#FBE5D6";
       }
@@ -127,7 +139,6 @@ const Homeweb = () => {
     var a = document.getElementById("postWriteID");
     a.value = "";
     selectedItem = -1;
-    selectedItemName = "";
     var itemList = document.querySelectorAll(".topicItems");
     itemList.forEach((item) => {
       item.querySelector("button").style.backgroundColor = "#FBE5D6";
@@ -147,7 +158,7 @@ const Homeweb = () => {
       axios
         .post(`${BackendConn}post/addPost`, {
           USER_ID: currUser._id,
-          TOPIC_NAME: selectedItemName,
+          TOPIC_ID: interestList[selectedItem]._id,
           BODY: postWriteID.value,
         })
         .then((response) => {
@@ -309,7 +320,8 @@ const Homeweb = () => {
             </div>
             <div id="writeSelectTopic">
               <div className="topicList">
-                {interestList.map((interest, index) => (
+                {
+                interestList.map((interest, index) => (
                   <div
                     className="topicItems"
                     key={index}
@@ -317,9 +329,10 @@ const Homeweb = () => {
                       itemSelectColorChange(index);
                     }}
                   >
-                    <TopicItem topicName={interest} index={index} />
+                    <TopicItem topicName={interest.TOPIC_NAME} index={index} />
                   </div>
-                ))}
+                ))
+                }
               </div>
             </div>
           </div>

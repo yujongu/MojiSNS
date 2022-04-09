@@ -10,11 +10,6 @@ const postSchema = new Schema(
       required: true,
     },
 
-    TOPIC_NAME: {
-      type: String,
-      required: true,
-    },
-
     TOPIC_ID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Topic",

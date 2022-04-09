@@ -23,6 +23,16 @@ router.post("/addTopic", async (req, res) => {
   }
 });
 
+router.patch("/addOneTrafficCount", async (req, res) => {
+  try {
+    const topic = await Topic.findById(req.body.TOPIC_ID);
+    topic.TOPIC_TRAFFIC_COUNT = topic.TOPIC_TRAFFIC_COUNT + 1;
+  } catch (error) {
+    console.log(error)
+
+  }
+})
+
 router.get("/getTopic/:id", async (req, res) => {
   try {
     const topic = await Topic.findById(req.params.id);
