@@ -44,7 +44,6 @@ const Homeweb = () => {
     var buttonForSelect = document.getElementById("buttonForSelect");
 
     var showWrite = document.getElementById("writePost");
-    console.log(showWrite.style.display);
     postingImg.addEventListener("click", function () {
       if (showWrite.style.display === "block") {
         showWrite.style.display = "none";
@@ -160,6 +159,7 @@ const Homeweb = () => {
       axios
         .post(`${BackendConn}post/addPost`, {
           USER_ID: currUser._id,
+          IS_ANONYMOUS: postAnonymous,
           TOPIC_ID: interestList[selectedItem]._id,
           BODY: postWriteID.value,
         })
@@ -181,8 +181,6 @@ const Homeweb = () => {
     console.log("Clicked");
     var a = document.querySelector(".writeCard");
     var b = document.querySelector("#btnAnonymous");
-    console.log(a);
-    console.log(b);
     if (postAnonymous) {
       postAnonymous = false;
       a.style.backgroundColor = "#ffffff";
@@ -192,7 +190,6 @@ const Homeweb = () => {
       a.style.backgroundColor = "#adadad";
       b.textContent = "Make post Public";
     }
-    console.log(postAnonymous);
   };
 
   function escapeRegExp(string) {
@@ -382,6 +379,7 @@ const Homeweb = () => {
                 <PostCard
                   key={index}
                   userName={singlePost.USER_ID.USER_USERNAME}
+                  anonymous={singlePost.IS_ANONYMOUS}
                   postTime={singlePost.updatedAt}
                   likeCount={singlePost.LIKES_COUNT}
                   commentCount={singlePost.COMMENTS_COUNT}

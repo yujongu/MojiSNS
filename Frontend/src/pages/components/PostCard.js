@@ -3,18 +3,37 @@ import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
 import datePretty from "../../helperFunctions/datePretty";
 
-function PostCard({ userName, postTime, likeCount, commentCount, postText }) {
-
-  var pastTime = datePretty(postTime)
+function PostCard({
+  userName,
+  anonymous,
+  postTime,
+  likeCount,
+  commentCount,
+  postText,
+}) {
+  var pastTime = datePretty(postTime);
+  console.log(anonymous);
 
   return (
     <div className="postingCard">
       <div className="postingHeader">
         <div className="postingProfile">
-          <img className="postPP" src="profile.png" alt="Sample profile"></img>
+          {anonymous ? (
+            <img
+              className="postPP"
+              src="anonymous_Img.png"
+              alt="Sample profile"
+            ></img>
+          ) : (
+            <img
+              className="postPP"
+              src="profile.png"
+              alt="Sample profile"
+            ></img>
+          )}
         </div>
         <div className="postingWriter">
-          <h3>{userName}</h3>
+          {anonymous ? <h3>HIDDEN USER</h3> : <h3>{userName}</h3>}
         </div>
         <div className="dateWritten">
           <h4>Posted {pastTime} ago</h4>

@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const Post = require("../models/post");
-const Topic = require("../models/topic")
+const Topic = require("../models/topic");
 const { default: mongoose } = require("mongoose");
 const router = express.Router();
 
@@ -21,6 +21,7 @@ router.post("/addPost", async (req, res) => {
   try {
     const post = new Post({
       USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+      IS_ANONYMOUS: req.body.IS_ANONYMOUS,
       TOPIC_ID: mongoose.Types.ObjectId(req.body.TOPIC_ID),
       BODY: req.body.BODY,
     });

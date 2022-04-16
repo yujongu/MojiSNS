@@ -10,6 +10,11 @@ const postSchema = new Schema(
       required: true,
     },
 
+    IS_ANONYMOUS: {
+      type: Boolean,
+      default: false,
+    },
+
     TOPIC_ID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Topic",
