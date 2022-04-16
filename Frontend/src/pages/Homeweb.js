@@ -21,6 +21,8 @@ const Homeweb = () => {
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
   const [interestList, setInterestList] = useState([]);
+
+  var postAnonymous = false;
   //window onload
   React.useEffect(() => {
     fetchTopics();
@@ -35,8 +37,7 @@ const Homeweb = () => {
     }
   }, [postData]);
 
-  React.useEffect(() => {
-  }, [interestList])
+  React.useEffect(() => {}, [interestList]);
 
   var eventListeners = () => {
     var postingImg = document.getElementById("postingImg");
@@ -102,6 +103,7 @@ const Homeweb = () => {
     const response = axios.get(`${BackendConn}post/getFeed/${currUser._id}`);
     response.then((response) => {
       if (response.status === 200) {
+        console.log(response);
         setLoading(false);
         setPostData(response.data);
       } else {
@@ -119,7 +121,7 @@ const Homeweb = () => {
         alert("Something Went Wrong...");
       }
     });
-  }
+  };
 
   var selectedItem = -1;
   var itemSelectColorChange = (index) => {
@@ -175,6 +177,24 @@ const Homeweb = () => {
     }
   };
 
+  var makeAnonymous = () => {
+    console.log("Clicked");
+    var a = document.querySelector(".writeCard");
+    var b = document.querySelector("#btnAnonymous");
+    console.log(a);
+    console.log(b);
+    if (postAnonymous) {
+      postAnonymous = false;
+      a.style.backgroundColor = "#ffffff";
+      b.textContent = "Make post Anonymous";
+    } else {
+      postAnonymous = true;
+      a.style.backgroundColor = "#adadad";
+      b.textContent = "Make post Public";
+    }
+    console.log(postAnonymous);
+  };
+
   function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
   }
@@ -216,7 +236,6 @@ const Homeweb = () => {
             <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
           <div className="hdrBtnContainer">
-            
             <button
               className="notification"
               onClick={() => {
@@ -311,6 +330,14 @@ const Homeweb = () => {
               <button id="buttonForSelect" className="btnSelect">
                 Select a topic
               </button>
+              <button
+                id="btnAnonymous"
+                className="btnSelect"
+                onClick={makeAnonymous}
+              >
+                Make post anonymous
+              </button>
+
               <button className="btnUpload" onClick={uploadPost}>
                 Upload
               </button>
@@ -320,8 +347,7 @@ const Homeweb = () => {
             </div>
             <div id="writeSelectTopic">
               <div className="topicList">
-                {
-                interestList.map((interest, index) => (
+                {interestList.map((interest, index) => (
                   <div
                     className="topicItems"
                     key={index}
@@ -331,8 +357,7 @@ const Homeweb = () => {
                   >
                     <TopicItem topicName={interest.TOPIC_NAME} index={index} />
                   </div>
-                ))
-                }
+                ))}
               </div>
             </div>
           </div>
@@ -340,21 +365,11 @@ const Homeweb = () => {
         <div className="viewByTopic">
           <h2 className="titleWeb2">View By Topic</h2>
           <div className="outer">
-            <div>
-              <button className="btnTopic">Sports</button>
-            </div>
-            <div>
-              <button className="btnTopic">Games</button>
-            </div>
-            <div>
-              <button className="btnTopic">Beauty</button>
-            </div>
-            <div>
-              <button className="btnTopic">Movies</button>
-            </div>
-            <div>
-              <button className="btnTopic">Memes</button>
-            </div>
+            {interestList.map((element) => (
+              <div>
+                <button className="btnTopic">{element.TOPIC_NAME}</button>
+              </div>
+            ))}
           </div>
         </div>
         <div className="timeline">
