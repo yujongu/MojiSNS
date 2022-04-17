@@ -10,7 +10,6 @@ import { BackendConn } from "../constants/backendConn";
 import axios from "axios";
 
 function Profile() {
-  console.log("This is user");
   let navigate = useNavigate();
 
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -33,7 +32,6 @@ function Profile() {
   var formattedBday =
     monthNames[parseInt(bday[1]) - 1] + " " + bday[2] + ", " + bday[0];
   var topics = "";
-  console.log(currUser.FOLLOWING_TOPICS);
   currUser.FOLLOWING_TOPICS_Obj.forEach((t) => {
     topics += `${t.TOPIC_NAME} `;
   });
@@ -148,6 +146,7 @@ function Profile() {
               <PostCard
                 key={index}
                 userName={singlePost.USER_ID.USER_USERNAME}
+                anonymous={singlePost.IS_ANONYMOUS}
                 postTime={singlePost.updatedAt}
                 likeCount={singlePost.LIKES_COUNT}
                 commentCount={singlePost.COMMENTS_COUNT}

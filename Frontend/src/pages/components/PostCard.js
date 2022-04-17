@@ -12,7 +12,7 @@ function PostCard({
   postText,
 }) {
   var pastTime = datePretty(postTime);
-  console.log(anonymous);
+  const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
   return (
     <div className="postingCard">
@@ -33,13 +33,25 @@ function PostCard({
           )}
         </div>
         <div className="postingWriter">
-          {anonymous ? <h3>HIDDEN USER</h3> : <h3>{userName}</h3>}
+          {anonymous ? (
+            userName === currUser.USER_USERNAME ? (
+              <h3>HIDDEN USER - me</h3>
+            ) : (
+              <h3>HIDDEN USER</h3>
+            )
+          ) : (
+            <h3>{userName}</h3>
+          )}
         </div>
         <div className="dateWritten">
           <h4>Posted {pastTime} ago</h4>
         </div>
         <div className="postSetting">
           <i className="fa-solid fa-ellipsis fa-2xl" id="postSet"></i>
+          <div className="postSetting_content">
+            <button>Delete</button>
+            <button>Edit</button>
+          </div>
         </div>
       </div>
       <div className="postingBody">

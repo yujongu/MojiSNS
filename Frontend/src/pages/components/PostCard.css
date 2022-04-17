@@ -43,7 +43,38 @@
     width: 5%;
     margin-left: 3%;
     margin-top: 6%;
+    cursor: pointer;
+    display: inline-block;
 }
+.postSetting:hover, .postSetting:focus {
+    color : #ffc368;
+}
+
+.postSetting_content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.postSetting_content button {
+    border-radius: 15px;
+    background-color: #ffc368;
+    color: #e26714;
+    width: 80px;
+    height: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+}
+
+.postSetting_content button:hover {
+    background-color: #e26714;
+    color: white;
+}
+
+.show {display:block;}
+
 
 .postingBody{
     display: flex;
