@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import TopSettingBar from "./components/Header/TopSettingBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/fontawesome-free-solid";
+import { faDoorOpen } from "@fortawesome/fontawesome-free-solid";
 import PostCard from "./components/PostCard";
 import React, { useState } from "react";
 import { BackendConn } from "../constants/backendConn";
@@ -12,7 +13,6 @@ import axios from "axios";
 function Profile() {
   console.log("This is user");
   let navigate = useNavigate();
-
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   //todo get curr user posts.
   var monthNames = [
@@ -42,8 +42,20 @@ function Profile() {
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
 
+  const countEl = document.getElementById('count');
+  function updateVisitCount() {
+    fetch('https://api.countapi.xyz/update/florin-pop/kimchi/?amount=1')
+    .then(res => res.json())
+    .then(res => {
+      countEl.innerHTML = res.value;
+      countEl = -6;
+    })
+  }
+  updateVisitCount();
+
   React.useEffect(() => {
     populatePosts();
+    
   }, []);
 
   //component did update
@@ -90,8 +102,10 @@ function Profile() {
     <main className="profileContainer">
       <div className="profileMainContainer">
         <TopSettingBar text={"Profile Page"} />
+
         <div className="myProfileInfoContainer">
           <div className="myProfUpperHalf">
+            
             <div id="lh">
               <div className="imageContainer">
                 <img src={require("../images/steveRogersProfile.jpg")} />
@@ -134,6 +148,11 @@ function Profile() {
                   +/-
                 </button>
               </div>
+            </div>
+            <div classname="visitCounts">
+              <FontAwesomeIcon icon={faDoorOpen} size="lg" />
+              <p>Visited: </p>
+              <p id="count">0</p>
             </div>
           </div>
         </div>
