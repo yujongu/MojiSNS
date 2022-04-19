@@ -40,16 +40,25 @@ function Profile() {
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
 
+  window.onclick = function (event) {
+    if (!event.target.matches("#postSet")) {
+      var dropdowns = document.getElementsByClassName("postSetting_content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains("show")) {
+          openDropdown.classList.remove("show");
+        }
+      }
+    }
+  };
+
   React.useEffect(() => {
     populatePosts();
   }, []);
 
   //component did update
-  React.useEffect(() => {
-    if (postData.length != 0) {
-      postEventListeners();
-    }
-  }, [postData]);
+  React.useEffect(() => {}, [postData]);
 
   var populatePosts = () => {
     const response = axios.get(`${BackendConn}post/getPosts/${currUser._id}`);
@@ -64,26 +73,6 @@ function Profile() {
     });
   };
 
-  var postEventListeners = () => {
-    var like = document.getElementById("like");
-    var likeNum = document.getElementById("likeNum");
-    var postSet = document.getElementById("postSet");
-    var stateLike = 0;
-    like.addEventListener("click", function () {
-      if (stateLike === 1) {
-        like.style.color = "#000000";
-        likeNum.style.color = "#000000";
-        stateLike = 0;
-      } else {
-        like.style.color = "#E26714";
-        likeNum.style.color = "#E26714";
-        stateLike = 1;
-      }
-    });
-    postSet.addEventListener("click", function () {
-      console.log("postSetting clicked");
-    });
-  };
   return (
     <main className="profileContainer">
       <div className="profileMainContainer">
@@ -146,6 +135,7 @@ function Profile() {
               <PostCard
                 key={index}
                 userName={singlePost.USER_ID.USER_USERNAME}
+                postId={singlePost._id}
                 anonymous={singlePost.IS_ANONYMOUS}
                 postTime={singlePost.updatedAt}
                 likeCount={singlePost.LIKES_COUNT}
