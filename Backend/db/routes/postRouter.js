@@ -106,6 +106,7 @@ router.get("/getFeed/:id", async (req, res) => {
         {
           USER_ID: req.params.id,
         },
+        { IS_ANONYMOUS: true },
       ],
     })
       .populate("USER_ID TOPIC_ID LIKED_USERS")

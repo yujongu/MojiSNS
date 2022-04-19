@@ -363,21 +363,18 @@ const Homeweb = () => {
             {isLoading ? (
               <div>Loading</div>
             ) : (
-              postData.map(
-                (singlePost, index) => (
-                  <PostCard
-                    key={index}
-                    userName={singlePost.USER_ID.USER_USERNAME}
-                    postId={singlePost._id}
-                    anonymous={singlePost.IS_ANONYMOUS}
-                    postTime={singlePost.updatedAt}
-                    likeCount={singlePost.LIKES_COUNT}
-                    commentCount={singlePost.COMMENTS_COUNT}
-                    postText={singlePost.BODY}
-                  />
-                )
-                // console.log(singlePost)
-              )
+              postData.map((singlePost, index) => (
+                <PostCard
+                  key={index}
+                  userName={singlePost.USER_ID.USER_USERNAME}
+                  postId={singlePost._id}
+                  anonymous={singlePost.IS_ANONYMOUS}
+                  postTime={singlePost.updatedAt}
+                  likeCount={singlePost.LIKES_COUNT}
+                  commentCount={singlePost.COMMENTS_COUNT}
+                  postText={singlePost.BODY}
+                />
+              ))
             )}
           </div>
         </div>

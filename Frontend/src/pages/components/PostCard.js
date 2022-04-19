@@ -101,17 +101,21 @@ function PostCard({
         <div className="dateWritten">
           <h4>Posted {pastTime} ago</h4>
         </div>
-        <div className="postSetting">
-          <i
-            className="fa-solid fa-ellipsis fa-2xl"
-            id="postSet"
-            onClick={openPostSetting}
-          ></i>
-          <div id="mDropdown" className="postSetting_content">
-            <div onClick={deleteTargetPost}>Delete</div>
-            <div onClick={editTargetPost}>Edit</div>
+        {userName === currUser.USER_USERNAME ? (
+          <div className="postSetting">
+            <i
+              className="fa-solid fa-ellipsis fa-2xl"
+              id="postSet"
+              onClick={openPostSetting}
+            ></i>
+            <div id="mDropdown" className="postSetting_content">
+              <div onClick={deleteTargetPost}>Delete</div>
+              <div onClick={editTargetPost}>Edit</div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className="postingBody">
         <div className="postingSection">
