@@ -30,12 +30,21 @@ const Homeweb = () => {
     eventListeners();
   }, []);
 
-  //component did update
-  React.useEffect(() => {
-    if (postData.length != 0) {
-      postEventListeners();
+  window.onclick = function (event) {
+    if (!event.target.matches("#postSet")) {
+      var dropdowns = document.getElementsByClassName("postSetting_content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains("show")) {
+          openDropdown.classList.remove("show");
+        }
+      }
     }
-  }, [postData]);
+  };
+
+  //component did update
+  React.useEffect(() => {}, [postData]);
 
   React.useEffect(() => {}, [interestList]);
 
@@ -73,27 +82,6 @@ const Homeweb = () => {
           parseInt(setHeight.getPropertyValue("border-bottom-width")) +
           "px";
       });
-    });
-  };
-
-  var postEventListeners = () => {
-    var like = document.getElementById("like");
-    var likeNum = document.getElementById("likeNum");
-    var postSet = document.getElementById("postSet");
-    var stateLike = 0;
-    like.addEventListener("click", function () {
-      if (stateLike === 1) {
-        like.style.color = "#000000";
-        likeNum.style.color = "#000000";
-        stateLike = 0;
-      } else {
-        like.style.color = "#E26714";
-        likeNum.style.color = "#E26714";
-        stateLike = 1;
-      }
-    });
-    postSet.addEventListener("click", function () {
-      console.log("postSetting clicked");
     });
   };
 
@@ -375,17 +363,21 @@ const Homeweb = () => {
             {isLoading ? (
               <div>Loading</div>
             ) : (
-              postData.map((singlePost, index) => (
-                <PostCard
-                  key={index}
-                  userName={singlePost.USER_ID.USER_USERNAME}
-                  anonymous={singlePost.IS_ANONYMOUS}
-                  postTime={singlePost.updatedAt}
-                  likeCount={singlePost.LIKES_COUNT}
-                  commentCount={singlePost.COMMENTS_COUNT}
-                  postText={singlePost.BODY}
-                />
-              ))
+              postData.map(
+                (singlePost, index) => (
+                  <PostCard
+                    key={index}
+                    userName={singlePost.USER_ID.USER_USERNAME}
+                    postId={singlePost._id}
+                    anonymous={singlePost.IS_ANONYMOUS}
+                    postTime={singlePost.updatedAt}
+                    likeCount={singlePost.LIKES_COUNT}
+                    commentCount={singlePost.COMMENTS_COUNT}
+                    postText={singlePost.BODY}
+                  />
+                )
+                // console.log(singlePost)
+              )
             )}
           </div>
         </div>
