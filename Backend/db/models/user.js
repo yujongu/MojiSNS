@@ -74,6 +74,16 @@ const userSchema = new Schema({
     ],
   },
 
+  DAILY_VISITOR_COUNT: {
+    type: Number,
+    default: 0,
+  },
+
+  TOTAL_VISITOR_COUNT: {
+    type: Number,
+    default: 0,
+  },
+
   PROFILE_PICTURE: {
     type: Buffer, // casted to MongoDB's BSON type: binData
   },
