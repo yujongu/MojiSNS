@@ -58,7 +58,7 @@ function Profile() {
   }, []);
 
   //component did update
-  React.useEffect(() => {}, [postData]);
+  React.useEffect(() => { }, [postData]);
 
   var populatePosts = () => {
     const response = axios.get(`${BackendConn}post/getPosts/${currUser._id}`);
@@ -78,7 +78,7 @@ function Profile() {
       <div className="itemFlex">
         <div className="backButton">
           <a href="/home">
-            <button  className="backFromProfile">
+            <button className="backFromProfile">
               &lt;Home
             </button>
           </a>
@@ -99,7 +99,10 @@ function Profile() {
               </div>
 
               <div className="profileEditBtns">
-                <button className="profile_editButton">Edit Profile</button>
+                <button className="profile_editButton"
+                onClick={() => {
+                  navigate("/accsetting");
+                }}>Edit Profile</button>
                 <button
                   className="interestModify"
                   onClick={() => navigate("/newinterest")}
@@ -133,23 +136,24 @@ function Profile() {
 
           <p id="myPostTitle">My Posts</p>
 
-        <div id="postHolder">
-          {isLoading ? (
-            <div>Loading</div>
-          ) : (
-            postData.map((singlePost, index) => (
-              <PostCard
-                key={index}
-                userName={singlePost.USER_ID.USER_USERNAME}
-                postId={singlePost._id}
-                anonymous={singlePost.IS_ANONYMOUS}
-                postTime={singlePost.updatedAt}
-                likeCount={singlePost.LIKES_COUNT}
-                commentCount={singlePost.COMMENTS_COUNT}
-                postText={singlePost.BODY}
-              />
-            ))
-          )}
+          <div id="postHolder">
+            {isLoading ? (
+              <div>Loading</div>
+            ) : (
+              postData.map((singlePost, index) => (
+                <PostCard
+                  key={index}
+                  userName={singlePost.USER_ID.USER_USERNAME}
+                  postId={singlePost._id}
+                  anonymous={singlePost.IS_ANONYMOUS}
+                  postTime={singlePost.updatedAt}
+                  likeCount={singlePost.LIKES_COUNT}
+                  commentCount={singlePost.COMMENTS_COUNT}
+                  postText={singlePost.BODY}
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </main>
