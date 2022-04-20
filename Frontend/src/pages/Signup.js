@@ -47,7 +47,7 @@ function Signup() {
           );
           console.log("This is user data: ")
           console.log(response.data)
-          if(response.status === 200) {
+          if (response.status === 200) {
             //store user data to local storage
             setUser(response.data)
             localStorage.setItem('currentUser', JSON.stringify(response.data))
@@ -84,7 +84,10 @@ function Signup() {
     <main className="signupMain">
       <form onSubmit={handleSubmit}>
         <div className="signupContainer">
-          <div class="logo"></div>
+          <div className="headerSignup">
+            <div class="logoSignup"></div>
+            <a href="/" class="close">&times;</a>
+          </div>
 
           <div id="float-label3">
             <input

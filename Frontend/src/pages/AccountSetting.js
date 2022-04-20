@@ -111,101 +111,110 @@ const AccountSetting = () => {
 
     return (
         <main className="accMain">
-            <div className="center1">
-                <div className="header">
-                    <div className="headerApp">
-                        <h2 className="titleWeb">Account Setting</h2>
-                    </div>
+            <div className='itemFlex'>
+                <div className="backButton">
+                    <a href="/profile">
+                        <button className="backFromAS">
+                            &lt;Profile
+                        </button>
+                    </a>
                 </div>
-                <div className='settingCard'>
-                    <div className='settingContainer'>
-                        <h3 className='accSett'>
-                            Account Setting
-                        </h3>
-                        <h4 className='header4set'>
-                            Account Preference
-                        </h4>
-                        <hr class="solid" />
-                        <h4 className='header4set'>
-                            Email Address
-                        </h4>
-                        <div className='emailSet'>
-                            <p id="userEmail">{currUser.USER_EMAIL}</p>
-                            <a href="?#divTwo" id="button" class="emailEdit">Edit Email</a>
+                <div className="center1">
+                    <div className="header">
+                        <div className="headerApp">
+                            <h2 className="titleWeb">Account Setting</h2>
                         </div>
-                        <h4 className='header4set'>
-                            Gender
-                        </h4>
-                        <div className='genderSet'>
-                            <p id="userGender">{currUser.USER_SEX}</p>
-                            <div>
-                                <div>
-                                    <select class="customGender" id="genders">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Not Sure">Unidentify</option>
-                                    </select>
-                                </div>
-                                <br>
-                                </br>
-                                <button type="submitG" onClick={functionGender}>Submit</button>
-                            </div>
-                        </div>
-                        <h4 className='header4set'>
-                            Birthday
-                        </h4>
-                        <div className='birthdaySet'>
-                            <p id="userBday">{formattedBday}</p>
-                            <div className='rightBirth'>
-                                <input class="customBday" type="date" id="birthday" name="birthday"></input>
-                                <button type="submitBirth" onClick={functionBirth}>Submit</button>
-                            </div>
-                        </div>
-                        <hr class="solid" />
-                        <div className='accountDelete'>
+                    </div>
+                    <div className='settingCard'>
+                        <div className='settingContainer'>
+                            <h3 className='accSett'>
+                                Account Setting
+                            </h3>
                             <h4 className='header4set'>
-                                Account Deletion
+                                Account Preference
                             </h4>
-                            <a href="?#divThree" id="button" class="deleteBtn">Delete</a>
-                        </div>
-                        <div class="overlay" id="divTwo">
-                            <div class="wrapperEmail">
-                                <div class="forgetHeader">
-                                    <h2>Update Email Address</h2>
-                                    <a href="#" class="close">&times;</a>
+                            <hr class="solid" />
+                            <h4 className='header4set'>
+                                Email Address
+                            </h4>
+                            <div className='emailSet'>
+                                <p id="userEmail">{currUser.USER_EMAIL}</p>
+                                <a href="?#divTwo" id="button" class="emailEdit">Edit Email</a>
+                            </div>
+                            <h4 className='header4set'>
+                                Gender
+                            </h4>
+                            <div className='genderSet'>
+                                <p id="userGender">{currUser.USER_SEX}</p>
+                                <div>
+                                    <div>
+                                        <select class="customGender" id="genders">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Not Sure">Unidentify</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    </br>
+                                    <button type="submitG" onClick={functionGender}>Submit</button>
                                 </div>
-                                <div class="content">
-                                    <div class="contentInside">
-                                        <form>
-                                            <label>
-                                                User Email
-                                            </label>
-                                            <input type="textE" placeholder={currUser.USER_EMAIL} id="updatedEmail">
-                                            </input>
-                                            <button type="submitE" onClick={updateEmail}>Update</button>
-                                        </form>
+                            </div>
+                            <h4 className='header4set'>
+                                Birthday
+                            </h4>
+                            <div className='birthdaySet'>
+                                <p id="userBday">{formattedBday}</p>
+                                <div className='rightBirth'>
+                                    <input class="customBday" type="date" id="birthday" name="birthday"></input>
+                                    <button type="submitBirth" onClick={functionBirth}>Submit</button>
+                                </div>
+                            </div>
+                            <hr class="solid" />
+                            <div className='accountDelete'>
+                                <h4 className='header4set'>
+                                    Account Deletion
+                                </h4>
+                                <a href="?#divThree" id="button" class="deleteBtn">Delete</a>
+                            </div>
+                            <div class="overlay" id="divTwo">
+                                <div class="wrapperEmail">
+                                    <div class="forgetHeader">
+                                        <h2>Update Email Address</h2>
+                                        <a href="#" class="close">&times;</a>
+                                    </div>
+                                    <div class="content">
+                                        <div class="contentInside">
+                                            <form>
+                                                <label>
+                                                    User Email
+                                                </label>
+                                                <input type="textE" placeholder={currUser.USER_EMAIL} id="updatedEmail">
+                                                </input>
+                                                <button type="submitE" onClick={updateEmail}>Update</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="overlay" id="divThree">
-                            <div class="wrapperEmail">
-                                <div class="forgetHeader">
-                                    <h2>Account Delete</h2>
-                                    <a href="#" class="close">&times;</a>
-                                </div>
-                                <h3>Please Type in "Delete My Account" to delete</h3>
+                            <div class="overlay" id="divThree">
+                                <div class="wrapperEmail">
+                                    <div class="forgetHeader">
+                                        <h2>Account Delete</h2>
+                                        <a href="#" class="close">&times;</a>
+                                    </div>
+                                    <h3>Please Type in "Delete My Account" to delete</h3>
 
-                                <div class="content">
-                                    <div class="contentInside">
-                                        <form>
-                                            <label>
-                                                Confirmation
-                                            </label>
-                                            <input type="textD" placeholder="Delete My Account" id="deleteMessage">
-                                            </input>
-                                            <button type="submitD" onClick={deleteAccount}>Delete</button>
-                                        </form>
+                                    <div class="content">
+                                        <div class="contentInside">
+                                            <form>
+                                                <label>
+                                                    Confirmation
+                                                </label>
+                                                <input type="textD" placeholder="Delete My Account" id="deleteMessage">
+                                                </input>
+                                                <button type="submitD" onClick={deleteAccount}>Delete</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -213,6 +222,7 @@ const AccountSetting = () => {
                     </div>
                 </div>
             </div>
+
         </main>
     )
 }

@@ -88,73 +88,82 @@ function Profile() {
   };
   return (
     <main className="profileContainer">
-      <div className="profileMainContainer">
-        <TopSettingBar text={"Profile Page"} />
-        <div className="myProfileInfoContainer">
-          <div className="myProfUpperHalf">
-            <div id="lh">
-              <div className="imageContainer">
-                <img src={require("../images/steveRogersProfile.jpg")} />
+      <div className="itemFlex">
+        <div className="backButton">
+          <a href="/home">
+            <button  className="backFromProfile">
+              &lt;Home
+            </button>
+          </a>
+        </div>
+        <div className="profileMainContainer">
+          <TopSettingBar text={"Profile Page"} />
+          <div className="myProfileInfoContainer">
+            <div className="myProfUpperHalf">
+              <div id="lh">
+                <div className="imageContainer">
+                  <img src={require("../images/steveRogersProfile.jpg")} />
+                </div>
+
+                <div className="nameInfos">
+                  <p id="prof_name">{currUser.USER_USERNAME}</p>
+                  <p id="prof_username">{currUser.USER_EMAIL}</p>
+                </div>
               </div>
 
-              <div className="nameInfos">
-                <p id="prof_name">{currUser.USER_USERNAME}</p>
-                <p id="prof_username">{currUser.USER_EMAIL}</p>
-              </div>
-            </div>
-
-            <div className="profileEditBtns">
-              <button className="profile_editButton">Edit Profile</button>
-              <button
-                className="profile_settingButton"
-                onClick={() => {
-                  navigate("/accsetting");
-                }}
-              >
-                Settings
-              </button>
-            </div>
-          </div>
-
-          <div className="infosContainer">
-            <div className="birthday">
-              <FontAwesomeIcon icon={faBirthdayCake} size="lg" />
-              <p>{formattedBday}</p>
-            </div>
-            <div className="interests">
-              <p>
-                <i className="fa-solid fa-face-grin-tongue-squint fa-lg"></i>
-              </p>
-              <div className="interestList">{topics}</div>
-              <div className="interestEditBtns">
+              <div className="profileEditBtns">
+                <button className="profile_editButton">Edit Profile</button>
                 <button
-                  className="interestModify"
-                  onClick={() => navigate('/newinterest')}
+                  className="profile_settingButton"
+                  onClick={() => {
+                    navigate("/accsetting");
+                  }}
                 >
-                  +/-
+                  Settings
                 </button>
               </div>
             </div>
+
+            <div className="infosContainer">
+              <div className="birthday">
+                <FontAwesomeIcon icon={faBirthdayCake} size="lg" />
+                <p>{formattedBday}</p>
+              </div>
+              <div className="interests">
+                <p>
+                  <i className="fa-solid fa-face-grin-tongue-squint fa-lg"></i>
+                </p>
+                <div className="interestList">{topics}</div>
+                <div className="interestEditBtns">
+                  <button
+                    className="interestModify"
+                    onClick={() => navigate('/newinterest')}
+                  >
+                    +/-
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <p id="myPostTitle">My Posts</p>
+          <p id="myPostTitle">My Posts</p>
 
-        <div id="postHolder">
-          {isLoading ? (
-            <div>Loading</div>
-          ) : (
-            postData.map((singlePost, index) => (
-              <PostCard
-                key={index}
-                userName={singlePost.USER_ID.USER_USERNAME}
-                postTime={singlePost.updatedAt}
-                likeCount={singlePost.LIKES_COUNT}
-                commentCount={singlePost.COMMENTS_COUNT}
-                postText={singlePost.BODY}
-              />
-            ))
-          )}
+          <div id="postHolder">
+            {isLoading ? (
+              <div>Loading</div>
+            ) : (
+              postData.map((singlePost, index) => (
+                <PostCard
+                  key={index}
+                  userName={singlePost.USER_ID.USER_USERNAME}
+                  postTime={singlePost.updatedAt}
+                  likeCount={singlePost.LIKES_COUNT}
+                  commentCount={singlePost.COMMENTS_COUNT}
+                  postText={singlePost.BODY}
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </main>
