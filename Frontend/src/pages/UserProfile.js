@@ -28,11 +28,7 @@ function UserProfile() {
   }, []);
 
   //component did update
-  React.useEffect(() => {
-    if (postData.length != 0) {
-      postEventListeners();
-    }
-  }, [postData]);
+  React.useEffect(() => {}, [postData]);
 
   React.useEffect(() => {
     if (userData.length != 0) {
@@ -62,27 +58,6 @@ function UserProfile() {
       } else {
         alert("Something Went Wrong...");
       }
-    });
-  };
-
-  var postEventListeners = () => {
-    var like = document.getElementById("like");
-    var likeNum = document.getElementById("likeNum");
-    var postSet = document.getElementById("postSet");
-    var stateLike = 0;
-    like.addEventListener("click", function () {
-      if (stateLike === 1) {
-        like.style.color = "#000000";
-        likeNum.style.color = "#000000";
-        stateLike = 0;
-      } else {
-        like.style.color = "#E26714";
-        likeNum.style.color = "#E26714";
-        stateLike = 1;
-      }
-    });
-    postSet.addEventListener("click", function () {
-      console.log("postSetting clicked");
     });
   };
 
@@ -118,53 +93,60 @@ function UserProfile() {
 
   return (
     <main className="profileContainer">
-      <div className="profileMainContainer">
-        <TopSettingBar text={"Profile Page"} />
-        <div className="myProfileInfoContainer">
-          <div className="myProfUpperHalf">
-            <div id="lh">
-              <div className="imageContainer">
-                <img src={require("../images/steveRogersProfile.jpg")} />
-              </div>
-
-              <div className="nameInfos">
-                <p id="prof_name">{userData.USER_USERNAME}</p>
-                <p id="prof_username">{userData.USER_EMAIL}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="infosContainer">
-            <div className="birthday">
-              <FontAwesomeIcon icon={faBirthdayCake} size="lg" />
-              <p>{formattedBday}</p>
-            </div>
-            <div className="interests">
-              <p>
-                <i className="fa-solid fa-face-grin-tongue-squint fa-lg"></i>
-              </p>
-              <div className="interestList">{topics}</div>
-            </div>
-          </div>
+      <div className="itemFlex">
+        <div className="backButton">
+          <a href="/home">
+            <button className="backFromProfile">&lt;Home</button>
+          </a>
         </div>
+        <div className="profileMainContainer">
+          <TopSettingBar text={"Profile Page"} />
+          <div className="myProfileInfoContainer">
+            <div className="myProfUpperHalf">
+              <div id="lh">
+                <div className="imageContainer">
+                  <img src={require("../images/steveRogersProfile.jpg")} />
+                </div>
 
-        <p id="myPostTitle">{targetUsername}'s Posts</p>
+                <div className="nameInfos">
+                  <p id="prof_name">{userData.USER_USERNAME}</p>
+                  <p id="prof_username">{userData.USER_EMAIL}</p>
+                </div>
+              </div>
+            </div>
 
-        <div id="postHolder">
-          {isLoading ? (
-            <div>Loading</div>
-          ) : (
-            postData.map((singlePost, index) => (
-              <PostCard
-                key={index}
-                userName={singlePost.USER_ID.USER_USERNAME}
-                postTime={singlePost.updatedAt}
-                likeCount={singlePost.LIKES_COUNT}
-                commentCount={singlePost.COMMENTS_COUNT}
-                postText={singlePost.BODY}
-              />
-            ))
-          )}
+            <div className="infosContainer">
+              <div className="birthday">
+                <FontAwesomeIcon icon={faBirthdayCake} size="lg" />
+                <p>{formattedBday}</p>
+              </div>
+              <div className="interests">
+                <p>
+                  <i className="fa-solid fa-face-grin-tongue-squint fa-lg"></i>
+                </p>
+                <div className="interestList">{topics}</div>
+              </div>
+            </div>
+          </div>
+
+          <p id="myPostTitle">{targetUsername}'s Posts</p>
+
+          <div id="postHolder">
+            {isLoading ? (
+              <div>Loading</div>
+            ) : (
+              postData.map((singlePost, index) => (
+                <PostCard
+                  key={index}
+                  userName={singlePost.USER_ID.USER_USERNAME}
+                  postTime={singlePost.updatedAt}
+                  likeCount={singlePost.LIKES_COUNT}
+                  commentCount={singlePost.COMMENTS_COUNT}
+                  postText={singlePost.BODY}
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </main>
