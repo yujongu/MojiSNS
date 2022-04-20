@@ -23,6 +23,31 @@
   box-shadow: 3px 2px 8px grey;
 }
 
+.headerSignup{
+  display:flex;
+  width: 95%;
+}
+
+.logoSignup{
+  position: relative;
+  background-image: url("../../public/images/start_logo.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 100px;
+  margin-left: 21%;
+}
+
+.close{
+  width: 2%;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  margin-left: 15%;
+}
+
 #float-label3 {
   display: flex;
   flex-direction: column;
