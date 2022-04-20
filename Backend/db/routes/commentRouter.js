@@ -4,7 +4,9 @@ const Comment = require("../models/comment");
 const router = express.Router();
 
 router.get("/getComments/:id", async (req, res) => {
-    const comments = await Comment.find({POST_ID: req.params.id})
+    const comments = await Comment.find({
+      POST_ID: req.params.id})//,
+      //OWNER_ID:{$nin: req.body.USER.USER_BLOCKLIST})
     .populate("POST_ID OWNER_ID PARENT_ID LIKED_USERS")
     .sort({createdAt: -1});
     console.log("Requesting comments list");
@@ -72,7 +74,7 @@ router.patch("/updateComment/:id", async (req, res) => {
 
 });
 
-router.delete("/deleteUser/:id", async (req, res) => {
+router.delete("/deleteUser/:id", async (req, res) => { //delete all user comments 
   try {
     await Comment.updateMany(
       {OWNER_ID: req.params.id},
