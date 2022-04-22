@@ -61,7 +61,7 @@ function Profile() {
   React.useEffect(() => { }, [postData]);
 
   var populatePosts = () => {
-    const response = axios.get(`${BackendConn}post/getPosts/${currUser._id}`);
+    const response = axios.get(`${BackendConn}post/getMyPosts/${currUser._id}`);
     response.then((response) => {
       if (response.status === 200) {
         setLoading(false);
