@@ -14,8 +14,11 @@ function PostCard({
   commentCount,
   postText,
 }) {
+  let navigate = useNavigate();
+
   var pastTime = datePretty(postTime);
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
+  const postLink = `/postDetail/${postId}`
 
   var likePostFunc = (e) => {
     if (e.target.style.color === "rgb(0, 0, 0)") {
@@ -70,7 +73,9 @@ function PostCard({
   }, []);
 
   return (
-    <div className="postingCard">
+    <div className="postingCard" onClick={() => {
+      navigate(postLink);
+    }}>
       <div className="postingHeader">
         <div className="postingProfile">
           {anonymous ? (

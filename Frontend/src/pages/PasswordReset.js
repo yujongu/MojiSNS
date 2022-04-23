@@ -62,16 +62,6 @@ const PasswordReset = (props) => {
                       alert("Password has changed!");
                       navigate("/login");
                 }
-                // axios
-                //     .get(`${BackendConn}user/login/${username}/${password}`)
-                //     .then((res) => {
-                //         console.log(res);
-                //         localStorage.setItem("currentUser", JSON.stringify(res.data))
-                //         navigate("/home");
-                //     })
-                //     .catch((error) => {
-                //         alert("Username and password does not exist in our database")
-                //     });
             }
         }
     };
