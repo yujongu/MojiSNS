@@ -48,21 +48,25 @@ function Profile() {
     .then(res => res.json())
     .then(res => {
       countEl.innerHTML = res.value;
-      countEl = -6;
+      console.log("COUNTEL:"+countEl.innerHTML);
+
     })
   }
-  updateVisitCount();
+
 
   React.useEffect(() => {
     populatePosts();
-    
   }, []);
 
   //component did update
   React.useEffect(() => {
     if (postData.length != 0) {
       postEventListeners();
+      
     }
+    updateVisitCount();
+
+    
   }, [postData]);
 
   var populatePosts = () => {
