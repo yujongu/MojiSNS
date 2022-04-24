@@ -76,12 +76,26 @@ function NewInterest() {
     var myId = me._id;
     console.log(fetchedTopics)
 
+    const response1 = await axios.post(
+      `${BackendConn}topic/addTopic/`,
+      {
+        TOPIC_NAME: moreInterest,
+      }
+    );
+
+    console.log(response1);
+
     var topicsId = [];
     fetchedTopics.forEach((element) => {
       if (topics.indexOf(element.TOPIC_NAME) != -1) {
-        topicsId.push(element._id);
+        topicsId.push(element._id);    
+
       }
     });
+    topicsId.push(response1.data._id);
+
+
+
     const response = await axios.patch(
       `${BackendConn}user/updateUser/${myId}`,
       {
@@ -131,6 +145,18 @@ function NewInterest() {
             ))
           )}
         </div>
+
+        <div id="float-label">
+            <input
+              type="text"
+              value={moreInterest}
+              onChange={(e) => handleTextChange(e)}
+              name="moreInterest"
+            ></input>
+            <label className={isActive ? "Active" : ""} htmlFor="addmore">
+              New topic to add
+            </label>
+          </div>
 
         <div className="Finish">
           <button type="submit" className="finished" onClick={handleSubmit}>
