@@ -76,32 +76,35 @@ function NewInterest() {
     var myId = me._id;
     console.log(fetchedTopics)
 
-    const response1 = await axios.post(
-      `${BackendConn}topic/addTopic/`,
-      {
-        TOPIC_NAME: moreInterest,
-      }
-    );
-
-    console.log(response1);
-
+    console.log("zzz"+moreInterest);
     var topicsId = [];
+    if (moreInterest!='') {
+      const response1 = await axios.post(
+        `${BackendConn}topic/addTopic/`,
+        {
+          TOPIC_NAME: moreInterest,
+        }
+      )
+      topicsId.push(response1.data._id);
+      console.log("INIF");
+    }
+
     fetchedTopics.forEach((element) => {
       if (topics.indexOf(element.TOPIC_NAME) != -1) {
         topicsId.push(element._id);    
-
       }
     });
-    topicsId.push(response1.data._id);
-
-
-
+    
+   
     const response = await axios.patch(
       `${BackendConn}user/updateUser/${myId}`,
       {
         FOLLOWING_TOPICS_Obj: topicsId,
       }
     );
+
+
+    console.log("RESPONSE"+response);
     if (response.status == 200 && response.data._id === myId) {
       localStorage.setItem("currentUser", JSON.stringify(response.data));
       navigate("/profile");
