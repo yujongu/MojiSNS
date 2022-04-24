@@ -173,6 +173,8 @@ a {
   border-radius: 15px;
   margin-bottom: 10%;
   box-sizing: border-box;
+  overflow: hidden;
+  
 }
 
 #postWriteID {
@@ -189,6 +191,7 @@ textarea {
   outline: none;
   font-size: 20px;
   resize: none;
+  max-height: 200px;
 }
 
 .writeFooter {
@@ -292,15 +295,12 @@ textarea {
 }
 
 .outer {
+  display: inline-block;
   height: 100px;
-  white-space: nowrap;
+  width: 100%;
   position: relative;
-  overflow-x: scroll;
-  overflow-y: hidden;
-}
-
-.outer::-webkit-scrollbar {
-  display: none;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .outer div {

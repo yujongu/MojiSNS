@@ -49,27 +49,36 @@ function Follower() {
   };
   return (
     <main className="followerMain">
-      <div className="followerContainer">
-        <h1>Follower List</h1>
-        <div className="followingToolbox">
-          {followerData.length === 1 ? (
-            <p>{followerData.length} user follows you</p>
-          ) : (
-            <p>{followerData.length} users follow you</p>
-          )}
-          <p>Followed today: {todayCount}</p>
+      <div className="itemFlex">
+        <div className="backButton">
+          <a href="/home">
+            <button className="backFromFollower">
+              &lt;Home
+            </button>
+          </a>
         </div>
-        <div className="followerInnerContainer">
-          {followerData.map((singleUser, index) => (
-            <UserInfoShort
-              key={index}
-              ind={index}
-              username={singleUser.USER_ID.USER_USERNAME}
-              uid={singleUser._id}
-              showTime={true}
-              time={singleUser.FOLLOW_DATE}
-            />
-          ))}
+        <div className="followerContainer">
+          <h1>Follower List</h1>
+          <div className="followingToolbox">
+            {followerData.length === 1 ? (
+              <p>{followerData.length} user follows you</p>
+            ) : (
+              <p>{followerData.length} users follow you</p>
+            )}
+            <p>Followed today: {todayCount}</p>
+          </div>
+          <div className="followerInnerContainer">
+            {followerData.map((singleUser, index) => (
+              <UserInfoShort
+                key={index}
+                ind={index}
+                username={singleUser.USER_ID.USER_USERNAME}
+                uid={singleUser._id}
+                showTime={true}
+                time={singleUser.FOLLOW_DATE}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>
