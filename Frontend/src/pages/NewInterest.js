@@ -76,7 +76,6 @@ function NewInterest() {
     var myId = me._id;
     console.log(fetchedTopics)
 
-    console.log("zzz"+moreInterest);
     var topicsId = [];
     if (moreInterest!='') {
       const response1 = await axios.post(
@@ -86,7 +85,6 @@ function NewInterest() {
         }
       )
       topicsId.push(response1.data._id);
-      console.log("INIF");
     }
 
     fetchedTopics.forEach((element) => {
@@ -104,7 +102,6 @@ function NewInterest() {
     );
 
 
-    console.log("RESPONSE"+response);
     if (response.status == 200 && response.data._id === myId) {
       localStorage.setItem("currentUser", JSON.stringify(response.data));
       navigate("/profile");
