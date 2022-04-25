@@ -88,7 +88,7 @@ function NewInterest() {
         FOLLOWING_TOPICS_Obj: topicsId,
       }
     );
-    if (response.status == 200 && response.data._id === myId) {
+    if (response.status === 200 && response.data._id === myId) {
       localStorage.setItem("currentUser", JSON.stringify(response.data));
       navigate("/profile");
     }

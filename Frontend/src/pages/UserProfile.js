@@ -8,6 +8,7 @@ import PostCard from "./components/PostCard";
 import React, { useState } from "react";
 import { BackendConn } from "../constants/backendConn";
 import axios from "axios";
+import { DIRECTMESSAGE, HOMEWEB } from "../constants/routes";
 
 function UserProfile() {
   const location = useLocation();
@@ -61,6 +62,11 @@ function UserProfile() {
     });
   };
 
+  var redirectToDmUser = () => {
+    console.log(userData)
+    navigate(DIRECTMESSAGE, { state: { username: targetUsername, uid: targetUserId, useremail: userData.USER_EMAIL } });
+  };
+
   var userEventListeners = () => {
     var monthNames = [
       "January",
@@ -90,12 +96,11 @@ function UserProfile() {
     var interestList = document.querySelector(".interestList");
     interestList.textContent = topics;
   };
-
   return (
     <main className="profileContainer">
       <div className="itemFlex">
         <div className="backButton">
-          <a href="/home">
+          <a href={HOMEWEB}>
             <button className="backFromProfile">&lt;Home</button>
           </a>
         </div>
@@ -136,7 +141,6 @@ function UserProfile() {
               <div>Loading</div>
             ) : (
               postData.map((singlePost, index) => (
-                
                 <PostCard
                   key={index}
                   userName={singlePost.USER_ID.USER_USERNAME}
@@ -147,19 +151,15 @@ function UserProfile() {
                   commentCount={singlePost.COMMENTS_COUNT}
                   postText={singlePost.BODY}
                 />
-                
-              //  console.log(singlePost)
-                // <PostCard
-                //   key={index}
-                //   userName={singlePost.USER_ID.USER_USERNAME}
-                //   postTime={singlePost.updatedAt}
-                //   likeCount={singlePost.LIKES_COUNT}
-                //   commentCount={singlePost.COMMENTS_COUNT}
-                //   postText={singlePost.BODY}
-                // />
               ))
             )}
           </div>
+        </div>
+        <div className="dmBtnContainer">
+          {/* <a href={DIRECTMESSAGE}>
+          </a> */}
+          <button className="dmBtn" onClick={redirectToDmUser}>Message&gt;</button>
+
         </div>
       </div>
     </main>

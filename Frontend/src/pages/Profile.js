@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/fontawesome-free-solid";
 import PostCard from "./components/PostCard";
 import React, { useState } from "react";
+import { HOMEWEB } from "../constants/routes";
 import { BackendConn } from "../constants/backendConn";
 import axios from "axios";
 
@@ -58,7 +59,7 @@ function Profile() {
   }, []);
 
   //component did update
-  React.useEffect(() => { }, [postData]);
+  React.useEffect(() => {}, [postData]);
 
   var populatePosts = () => {
     const response = axios.get(`${BackendConn}post/getMyPosts/${currUser._id}`);
@@ -77,10 +78,8 @@ function Profile() {
     <main className="profileContainer">
       <div className="itemFlex">
         <div className="backButton">
-          <a href="/home">
-            <button className="backFromProfile">
-              &lt;Home
-            </button>
+          <a href={HOMEWEB}>
+            <button className="backFromProfile">&lt;Home</button>
           </a>
         </div>
         <div className="profileMainContainer">
@@ -99,10 +98,14 @@ function Profile() {
               </div>
 
               <div className="profileEditBtns">
-                <button className="profile_editButton"
-                onClick={() => {
-                  navigate("/accsetting");
-                }}>Edit Profile</button>
+                <button
+                  className="profile_editButton"
+                  onClick={() => {
+                    navigate("/accsetting");
+                  }}
+                >
+                  Edit Profile
+                </button>
                 <button
                   className="interestModify"
                   onClick={() => navigate("/newinterest")}
@@ -125,7 +128,7 @@ function Profile() {
                 <div className="interestEditBtns">
                   <button
                     className="interestModify"
-                    onClick={() => navigate('/newinterest')}
+                    onClick={() => navigate("/newinterest")}
                   >
                     +/-
                   </button>
