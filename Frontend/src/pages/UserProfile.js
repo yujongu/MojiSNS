@@ -105,8 +105,8 @@ function UserProfile() {
     formattedBday =
       monthNames[parseInt(bday[1]) - 1] + " " + bday[2] + ", " + bday[0];
 
-    userData.FOLLOWING_TOPICS.forEach((t) => {
-      topics += `${t} `;
+    userData.FOLLOWING_TOPICS_Obj.forEach((t) => {
+      topics += `${t.TOPIC_NAME} `;
     });
 
     var bdayContainer = document.querySelector(".birthday > p");

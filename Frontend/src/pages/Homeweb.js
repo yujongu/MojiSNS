@@ -3,7 +3,6 @@ import "./Homeweb.css";
 import { useNavigate } from "react-router-dom";
 import PostCard from "./components/PostCard";
 import TopicItem from "./components/TopicsBtn/TopicItem";
-import { interestList } from "../constants/interests";
 import { BackendConn } from "../constants/backendConn";
 import { NOTIFICATION, SEARCHRES } from "../constants/routes";
 import {
@@ -21,26 +20,39 @@ const Homeweb = () => {
 
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
+  const [interestList, setInterestList] = useState([]);
 
+  var postAnonymous = false;
   //window onload
   React.useEffect(() => {
+    fetchTopics();
     populatePosts();
     eventListeners();
   }, []);
 
-  //component did update
-  React.useEffect(() => {
-    if (postData.length != 0) {
-      postEventListeners();
+  window.onclick = function (event) {
+    if (!event.target.matches("#postSet")) {
+      var dropdowns = document.getElementsByClassName("postSetting_content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains("show")) {
+          openDropdown.classList.remove("show");
+        }
+      }
     }
-  }, [postData]);
+  };
+
+  //component did update
+  React.useEffect(() => {}, [postData]);
+
+  React.useEffect(() => {}, [interestList]);
 
   var eventListeners = () => {
     var postingImg = document.getElementById("postingImg");
     var buttonForSelect = document.getElementById("buttonForSelect");
 
     var showWrite = document.getElementById("writePost");
-    console.log(showWrite.style.display);
     postingImg.addEventListener("click", function () {
       if (showWrite.style.display === "block") {
         showWrite.style.display = "none";
@@ -73,32 +85,12 @@ const Homeweb = () => {
     });
   };
 
-  var postEventListeners = () => {
-    var like = document.getElementById("like");
-    var likeNum = document.getElementById("likeNum");
-    var postSet = document.getElementById("postSet");
-    var stateLike = 0;
-    like.addEventListener("click", function () {
-      if (stateLike === 1) {
-        like.style.color = "#000000";
-        likeNum.style.color = "#000000";
-        stateLike = 0;
-      } else {
-        like.style.color = "#E26714";
-        likeNum.style.color = "#E26714";
-        stateLike = 1;
-      }
-    });
-    postSet.addEventListener("click", function () {
-      console.log("postSetting clicked");
-    });
-  };
-
   var populatePosts = () => {
     // const response = axios.get(`${BackendConn}post/getPosts`);
     const response = axios.get(`${BackendConn}post/getFeed/${currUser._id}`);
     response.then((response) => {
       if (response.status === 200) {
+        console.log(response);
         setLoading(false);
         setPostData(response.data);
       } else {
@@ -107,8 +99,18 @@ const Homeweb = () => {
     });
   };
 
+  var fetchTopics = () => {
+    const response = axios.get(`${BackendConn}topic/getTopics`);
+    response.then((response) => {
+      if (response.status === 200) {
+        setInterestList(response.data);
+      } else {
+        alert("Something Went Wrong...");
+      }
+    });
+  };
+
   var selectedItem = -1;
-  var selectedItemName = "";
   var itemSelectColorChange = (index) => {
     selectedItem = index;
     var list = document.querySelectorAll(".topicItems");
@@ -116,7 +118,6 @@ const Homeweb = () => {
       var itm = item.querySelector("button");
       if (itm.id == selectedItem) {
         itm.style.backgroundColor = "#F4B183";
-        selectedItemName = itm.querySelector("p").innerHTML;
       } else {
         itm.style.backgroundColor = "#FBE5D6";
       }
@@ -127,7 +128,6 @@ const Homeweb = () => {
     var a = document.getElementById("postWriteID");
     a.value = "";
     selectedItem = -1;
-    selectedItemName = "";
     var itemList = document.querySelectorAll(".topicItems");
     itemList.forEach((item) => {
       item.querySelector("button").style.backgroundColor = "#FBE5D6";
@@ -147,7 +147,8 @@ const Homeweb = () => {
       axios
         .post(`${BackendConn}post/addPost`, {
           USER_ID: currUser._id,
-          TOPIC_NAME: selectedItemName,
+          IS_ANONYMOUS: postAnonymous,
+          TOPIC_ID: interestList[selectedItem]._id,
           BODY: postWriteID.value,
         })
         .then((response) => {
@@ -161,6 +162,21 @@ const Homeweb = () => {
             alert("Something Went Wrong...");
           }
         });
+    }
+  };
+
+  var makeAnonymous = () => {
+    console.log("Clicked");
+    var a = document.querySelector(".writeCard");
+    var b = document.querySelector("#btnAnonymous");
+    if (postAnonymous) {
+      postAnonymous = false;
+      a.style.backgroundColor = "#ffffff";
+      b.textContent = "Make post Anonymous";
+    } else {
+      postAnonymous = true;
+      a.style.backgroundColor = "#adadad";
+      b.textContent = "Make post Public";
     }
   };
 
@@ -205,7 +221,6 @@ const Homeweb = () => {
             <h2 className="titleWeb">Welcome to Moji!</h2>
           </div>
           <div className="hdrBtnContainer">
-            
             <button
               className="notification"
               onClick={() => {
@@ -300,6 +315,14 @@ const Homeweb = () => {
               <button id="buttonForSelect" className="btnSelect">
                 Select a topic
               </button>
+              <button
+                id="btnAnonymous"
+                className="btnSelect"
+                onClick={makeAnonymous}
+              >
+                Make post anonymous
+              </button>
+
               <button className="btnUpload" onClick={uploadPost}>
                 Upload
               </button>
@@ -317,7 +340,7 @@ const Homeweb = () => {
                       itemSelectColorChange(index);
                     }}
                   >
-                    <TopicItem topicName={interest} index={index} />
+                    <TopicItem topicName={interest.TOPIC_NAME} index={index} />
                   </div>
                 ))}
               </div>
@@ -327,21 +350,11 @@ const Homeweb = () => {
         <div className="viewByTopic">
           <h2 className="titleWeb2">View By Topic</h2>
           <div className="outer">
-            <div>
-              <button className="btnTopic">Sports</button>
-            </div>
-            <div>
-              <button className="btnTopic">Games</button>
-            </div>
-            <div>
-              <button className="btnTopic">Beauty</button>
-            </div>
-            <div>
-              <button className="btnTopic">Movies</button>
-            </div>
-            <div>
-              <button className="btnTopic">Memes</button>
-            </div>
+            {interestList.map((element) => (
+              <div>
+                <button className="btnTopic">{element.TOPIC_NAME}</button>
+              </div>
+            ))}
           </div>
         </div>
         <div className="timeline">
@@ -354,6 +367,8 @@ const Homeweb = () => {
                 <PostCard
                   key={index}
                   userName={singlePost.USER_ID.USER_USERNAME}
+                  postId={singlePost._id}
+                  anonymous={singlePost.IS_ANONYMOUS}
                   postTime={singlePost.updatedAt}
                   likeCount={singlePost.LIKES_COUNT}
                   commentCount={singlePost.COMMENTS_COUNT}

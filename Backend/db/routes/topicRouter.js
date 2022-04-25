@@ -3,11 +3,9 @@ const Topic = require("../models/topic");
 const router = express.Router();
 const mongoose = require("mongoose");
 
-
 router.get("/getTopics", async (req, res) => {
   const topics = await Topic.find();
   console.log("Requesting topic list");
-  console.log(topics);
   res.send(topics);
 });
 
@@ -15,7 +13,7 @@ router.post("/addTopic", async (req, res) => {
   try {
     const topic = new Topic({
       TOPIC_NAME: req.body.TOPIC_NAME,
-      USER_ID: req.body.USER_ID
+      USER_ID: req.body.USER_ID,
     });
     await topic.save();
     res.send(topic);
@@ -23,8 +21,17 @@ router.post("/addTopic", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-    
 });
+
+router.patch("/addOneTrafficCount", async (req, res) => {
+  try {
+    const topic = await Topic.findById(req.body.TOPIC_ID);
+    topic.TOPIC_TRAFFIC_COUNT = topic.TOPIC_TRAFFIC_COUNT + 1;
+  } catch (error) {
+    console.log(error)
+
+  }
+})
 
 router.get("/getTopic/:id", async (req, res) => {
   try {
@@ -33,19 +40,15 @@ router.get("/getTopic/:id", async (req, res) => {
     console.log(topic);
   } catch (error) {
     console.log(error);
-  }  
-})
-
-
-
-
+  }
+});
 
 ////////TEST////////////////////////////
 router.get("/testAdd", async (req, res) => {
   try {
     const topic = new Topic({
       TOPIC_NAME: "FunnyTest",
-      USER_ID: "placeholder"
+      USER_ID: "placeholder",
     });
     await topic.save();
     res.send(topic);
@@ -53,7 +56,6 @@ router.get("/testAdd", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-    
 });
 
-module.exports = router
+module.exports = router;
