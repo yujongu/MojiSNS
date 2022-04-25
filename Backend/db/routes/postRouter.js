@@ -133,4 +133,51 @@ router.get("/getTopicPosts/:id", async (req, res) => {
   }
 });
 
+router.post("/likePost/:post_id/:user_id", async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.params.post_id })
+      .populate("USER_ID TOPIC_ID LIKED_USERS");
+
+      if (
+        temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+      ) {
+        res.send("already liked");
+        console.log("already liked");
+        return;
+      }
+    Post.updateOne(
+      { _id: req.param.post_id},
+      { $inc: {LIKES_COUNT : 1}, $push: {LIKED_USERS: req.params.user_id}}
+    )
+    
+    res.send("post liked");
+    console.log("post liked");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.params.post_id })
+      .populate("USER_ID TOPIC_ID LIKED_USERS");
+
+      if (
+        !temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+      ) {
+        res.send("post not liked");
+        console.log("post not liked");
+        return;
+      }
+    Post.updateOne(
+      { _id: req.param.post_id},
+      { $inc: {LIKES_COUNT : -1}, $pull: {LIKED_USERS: req.params.user_id}}
+    )
+    
+    res.send("like removed");
+    console.log("like removed");
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
