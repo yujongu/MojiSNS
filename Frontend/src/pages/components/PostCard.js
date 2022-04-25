@@ -2,6 +2,7 @@ import React from "react";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
 import datePretty from "../../helperFunctions/datePretty";
+import Linkify from 'react-linkify';
 import axios from "axios";
 import { BackendConn } from "../../constants/backendConn";
 
@@ -120,7 +121,7 @@ function PostCard({
       <div className="postingBody">
         <div className="postingSection">
           <div className="postWords">
-            <h3>{postText}</h3>
+            <Linkify>{postText}</Linkify>
           </div>
         </div>
         <div className="iconSection">

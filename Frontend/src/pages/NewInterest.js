@@ -77,20 +77,48 @@ function NewInterest() {
     console.log(fetchedTopics)
 
     var topicsId = [];
+    if (moreInterest!='') {
+      const response1 = await axios.post(
+        `${BackendConn}topic/addTopic/`,
+        {
+          TOPIC_NAME: moreInterest,
+        }
+      )
+      topicsId.push(response1.data._id);
+    }
+
     fetchedTopics.forEach((element) => {
       if (topics.indexOf(element.TOPIC_NAME) != -1) {
-        topicsId.push(element._id);
+        topicsId.push(element._id);    
       }
     });
+    
+   
     const response = await axios.patch(
       `${BackendConn}user/updateUser/${myId}`,
       {
         FOLLOWING_TOPICS_Obj: topicsId,
       }
     );
+
+
     if (response.status === 200 && response.data._id === myId) {
       localStorage.setItem("currentUser", JSON.stringify(response.data));
       navigate("/profile");
+    }
+  };
+
+  const [isActive, setIsActive] = useState(false);
+  const [moreInterest, setMoreInterest] = useState("");
+
+  const handleTextChange = (e) => {
+    console.log(e.target);
+    setMoreInterest(e.target.value)
+
+    if (e.target.value !== "") {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
     }
   };
 
@@ -117,6 +145,18 @@ function NewInterest() {
             ))
           )}
         </div>
+
+        <div id="float-label">
+            <input
+              type="text"
+              value={moreInterest}
+              onChange={(e) => handleTextChange(e)}
+              name="moreInterest"
+            ></input>
+            <label className={isActive ? "Active" : ""} htmlFor="addmore">
+              New topic to add
+            </label>
+          </div>
 
         <div className="Finish">
           <button type="submit" className="finished" onClick={handleSubmit}>

@@ -203,6 +203,19 @@
   color: #f2f2f2;
 }
 
+.visitCounts {
+  display: flex;
+  position: relative;
+  flex-direction: row-reverse;
+  margin-top: 10px;
+}
+
+.visitedDisplay {
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 #myPostTitle {
   font-size: 25px;
   font-weight: bold;

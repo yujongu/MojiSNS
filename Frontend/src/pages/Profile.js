@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import TopSettingBar from "./components/Header/TopSettingBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBirthdayCake } from "@fortawesome/fontawesome-free-solid";
+import { faDoorOpen } from "@fortawesome/fontawesome-free-solid";
 import PostCard from "./components/PostCard";
 import React, { useState } from "react";
 import { HOMEWEB } from "../constants/routes";
@@ -12,7 +13,6 @@ import axios from "axios";
 
 function Profile() {
   let navigate = useNavigate();
-
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   //todo get curr user posts.
   var monthNames = [
