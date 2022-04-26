@@ -73,9 +73,7 @@ function PostCard({
   }, []);
 
   return (
-    <div className="postingCard" onClick={() => {
-      navigate(postLink);
-    }}>
+    <div className="postingCard" >
       <div className="postingHeader">
         <div className="postingProfile">
           {anonymous ? (
@@ -139,7 +137,10 @@ function PostCard({
               {likeCount}
             </div>
           </div>
-          <div className="commentSection">
+          <div className="commentSection"
+            onClick={() => {
+              navigate(postLink);
+            }}>
             <i className="fa-regular fa-comment-dots fa-2xl"></i>
             <h5 className="commentCount">{commentCount}</h5>
           </div>

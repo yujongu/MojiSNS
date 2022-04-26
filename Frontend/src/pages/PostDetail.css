@@ -1,0 +1,89 @@
+.postingCardDetail{
+  position: relative;
+  background-color: white;
+  border-radius: 25px;
+  margin-top: 6%;
+  margin-bottom: 10px;
+  width: 800px;
+}
+
+.postContainer {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    width: 95vw;
+    justify-content: center;
+    align-items: center;
+  } 
+
+  .postMainContainer {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 700px;
+    margin-top: 30px;
+  }
+
+  #writeComment {
+    display: none;
+    margin: 4%;
+  }
+
+  .commentsTL{
+    position: relative;
+    background-color: white;
+    margin-bottom: 3%;
+    border-radius: 15px;
+  }
+
+  #commentWriteID {
+    position: relative;
+    background-color: transparent;
+    width: 95%;
+  }
+
+  .writeFooterC {
+    display: flex;
+    width: 100%;
+  }
+
+  .btnUploadC {
+    position: relative;
+    margin-right: 2%;
+    margin-left: 70%;
+    border-radius: 11px;
+    border-style: none;
+    background-color: #ffc368;
+    transition-duration: 0.4s;
+    font-size: large;
+    font-weight: bold;
+    padding: 2%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    color: #e26714;
+  }
+  
+  .btnUploadC:hover {
+    background-color: #e26714;
+    color: #f2f2f2;
+  }
+  
+  .btnCancelC {
+    position: relative;
+    margin-right: 2%;
+    border-radius: 11px;
+    border-style: none;
+    background-color: #ffc368;
+    transition-duration: 0.4s;
+    font-size: large;
+    font-weight: bold;
+    padding: 2%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    color: #e26714;
+  }
+
+  .btnCancelC:hover {
+    background-color: #e26714;
+    color: #f2f2f2;
+  }

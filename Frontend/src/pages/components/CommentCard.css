@@ -1,0 +1,60 @@
+.commentCard {
+    position: relative;
+    background-color: #f2f2f2;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 1%;
+    display: flex;
+}
+
+.commentContent {
+    margin-top: 0.7%;
+    width: 41em;
+}
+
+.commentWriter {
+    display: flex;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    font-weight: bold;
+}
+
+.commentContentText {
+    width: 98%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 1%;
+}
+
+.commentDate {
+    margin-left: auto;
+}
+.commentSetting{
+    margin-left: 6%;
+}
+.commentFooter {
+    display: flex;
+    margin-top: 0.4%;
+    margin-left: auto;
+}
+
+.likeCommentSec {
+    margin-top: 1.5%;
+    margin-left: 89%;
+}
+
+.likeCountComment{
+    font-weight: bold;
+    margin-left: 30%;
+}
+
+#commentReply{
+    margin-top: 76%;
+    margin-left: 60%;
+}
+
+.writeReply {
+    display: none;
+    margin: 4%;
+  }
