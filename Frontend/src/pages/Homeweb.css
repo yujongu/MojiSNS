@@ -194,11 +194,7 @@ textarea {
   max-height: 200px;
 }
 
-.writeFooter {
-  margin-top: 4%;
-  display: flex;
-  width: 100%;
-}
+
 
 .btnSelect {
   position: relative;
