@@ -73,7 +73,7 @@ function Follower() {
                 key={index}
                 ind={index}
                 username={singleUser.USER_ID.USER_USERNAME}
-                uid={singleUser._id}
+                uid={singleUser.USER_ID._id}
                 showTime={true}
                 time={singleUser.FOLLOW_DATE}
               />

@@ -1,6 +1,7 @@
 import "./App.css";
 import * as React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import * as PageLinks from "./constants/routes";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -19,9 +20,13 @@ import UserProfile from "./pages/UserProfile";
 import Follower from "./pages/Follower";
 import Following from "./pages/Following";
 import Notification from "./pages/Notification";
+<<<<<<< HEAD
 import PostDetail from "./pages/PostDetail";
 import * as PageLinks from "./constants/routes";
 
+=======
+import DirectMessage from "./pages/DirectMessage";
+>>>>>>> bb8f5878f15b845520dcfdda89a3a3b76a7863c8
 
 function App() {
   return (
@@ -44,7 +49,11 @@ function App() {
         <Route path={PageLinks.FOLLOWER} element={<Follower />} />
         <Route path={PageLinks.FOLLOWING} element={<Following />} />
         <Route path={PageLinks.NOTIFICATION} element={<Notification />} />
+<<<<<<< HEAD
         <Route path={PageLinks.POSTDETAIL} element={<PostDetail />} />
+=======
+        <Route path={PageLinks.DIRECTMESSAGE} element={<DirectMessage />} />
+>>>>>>> bb8f5878f15b845520dcfdda89a3a3b76a7863c8
       </Routes>
     </Router>
   );
