@@ -108,6 +108,12 @@
 
 .postWords {
   position: relative;
+  white-space: pre-wrap;
+}
+
+.postWords a {
+    color: #FFC368;
+    font-weight: bold;
 }
 
 .iconSection {
