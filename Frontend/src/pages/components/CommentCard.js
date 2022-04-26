@@ -61,36 +61,37 @@ function CommentCard({
         console.log(`edit post clicked, ${el.target}`);
     };
 
-    var likeCommentFunc = (el) => {
-        if (el.target.style.color === "rgb(0, 0, 0)") {
+    var likeCommentFunc = (e) => {
+        console.log(e.target.style.color);
+        if (e.target.style.color === "rgb(0, 0, 0)") {
             console.log("add like");
-            el.target.style.color = "#E26714";
-            el.target.nextSibling.style.color = "#E26714";
-            el.target.nextSibling.textContent = parseInt(el.target.nextSibling.textContent) + 1;
-            //   axios.post(`${BackendConn}post/likePost/${postId}/${currUser}`).then((res) =>{
-            //     console.log(res)
-            //     if(res.status === 200)
-            //     {
-            //       console.log("success liked");
-            //     }
-            //     else{
-            //       alert("Liked failed");
-            //     }
-            //   })
+            e.target.style.color = "#E26714";
+            e.target.nextSibling.style.color = "#E26714";
+            e.target.nextSibling.textContent = parseInt(e.target.nextSibling.textContent) + 1;
+              axios.post(`${BackendConn}post/likeComment/${commentId}/${currUser._id}`).then((res) =>{
+                console.log(res)
+                if(res.status === 200)
+                {
+                  console.log("success liked");
+                }
+                else{
+                  alert("Liked failed");
+                }
+              })
         } else {
             console.log("delete like");
-            el.target.style.color = "#000000";
-            el.target.nextSibling.style.color = "#000000";
-            el.target.nextSibling.textContent = parseInt(el.target.nextSibling.textContent) - 1;
-            // axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser}`).then((res) =>{
-            //   console.log(res)
-            //   if(res.status === 200)
-            //   {
-            //   }
-            //   else{
-            //     alert("Liked failed");
-            //   }
-            // })
+            e.target.style.color = "#000000";
+            e.target.nextSibling.style.color = "#000000";
+            e.target.nextSibling.textContent = parseInt(e.target.nextSibling.textContent) - 1;
+            axios.post(`${BackendConn}post/unlikeComment/${commentId}/${currUser._id}`).then((res) =>{
+              console.log(res)
+              if(res.status === 200)
+              {
+              }
+              else{
+                alert("Liked failed");
+              }
+            })
         }
     }
 

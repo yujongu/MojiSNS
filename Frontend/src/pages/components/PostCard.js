@@ -28,7 +28,7 @@ function PostCard({
       e.target.nextSibling.style.color = "#E26714";
       e.target.nextSibling.textContent =
       parseInt(e.target.nextSibling.textContent) + 1;
-      axios.post(`${BackendConn}post/likePost/${postId}/${currUser}`).then((res) =>{
+      axios.post(`${BackendConn}post/likePost/${postId}/${currUser._id}`).then((res) =>{
         console.log(res)
         if(res.status === 200)
         {
@@ -43,7 +43,7 @@ function PostCard({
       e.target.nextSibling.style.color = "#000000";
       e.target.nextSibling.textContent =
         parseInt(e.target.nextSibling.textContent) - 1;
-        axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser}`).then((res) =>{
+        axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser._id}`).then((res) =>{
           console.log(res)
           if(res.status === 200)
           {
