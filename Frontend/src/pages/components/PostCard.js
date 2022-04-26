@@ -22,8 +22,6 @@ function PostCard({
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   const postLink = `/postDetail/${postId}`
 
-  console.log(topic)
-
   var likePostFunc = (e) => {
     if (e.target.style.color === "rgb(0, 0, 0)") {
       e.target.style.color = "#E26714";

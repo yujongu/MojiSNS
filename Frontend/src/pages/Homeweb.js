@@ -49,8 +49,7 @@ const Homeweb = () => {
 
   React.useEffect(() => {}, [interestList]);
 
-  React.useEffect(() => {
-  }, [filteredTopics]);
+  React.useEffect(() => {}, [filteredTopics]);
 
   var eventListeners = () => {
     var postingImg = document.getElementById("postingImg");
@@ -103,7 +102,6 @@ const Homeweb = () => {
   };
 
   var displaySelectedTopic = (e) => {
-    console.log(e.target.textContent);
     if (e.target.style.backgroundColor !== "rgb(244, 177, 131)") {
       e.target.style.backgroundColor = "#F4B183";
       setFilteredTopics([...filteredTopics, e.target.textContent]);
@@ -114,6 +112,14 @@ const Homeweb = () => {
       setFilteredTopics([...temp]);
     }
   };
+  
+  var clearTopicFilters = () => {
+    var a = document.querySelectorAll(".btnTopic")
+    a.forEach((element) => {
+      element.style.backgroundColor = ""
+    })
+    setFilteredTopics([]);
+  }
 
   var fetchTopics = () => {
     const response = axios.get(`${BackendConn}topic/getTopics`);
@@ -376,7 +382,11 @@ const Homeweb = () => {
           </div>
         </div>
         <div className="viewByTopic">
-          <h2 className="titleWeb2">View By Topic</h2>
+          <div className="Homeweb-topics_filter_reset_container">
+            <h2 className="titleWeb2">View By Topic</h2>
+            <button onClick={clearTopicFilters}>Clear Filter</button>
+          </div>
+
           <div className="outer">
             {interestList.map((element, index) => (
               <div>
@@ -397,11 +407,27 @@ const Homeweb = () => {
             {isLoading ? (
               <div>Loading</div>
             ) : (
-              postData.map((singlePost, index) =>
-                // console.log(singlePost.TOPIC_ID.TOPIC_NAME)
-                filteredTopics.length !== 0 ? (
-                  filteredTopics.indexOf(singlePost.TOPIC_ID.TOPIC_NAME) !==
-                  -1 ? (
+              postData.map(
+                (singlePost, index) =>
+                  // console.log(singlePost.TOPIC_ID.TOPIC_NAME)
+                  filteredTopics.length !== 0 ? (
+                    filteredTopics.indexOf(singlePost.TOPIC_ID.TOPIC_NAME) !==
+                    -1 ? (
+                      <PostCard
+                        key={index}
+                        topic={singlePost.TOPIC_ID.TOPIC_NAME}
+                        userName={singlePost.USER_ID.USER_USERNAME}
+                        postId={singlePost._id}
+                        anonymous={singlePost.IS_ANONYMOUS}
+                        postTime={singlePost.updatedAt}
+                        likeCount={singlePost.LIKES_COUNT}
+                        commentCount={singlePost.COMMENTS_COUNT}
+                        postText={singlePost.BODY}
+                      />
+                    ) : (
+                      <div></div>
+                    )
+                  ) : (
                     <PostCard
                       key={index}
                       topic={singlePost.TOPIC_ID.TOPIC_NAME}
@@ -413,22 +439,7 @@ const Homeweb = () => {
                       commentCount={singlePost.COMMENTS_COUNT}
                       postText={singlePost.BODY}
                     />
-                  ) : (
-                    <div></div>
                   )
-                ) : (
-                  <PostCard
-                    key={index}
-                    topic={singlePost.TOPIC_ID.TOPIC_NAME}
-                    userName={singlePost.USER_ID.USER_USERNAME}
-                    postId={singlePost._id}
-                    anonymous={singlePost.IS_ANONYMOUS}
-                    postTime={singlePost.updatedAt}
-                    likeCount={singlePost.LIKES_COUNT}
-                    commentCount={singlePost.COMMENTS_COUNT}
-                    postText={singlePost.BODY}
-                  />
-                )
                 // <PostCard
                 //   key={index}
                 //   topic={singlePost.TOPIC_ID.TOPIC_NAME}
