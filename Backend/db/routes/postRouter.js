@@ -151,15 +151,17 @@ router.post("/likePost/:post_id/:user_id", async (req, res) => {
       .populate("USER_ID TOPIC_ID LIKED_USERS");
 
       if (
-        temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        post.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
       ) {
+        console.log(e.toString)
+
         res.send("already liked");
         console.log("already liked");
         return;
       }
-    Post.updateOne(
-      { _id: req.param.post_id},
-      { $inc: {LIKES_COUNT : 1}, $push: {LIKED_USERS: req.params.user_id}}
+    await Post.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.params.post_id)},
+      { $inc: {"LIKES_COUNT" : 1}, $push: {LIKED_USERS: req.params.user_id}}
     )
     
     res.send("post liked");
@@ -175,16 +177,16 @@ router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
       .populate("USER_ID TOPIC_ID LIKED_USERS");
 
       if (
-        !temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        !post.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
       ) {
         res.send("post not liked");
         console.log("post not liked");
         return;
       }
-    Post.updateOne(
-      { _id: req.param.post_id},
-      { $inc: {LIKES_COUNT : -1}, $pull: {LIKED_USERS: req.params.user_id}}
-    )
+      await Post.findOneAndUpdate(
+        { _id: mongoose.Types.ObjectId(req.params.post_id)},
+        { $inc: {"LIKES_COUNT" : -1}, $pull: {LIKED_USERS: req.params.user_id}}
+      )
     
     res.send("like removed");
     console.log("like removed");
