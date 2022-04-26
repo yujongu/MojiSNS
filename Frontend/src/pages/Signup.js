@@ -17,41 +17,52 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const emailRegExp =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
     if (password !== conpsw) {
       alert("Password do not match!!");
     } else {
-      //check if email exists
-      const response = await axios.get(
-        `${BackendConn}user/getUserByEmail/${email}`
-      );
-      if (response.data !== "") {
-        alert("Email already exists!");
+      //check email format with regex
+      if (!emailRegExp.test(email)) {
+        alert("Email format seems wrong!");
       } else {
-        //check if username exists
+        //check if email exists
         const response = await axios.get(
-          `${BackendConn}user/getUserByUsername/${username}`
+          `${BackendConn}user/getUserByEmail/${email}`
         );
         if (response.data !== "") {
-          alert("Username already exists!");
+          alert("Email already exists!");
         } else {
-          //passed email and username check.
-          //submit user to signup.
-          const user = {
-            USER_EMAIL: email,
-            USER_USERNAME: username,
-            USER_PW: password,
-          };
-          const response = await axios.post(
-            `${BackendConn}user/signup`,
-            user
+          //check if username exists
+          const response = await axios.get(
+            `${BackendConn}user/getUserByUsername/${username}`
           );
-          console.log("This is user data: ")
-          console.log(response.data)
-          if (response.status === 200) {
-            //store user data to local storage
-            setUser(response.data)
-            localStorage.setItem('currentUser', JSON.stringify(response.data))
-            navigate("/signup/bio");
+          if (response.data !== "") {
+            alert("Username already exists!");
+          } else {
+            //passed email and username check.
+            //submit user to signup.
+            const user = {
+              USER_EMAIL: email,
+              USER_USERNAME: username,
+              USER_PW: password,
+            };
+            const response = await axios.post(
+              `${BackendConn}user/signup`,
+              user
+            );
+            console.log("This is user data: ");
+            console.log(response.data);
+            if (response.status === 200) {
+              //store user data to local storage
+              setUser(response.data);
+              localStorage.setItem(
+                "currentUser",
+                JSON.stringify(response.data)
+              );
+              navigate("/signup/bio");
+            }
           }
         }
       }
@@ -68,7 +79,11 @@ function Signup() {
         setPassword(e.target.value);
         break;
       case "username":
-        setUsername(e.target.value);
+        if (e.target.value.length > 25) {
+          alert("Username cannot be longer than 25 characters");
+        } else {
+          setUsername(e.target.value);
+        }
         break;
       case "conpsw":
         setConpsw(e.target.value);
@@ -85,8 +100,10 @@ function Signup() {
       <form onSubmit={handleSubmit}>
         <div className="signupContainer">
           <div className="headerSignup">
-            <div class="logoSignup"></div>
-            <a href="/" class="close">&times;</a>
+            <div className="logoSignup"></div>
+            <a href="/" className="close">
+              &times;
+            </a>
           </div>
 
           <div id="float-label3">
@@ -109,7 +126,7 @@ function Signup() {
               name="username"
             />
             <label className={isActive ? "Active" : ""} htmlFor="username">
-              Username
+              Username (25)
             </label>
           </div>
 
@@ -137,7 +154,7 @@ function Signup() {
             </label>
           </div>
 
-          <div class="signupS">
+          <div className="signupS">
             <button
               className="signup"
               type="submit"
