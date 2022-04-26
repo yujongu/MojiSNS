@@ -112,7 +112,30 @@ router.post("/likeComment/:comment_id/:user_id", async (req, res) => {
 });
 
 
-//================
+router.post("/unlikePost/:comment_id/:user_id", async (req, res) => {
+  try {
+    const temp = await Comment.findOne({ _id: req.params.comment_id })
+      .populate("LIKED_USERS");
+
+      if (
+        !temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+      ) {
+        res.send("comment not liked");
+        console.log("comment not liked");
+        return;
+      }
+    Comment.updateOne(
+      { _id: req.params.comment_id},
+      { $inc: {LIKES_COUNT : -1}, $pull: {LIKED_USERS: req.params.user_id}}
+    )
+    
+    res.send("like removed");
+    console.log("like removed");
+  } catch (error) {
+    console.log(error);
+  }
+});
+/*
 router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
   try {
     const temp = await Post.findOne({ _id: req.params.comment_id })
@@ -136,4 +159,6 @@ router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
     console.log(error);
   }
 });
+*/
+
 module.exports = router;
