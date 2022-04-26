@@ -178,7 +178,7 @@ router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
       .populate("USER_ID TOPIC_ID LIKED_USERS");
 
       if (
-        !post.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        !post.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
       ) {
         res.send("post not liked");
         console.log("post not liked");
@@ -191,6 +191,26 @@ router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
     
     res.send("like removed");
     console.log("like removed");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/isLiked/:post_id/:user_id", async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.params.post_id })
+      .populate("USER_ID TOPIC_ID LIKED_USERS");
+
+      if (
+        post.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
+      ) {
+        res.send("Yes");
+        console.log("Yes");
+        return;
+      }
+    
+    res.send("No");
+    console.log("No");
   } catch (error) {
     console.log(error);
   }
