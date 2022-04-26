@@ -5,7 +5,7 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const Token = require("../models/token");
 const sendEmail = require("../email/sendEmail");
-const axios = require("axios");
+const axios = require('axios');
 const router = express.Router();
 const { scryptSync, randomBytes, timingSafeEqual } = require("crypto");
 //const bcrypt = require("bcrypt");
@@ -106,7 +106,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
       "./template/deleteEmail.handlebars"
     );
     //remove following list
-    user.FOLLOWER_USERS.forEach(async (element) => {
+    user.FOLLOWER_USERS.forEach( async (element) => {
       await User.findOneAndUpdate(
         { _id: element.USER_ID },
         {
@@ -118,7 +118,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
         }
       );
     });
-
+    
     user.FOLLOWING_USERS.forEach(async (element) => {
       await User.findOneAndUpdate(
         { _id: element.USER_ID },
@@ -135,26 +135,28 @@ router.delete("/deleteUser/:id", async (req, res) => {
     await Notification.deleteMany({
       $or: [
         {
-          RECEP_USER_ID: mongoose.Types.ObjectId(user._id),
+          RECEP_USER_ID: mongoose.Types.ObjectId(user._id)
         },
         {
-          SENDER_USER_ID: mongoose.Types.ObjectId(user._id),
-        },
-      ],
-    });
+          SENDER_USER_ID: mongoose.Types.ObjectId(user._id)
+        } 
+      ]
+    })
 
     await User.findByIdAndDelete(req.params.id);
-    await Post.deleteMany({ USER_ID: req.params.id });
+    await Post.deleteMany({USER_ID: req.params.id})
+    
+    axios.delete(`http://localhost:5000/api/comment/deleteUser/${req.params.id}`)
+    .then(response => {
+      console.log(response.data.url);
+      //console.log(response.data.explanation);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 
-    axios
-      .delete(`http://localhost:3010/api/comment/deleteUser/${req.params.id}`)
-      .then((response) => {
-        console.log(response.data.url);
-        //console.log(response.data.explanation);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    
 
     console.log("delete user");
     res.send("delete user");
@@ -167,13 +169,13 @@ router.delete("/deleteUser/:id", async (req, res) => {
 router.patch("/updateUser/:id", async (req, res) => {
   try {
     console.log("wassup");
-    console.log(req.body.FOLLOWING_TOPICS);
+    console.log(req.body.FOLLOWING_TOPICS)
     const user = await User.findById(req.params.id).populate(
       "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj"
     );
 
-    if (user) {
-      console.log(user);
+    if(user) {
+      console.log(user)
     }
     if (req.body.USER_EMAIL) {
       user.USER_EMAIL = req.body.USER_EMAIL;
@@ -199,17 +201,10 @@ router.patch("/updateUser/:id", async (req, res) => {
       user.FOLLOWING_TOPICS = req.body.FOLLOWING_TOPICS;
     }
 
-    if (req.body.FOLLOWING_TOPICS_Obj) {
-      user.FOLLOWING_TOPICS_Obj = req.body.FOLLOWING_TOPICS_Obj;
-    }
-
     await user.save();
     console.log("Passed!!");
-    const updatedUser = await User.findById(req.params.id).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS FOLLOWING_TOPICS_Obj"
-    );
-    
-    res.send(updatedUser);
+    console.log(user);
+    res.send(user);
   } catch (error) {
     console.log(error);
   }
@@ -232,7 +227,7 @@ router.get("/getMyFollowings/:id", async (req, res) => {
     const user = await User.findOne({ _id: req.params.id })
       //.select("FOLLOWING_USERS")
       .populate("FOLLOWING_USERS.USER_ID")
-      .sort({ "FOLLOWING_USERS.FOLLOW_DATE": 1 });
+      .sort({"FOLLOWING_USERS.FOLLOW_DATE": 1});
 
     res.send(user);
     console.log(user);
@@ -350,7 +345,7 @@ router.get("/login/:username/:password", async (req, res) => {
     const user = await User.findOne({
       USER_USERNAME: req.params.username,
     }).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS FOLLOWING_TOPICS_Obj"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
     );
 
     if (!user) {
@@ -363,7 +358,7 @@ router.get("/login/:username/:password", async (req, res) => {
 
     const keyBuffer = Buffer.from(key, "hex");
     const match = timingSafeEqual(hashedBuffer, keyBuffer);
-
+    
     if (match) {
       res.send(user);
       console.log(user);
@@ -398,13 +393,9 @@ router.post("/auth/requestResetPassword/:email", async (req, res) => {
   }).save();
 
   const link = `localhost:3000/passwordReset/${user._id}/${resetToken}`;
-  sendEmail(
-    user.USER_EMAIL,
-    "Password Reset Request",
-    { name: user.USER_USERNAME, link: link },
-    "./template/requestResetPassword.handlebars"
-  );
+  sendEmail(user.USER_EMAIL,"Password Reset Request",{name: user.USER_USERNAME,link: link,},"./template/requestResetPassword.handlebars");
   return link;
+
 });
 
 router.post("/auth/resetPassword", async (req, res) => {
@@ -412,10 +403,13 @@ router.post("/auth/resetPassword", async (req, res) => {
   console.log("hello");
   console.log(req.body);
   if (!passwordResetToken) {
-    console.log("Invalid or expired password reset token1234");
+    console.log("Invalid or expired password reset token1234")
     return res.send("Invalid or expired password reset token");
   }
 
+
+
+  
   const [salt, key] = passwordResetToken.token.split(":");
   const hashedBuffer = scryptSync(req.body.token, salt, 64);
 
@@ -424,11 +418,12 @@ router.post("/auth/resetPassword", async (req, res) => {
   //const isValid = await bcrypt.compare(token, passwordResetToken.token);
 
   //console.log(hashedBuffer)
-  console.log(keyBuffer);
+  console.log(keyBuffer)
+  
 
-  console.log(match);
+  console.log(match)
   if (!match) {
-    console.log("Invalid or expired password reset token");
+    console.log("Invalid or expired password reset token")
     return res.send("Invalid or expired password reset token");
   }
 
@@ -437,9 +432,10 @@ router.post("/auth/resetPassword", async (req, res) => {
     "hex"
   );
 
+
   const user = await User.findById(req.body.userid);
   user.USER_PW = `${salt2}:${hashedPassword}`;
-
+  
   await user.save();
 
   sendEmail(
@@ -456,8 +452,9 @@ router.post("/auth/resetPassword", async (req, res) => {
   res.send("Password reset");
 });
 
+
 router.post("/addProfilePicture/:id", async (req, res) => {
-  console.log("body =");
+  console.log("body =")
   console.log(req.body);
 
   try {
@@ -472,5 +469,76 @@ router.post("/addProfilePicture/:id", async (req, res) => {
     console.log(error);
   }
 });
+
+router.patch("/blockUser/:id", async (req, res) => {
+  try {
+    let temp = await User.findOne({ _id: req.params.id });
+
+    if (
+      temp.USER_BLOCKLIST.some((e) => e.USER_ID.toString() == req.body.USER_ID)
+    ) {
+      res.send("already blocked");
+      console.log("already blocked");
+      return;
+    }
+
+    await User.findOneAndUpdate( //add to blocklist
+      { _id: req.params.id },
+      {
+        $push: {
+          USER_BLOCKLIST: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
+    );
+
+    await User.findOneAndUpdate( //unfollow user
+      { _id: req.params.id },
+      {
+        $pull: {
+          FOLLOWING_USERS: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
+    );
+    await User.findOneAndUpdate(
+      { _id: req.body.USER_ID },
+      {
+        $pull: {
+          FOLLOWER_USERS: { USER_ID: mongoose.Types.ObjectId(req.params.id) },
+        },
+      }
+    );
+
+    console.log("user blocked");
+    res.send("user blocked");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.patch("/unblockUser/:id", async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: {
+          USER_BLOCKLIST: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
+    );
+
+    console.log("user unblocked");
+    res.send("user unblocked");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 
 module.exports = router;

@@ -183,6 +183,7 @@ const Homeweb = () => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
   }
 
+
   var searchUser = () => {
     var searchUser = document.querySelector(".searchBox-homeweb > input").value;
     const $regex = escapeRegExp(searchUser);

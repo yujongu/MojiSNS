@@ -15,8 +15,11 @@ function PostCard({
   commentCount,
   postText,
 }) {
+  let navigate = useNavigate();
+
   var pastTime = datePretty(postTime);
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
+  const postLink = `/postDetail/${postId}`
 
   var likePostFunc = (e) => {
     if (e.target.style.color === "rgb(0, 0, 0)") {
@@ -71,7 +74,7 @@ function PostCard({
   }, []);
 
   return (
-    <div className="postingCard">
+    <div className="postingCard" >
       <div className="postingHeader">
         <div className="postingProfile">
           {anonymous ? (
@@ -135,7 +138,10 @@ function PostCard({
               {likeCount}
             </div>
           </div>
-          <div className="commentSection">
+          <div className="commentSection"
+            onClick={() => {
+              navigate(postLink);
+            }}>
             <i className="fa-regular fa-comment-dots fa-2xl"></i>
             <h5 className="commentCount">{commentCount}</h5>
           </div>

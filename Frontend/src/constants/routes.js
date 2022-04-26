@@ -16,3 +16,4 @@ export const FOLLOWER = "/follower";
 export const FOLLOWING = "/following";
 export const NOTIFICATION = "/notification";
 export const DIRECTMESSAGE = "/directmessage";
+export const POSTDETAIL = "/postDetail/:postId"
