@@ -339,6 +339,33 @@ textarea {
   margin-top: 5%;
 }
 
+.Homeweb-topics_filter_reset_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.Homeweb-topics_filter_reset_container button{
+  background-color: #ffc368;
+  margin-left: 10px;
+  border-radius: 15px;
+  height: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 16px;
+  border-style: none;
+  color: #e26714;
+  font-weight: bold;
+  transition-duration: 0.4s;
+}
+
+.Homeweb-topics_filter_reset_container button:hover {
+  background-color: #e26714;
+  color: #f2f2f2;
+}
+
+
 .titleWeb2 {
   padding-bottom: 2%;
 }

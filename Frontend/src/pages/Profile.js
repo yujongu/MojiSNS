@@ -158,6 +158,7 @@ function Profile() {
               postData.map((singlePost, index) => (
                 <PostCard
                   key={index}
+                  topic={singlePost.TOPIC_ID.TOPIC_NAME}
                   userName={singlePost.USER_ID.USER_USERNAME}
                   postId={singlePost._id}
                   anonymous={singlePost.IS_ANONYMOUS}

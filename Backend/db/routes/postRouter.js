@@ -149,11 +149,12 @@ router.post("/likePost/:post_id/:user_id", async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id })
       .populate("USER_ID TOPIC_ID LIKED_USERS");
+      //post.LIKED_USERS.some((e) => console.log(e._id.toString()))
+
 
       if (
-        post.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        post.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
       ) {
-        console.log(e.toString)
 
         res.send("already liked");
         console.log("already liked");
