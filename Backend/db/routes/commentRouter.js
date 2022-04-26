@@ -2,6 +2,7 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const Comment = require("../models/comment");
 const router = express.Router();
+const Post = require("../models/post");
 
 router.get("/getComments/:id", async (req, res) => { //post id
     const comments = await Comment.find({
@@ -32,6 +33,10 @@ router.post("/addComment", async (req, res) => {
       CONTENT: req.body.CONTENT,
       PARENT_ID: mongoose.Types.ObjectId(req.body.PARENT_ID)
     });
+    await Post.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.body.POST_ID)},
+      { $inc: {"COMMENTS_COUNT" : 1} }
+    )    
     await comment.save();
     res.send(comment);
     console.log(comment);
