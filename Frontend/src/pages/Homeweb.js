@@ -21,6 +21,7 @@ const Homeweb = () => {
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
   const [interestList, setInterestList] = useState([]);
+  const [filteredTopics, setFilteredTopics] = useState([]);
 
   var postAnonymous = false;
   //window onload
@@ -47,6 +48,8 @@ const Homeweb = () => {
   React.useEffect(() => {}, [postData]);
 
   React.useEffect(() => {}, [interestList]);
+
+  React.useEffect(() => {}, [filteredTopics]);
 
   var eventListeners = () => {
     var postingImg = document.getElementById("postingImg");
@@ -98,6 +101,26 @@ const Homeweb = () => {
     });
   };
 
+  var displaySelectedTopic = (e) => {
+    if (e.target.style.backgroundColor !== "rgb(244, 177, 131)") {
+      e.target.style.backgroundColor = "#F4B183";
+      setFilteredTopics([...filteredTopics, e.target.textContent]);
+    } else {
+      e.target.style.backgroundColor = "#ffc368";
+      var temp = filteredTopics;
+      temp.splice(filteredTopics.indexOf(e.target.textContent), 1);
+      setFilteredTopics([...temp]);
+    }
+  };
+  
+  var clearTopicFilters = () => {
+    var a = document.querySelectorAll(".btnTopic")
+    a.forEach((element) => {
+      element.style.backgroundColor = ""
+    })
+    setFilteredTopics([]);
+  }
+
   var fetchTopics = () => {
     const response = axios.get(`${BackendConn}topic/getTopics`);
     response.then((response) => {
@@ -121,6 +144,15 @@ const Homeweb = () => {
         itm.style.backgroundColor = "#FBE5D6";
       }
     });
+  };
+
+  const handlePostText = (e) => {
+    console.log(e.target.value);
+    if (e.target.value.length > 500) {
+      alert("Posts are limited to 500 characters.");
+      let str = String(e.target.value);
+      e.target.value = str.slice(0, 500);
+    }
   };
 
   var cancelPost = () => {
@@ -183,7 +215,6 @@ const Homeweb = () => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
   }
 
-
   var searchUser = () => {
     var searchUser = document.querySelector(".searchBox-homeweb > input").value;
     const $regex = escapeRegExp(searchUser);
@@ -243,8 +274,8 @@ const Homeweb = () => {
               className="logout"
               onClick={() => {
                 localStorage.removeItem("currentUser");
-                localStorage.removeItem("Trustworthy")
-                localStorage.removeItem("SearchRes")
+                localStorage.removeItem("Trustworthy");
+                localStorage.removeItem("SearchRes");
                 navigate(LOGIN);
               }}
             >
@@ -311,6 +342,7 @@ const Homeweb = () => {
               <textarea
                 id="postWriteID"
                 placeholder="What do you want to share?"
+                onChange={handlePostText}
               ></textarea>
             </form>
             <div className="writeFooter">
@@ -350,11 +382,21 @@ const Homeweb = () => {
           </div>
         </div>
         <div className="viewByTopic">
-          <h2 className="titleWeb2">View By Topic</h2>
+          <div className="Homeweb-topics_filter_reset_container">
+            <h2 className="titleWeb2">View By Topic</h2>
+            <button onClick={clearTopicFilters}>Clear Filter</button>
+          </div>
+
           <div className="outer">
             {interestList.map((element, index) => (
               <div>
-                <button key={index} className="btnTopic">{element.TOPIC_NAME}</button>
+                <button
+                  key={index}
+                  className="btnTopic"
+                  onClick={displaySelectedTopic}
+                >
+                  {element.TOPIC_NAME}
+                </button>
               </div>
             ))}
           </div>
@@ -365,18 +407,51 @@ const Homeweb = () => {
             {isLoading ? (
               <div>Loading</div>
             ) : (
-              postData.map((singlePost, index) => (
-                <PostCard
-                  key={index}
-                  userName={singlePost.USER_ID.USER_USERNAME}
-                  postId={singlePost._id}
-                  anonymous={singlePost.IS_ANONYMOUS}
-                  postTime={singlePost.updatedAt}
-                  likeCount={singlePost.LIKES_COUNT}
-                  commentCount={singlePost.COMMENTS_COUNT}
-                  postText={singlePost.BODY}
-                />
-              ))
+              postData.map(
+                (singlePost, index) =>
+                  // console.log(singlePost.TOPIC_ID.TOPIC_NAME)
+                  filteredTopics.length !== 0 ? (
+                    filteredTopics.indexOf(singlePost.TOPIC_ID.TOPIC_NAME) !==
+                    -1 ? (
+                      <PostCard
+                        key={index}
+                        topic={singlePost.TOPIC_ID.TOPIC_NAME}
+                        userName={singlePost.USER_ID.USER_USERNAME}
+                        postId={singlePost._id}
+                        anonymous={singlePost.IS_ANONYMOUS}
+                        postTime={singlePost.updatedAt}
+                        likeCount={singlePost.LIKES_COUNT}
+                        commentCount={singlePost.COMMENTS_COUNT}
+                        postText={singlePost.BODY}
+                      />
+                    ) : (
+                      <div></div>
+                    )
+                  ) : (
+                    <PostCard
+                      key={index}
+                      topic={singlePost.TOPIC_ID.TOPIC_NAME}
+                      userName={singlePost.USER_ID.USER_USERNAME}
+                      postId={singlePost._id}
+                      anonymous={singlePost.IS_ANONYMOUS}
+                      postTime={singlePost.updatedAt}
+                      likeCount={singlePost.LIKES_COUNT}
+                      commentCount={singlePost.COMMENTS_COUNT}
+                      postText={singlePost.BODY}
+                    />
+                  )
+                // <PostCard
+                //   key={index}
+                //   topic={singlePost.TOPIC_ID.TOPIC_NAME}
+                //   userName={singlePost.USER_ID.USER_USERNAME}
+                //   postId={singlePost._id}
+                //   anonymous={singlePost.IS_ANONYMOUS}
+                //   postTime={singlePost.updatedAt}
+                //   likeCount={singlePost.LIKES_COUNT}
+                //   commentCount={singlePost.COMMENTS_COUNT}
+                //   postText={singlePost.BODY}
+                // />
+              )
             )}
           </div>
         </div>
