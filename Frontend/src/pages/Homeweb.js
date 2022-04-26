@@ -123,6 +123,15 @@ const Homeweb = () => {
     });
   };
 
+  const handlePostText = (e) => {
+    console.log(e.target.value)
+    if(e.target.value.length > 500) {
+      alert("Posts are limited to 500 characters.")
+      let str = String(e.target.value)
+      e.target.value = str.slice(0, 500)
+    }
+  }
+
   var cancelPost = () => {
     var a = document.getElementById("postWriteID");
     a.value = "";
@@ -311,6 +320,7 @@ const Homeweb = () => {
               <textarea
                 id="postWriteID"
                 placeholder="What do you want to share?"
+                onChange={handlePostText}
               ></textarea>
             </form>
             <div className="writeFooter">

@@ -14,7 +14,6 @@ function Login() {
   const [user, setUser] = useState();
 
   const handleTextChange = (e) => {
-    console.log(e.target);
     switch (e.target.name) {
       case "username":
         setUsername(e.target.value);
