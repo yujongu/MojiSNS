@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./CommentCard.css";
 import { useNavigate } from "react-router-dom";
 import datePretty from "../../helperFunctions/datePretty";
+import ReplyCard from "./ReplyCard";
 import axios from "axios";
 import { BackendConn } from "../../constants/backendConn";
 import profileP from "../../images/profile.png";
@@ -16,15 +17,22 @@ function CommentCard({
     likeCount,
     commentText,
 }) {
+
+    const [isLoading, setLoading] = useState(true);
+    const [replyData, setReplyData] = useState([]);
+
     let navigate = useNavigate();
 
     var pastTime = datePretty(postTime);
     var showReply = document.getElementById(commentId);
 
+
     React.useEffect(() => {
         // Update the document title using the browser API
         showReply = document.getElementById(commentId);
     });
+
+    React.useEffect(() => { }, [replyData]);
 
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -52,6 +60,39 @@ function CommentCard({
     var editTargetComment = (el) => {
         console.log(`edit post clicked, ${el.target}`);
     };
+
+    var likeCommentFunc = (el) => {
+        if (el.target.style.color === "rgb(0, 0, 0)") {
+            console.log("add like");
+            el.target.style.color = "#E26714";
+            el.target.nextSibling.style.color = "#E26714";
+            el.target.nextSibling.textContent = parseInt(el.target.nextSibling.textContent) + 1;
+            //   axios.post(`${BackendConn}post/likePost/${postId}/${currUser}`).then((res) =>{
+            //     console.log(res)
+            //     if(res.status === 200)
+            //     {
+            //       console.log("success liked");
+            //     }
+            //     else{
+            //       alert("Liked failed");
+            //     }
+            //   })
+        } else {
+            console.log("delete like");
+            el.target.style.color = "#000000";
+            el.target.nextSibling.style.color = "#000000";
+            el.target.nextSibling.textContent = parseInt(el.target.nextSibling.textContent) - 1;
+            // axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser}`).then((res) =>{
+            //   console.log(res)
+            //   if(res.status === 200)
+            //   {
+            //   }
+            //   else{
+            //     alert("Liked failed");
+            //   }
+            // })
+        }
+    }
 
     var activateReply = (el) => {
         if (showReply.style.display === "block") {
@@ -102,6 +143,7 @@ function CommentCard({
                         <i
                             className="fa-regular fa-thumbs-up fa-xl"
                             id="likeComment"
+                            onClick={likeCommentFunc}
                         ></i>
                         <div className="likeCountComment" id="likeNum">
                             {likeCount}
@@ -115,6 +157,16 @@ function CommentCard({
                 </div>
                 <div id={commentId} className="writeReply">
                     <hr class="solid" />
+                    <div>
+                        {isLoading ? (
+                            <div>Loading</div>
+                        ) : (
+                            replyData.map((singleReply, index) => (
+                                <ReplyCard
+                                />
+                            ))
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

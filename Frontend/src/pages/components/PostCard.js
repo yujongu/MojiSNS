@@ -26,12 +26,31 @@ function PostCard({
       e.target.style.color = "#E26714";
       e.target.nextSibling.style.color = "#E26714";
       e.target.nextSibling.textContent =
-        parseInt(e.target.nextSibling.textContent) + 1;
+      parseInt(e.target.nextSibling.textContent) + 1;
+      axios.post(`${BackendConn}post/likePost/${postId}/${currUser}`).then((res) =>{
+        console.log(res)
+        if(res.status === 200)
+        {
+          console.log("success liked");
+        }
+        else{
+          alert("Liked failed");
+        }
+      })
     } else {
       e.target.style.color = "#000000";
       e.target.nextSibling.style.color = "#000000";
       e.target.nextSibling.textContent =
         parseInt(e.target.nextSibling.textContent) - 1;
+        axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser}`).then((res) =>{
+          console.log(res)
+          if(res.status === 200)
+          {
+          }
+          else{
+            alert("Liked failed");
+          }
+        })
     }
   };
 
