@@ -2,6 +2,7 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const Comment = require("../models/comment");
 const router = express.Router();
+const Post = require("../models/post");
 
 router.get("/getComments/:id", async (req, res) => { //post id
     const comments = await Comment.find({
@@ -32,6 +33,10 @@ router.post("/addComment", async (req, res) => {
       CONTENT: req.body.CONTENT,
       PARENT_ID: mongoose.Types.ObjectId(req.body.PARENT_ID)
     });
+    await Post.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.body.POST_ID)},
+      { $inc: {"COMMENTS_COUNT" : 1} }
+    )    
     await comment.save();
     res.send(comment);
     console.log(comment);
@@ -135,30 +140,25 @@ router.post("/unlikePost/:comment_id/:user_id", async (req, res) => {
     console.log(error);
   }
 });
-/*
-router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
+
+router.post("/isLiked/:comment_id/:user_id", async (req, res) => {
   try {
-    const temp = await Post.findOne({ _id: req.params.comment_id })
+    const temp = await Comment.findOne({ _id: req.params.comment_id })
       .populate("LIKED_USERS");
 
       if (
-        !temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        temp.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
       ) {
-        res.send("comment not liked");
-        console.log("comment not liked");
+        res.send("Yes");
+        console.log("Yes");
         return;
       }
-    Post.updateOne(
-      { _id: req.params.comment_id},
-      { $inc: {LIKES_COUNT : -1}, $pull: {LIKED_USERS: req.params.user_id}}
-    )
     
-    res.send("like removed");
-    console.log("like removed");
+    res.send("No");
+    console.log("No");
   } catch (error) {
     console.log(error);
   }
 });
-*/
 
 module.exports = router;
