@@ -9,19 +9,28 @@ function UserSearchResult() {
   console.log(d);
   return (
     <main className="searchResMain">
-      <div className="searchResContainer">
-        <h1>Search Result</h1>
-        <div className="innerResContainer">
-          {d.map((singleUser, index) => (
-            <UserInfoShort
-              key={index}
-              ind={index}
-              username={singleUser.USER_USERNAME}
-              uid={singleUser._id}
-              showTime={false}
-              time={""}
-            />
-          ))}
+      <div className="itemFlex">
+        <div className="backButton">
+          <a href="/home">
+            <button className="backFromFollower">
+              &lt;Home
+            </button>
+          </a>
+        </div>
+        <div className="searchResContainer">
+          <h1>Search Result</h1>
+          <div className="innerResContainer">
+            {d.map((singleUser, index) => (
+              <UserInfoShort
+                key={index}
+                ind={index}
+                username={singleUser.USER_USERNAME}
+                uid={singleUser._id}
+                showTime={false}
+                time={""}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>

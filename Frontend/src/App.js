@@ -1,6 +1,7 @@
 import "./App.css";
 import * as React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import * as PageLinks from "./constants/routes";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -19,8 +20,7 @@ import UserProfile from "./pages/UserProfile";
 import Follower from "./pages/Follower";
 import Following from "./pages/Following";
 import Notification from "./pages/Notification";
-import * as PageLinks from "./constants/routes";
-
+import DirectMessage from "./pages/DirectMessage";
 
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
         <Route path={PageLinks.FOLLOWER} element={<Follower />} />
         <Route path={PageLinks.FOLLOWING} element={<Following />} />
         <Route path={PageLinks.NOTIFICATION} element={<Notification />} />
+        <Route path={PageLinks.DIRECTMESSAGE} element={<DirectMessage />} />
       </Routes>
     </Router>
   );

@@ -82,11 +82,23 @@ router.patch("/updatePost/:id", (req, res) => {
     });
 });
 
-//get all posts from user newest first
+//get all posts from user newest first and exclude anonymous posts.
 router.get("/getPosts/:id", async (req, res) => {
   console.log("find posts by user");
   const id = req.params.id;
-  const posts = await Post.find({ USER_ID: id })
+  const posts = await Post.find({ USER_ID: id, IS_ANONYMOUS: false })
+    .populate("USER_ID TOPIC_ID LIKED_USERS")
+    .sort({ createdAt: -1 });
+
+  console.log(posts);
+  res.send(posts);
+});
+
+//get all posts from user newest first.
+router.get("/getMyPosts/:id", async (req, res) => {
+  console.log("find posts by user");
+  const id = req.params.id;
+  const posts = await Post.find({ USER_ID: id})
     .populate("USER_ID TOPIC_ID LIKED_USERS")
     .sort({ createdAt: -1 });
 

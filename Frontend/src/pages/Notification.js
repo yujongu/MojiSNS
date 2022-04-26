@@ -14,7 +14,7 @@ function Notification() {
     retrieveNotifications();
   }, []);
 
-  React.useEffect(() => {}, [notificationData]);
+  React.useEffect(() => { }, [notificationData]);
 
   var retrieveNotifications = () => {
     axios
@@ -27,29 +27,39 @@ function Notification() {
   };
   return (
     <main className="notifMainContainer">
-      <div className="notifContainer">
-        <h1>Notification Page</h1>
-        {notificationData.length === 0 ? (
-          <div className="zeroNotificationContainer">
-            <p>Sorry, you do not have any notifications...</p>
-          </div>
-        ) : (
-          <div></div>
-        )}
-        {notificationData.map((notification, index) => (
-          <NotifItem
-            key={index}
-            notifId={notification._id}
-            userName={notification.SENDER_USER_ID.USER_USERNAME}
-            uid={notification.SENDER_USER_ID._id}
-            type={notification.NOTIF_TYPE}
-            content={notification.BODY}
-            time={notification.createdAt}
-            read={notification.VIEWED}
-          />
-          // console.log(notification)
-        ))}
+      <div className="itemFlex">
+        <div className="backButton">
+          <a href="/home">
+            <button className="backFromNotif">
+              &lt;Home
+            </button>
+          </a>
+        </div>
+        <div className="notifContainer">
+          <h1>Notification Page</h1>
+          {notificationData.length === 0 ? (
+            <div className="zeroNotificationContainer">
+              <p>Sorry, you do not have any notifications...</p>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {notificationData.map((notification, index) => (
+            <NotifItem
+              key={index}
+              notifId={notification._id}
+              userName={notification.SENDER_USER_ID.USER_USERNAME}
+              uid={notification.SENDER_USER_ID._id}
+              type={notification.NOTIF_TYPE}
+              content={notification.BODY}
+              time={notification.createdAt}
+              read={notification.VIEWED}
+            />
+            // console.log(notification)
+          ))}
+        </div>
       </div>
+
     </main>
   );
 }

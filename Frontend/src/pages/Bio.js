@@ -44,7 +44,7 @@ function Bio() {
           }
         );
         console.log(response);
-        if(response.data._id === myId) {
+        if (response.data._id === myId) {
           localStorage.setItem('currentUser', JSON.stringify(response.data))
           navigate("/signup/interest");
         }
@@ -74,6 +74,7 @@ function Bio() {
     <main className="bioMain">
       <form onSubmit={handleSubmit}>
         <div className="bioContainer">
+
           <div class="logo"></div>
 
           <div id="float-label7">

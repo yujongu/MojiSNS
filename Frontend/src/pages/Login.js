@@ -108,9 +108,13 @@ function Login() {
               Log In
             </button>
           </div>
-
-          <div className="forgotpsw">
-            <a href="?#divOne">Forget Password?</a>
+          <div className="footerLogin">
+            <div className="cancelL">
+              <a href="/">Cancel</a>
+            </div>
+            <div className="forgotpsw">
+              <a href="?#divOne">Forget Password?</a>
+            </div>
           </div>
           <div class="overlay" id="divOne">
             <div class="wrapper">
