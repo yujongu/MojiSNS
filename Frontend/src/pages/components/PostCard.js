@@ -46,6 +46,7 @@ function PostCard({
           console.log(res)
           if(res.status === 200)
           {
+            console.log("success unliked");
           }
           else{
             alert("Liked failed");
