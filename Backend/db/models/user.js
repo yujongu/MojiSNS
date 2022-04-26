@@ -84,7 +84,6 @@ const userSchema = new Schema({
     default: 0,
   },
 
-<<<<<<< HEAD
     USER_DESCRIPTION: {
         type: String,
         default: "",
@@ -133,12 +132,10 @@ const userSchema = new Schema({
             ref: "User"
         }
       }]
-    }
-=======
+    },
   PROFILE_PICTURE: {
     type: Buffer, // casted to MongoDB's BSON type: binData
   },
->>>>>>> 50ad8ee2dbc9ae279822e8c9569c2b47821b3c48
 });
 
 module.exports = mongoose.model("User", userSchema);
