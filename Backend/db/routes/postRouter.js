@@ -151,7 +151,7 @@ router.post("/likePost/:post_id/:user_id", async (req, res) => {
       .populate("USER_ID TOPIC_ID LIKED_USERS");
 
       if (
-        temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        postt.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
       ) {
         res.send("already liked");
         console.log("already liked");
@@ -175,7 +175,7 @@ router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
       .populate("USER_ID TOPIC_ID LIKED_USERS");
 
       if (
-        !temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        !post.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
       ) {
         res.send("post not liked");
         console.log("post not liked");
