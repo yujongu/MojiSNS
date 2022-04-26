@@ -4,6 +4,7 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BackendConn } from "../constants/backendConn";
+import { browserName } from "react-device-detect";
 
 function Login() {
   let navigate = useNavigate();
@@ -62,6 +63,12 @@ function Login() {
             }
             else {
               localStorage.setItem("currentUser", JSON.stringify(res.data))
+              if (window.confirm("Your login information will be saved. Is this a trustable device?")) {
+                localStorage.setItem("Trustworthy", "YES")
+                localStorage.setItem("BrowserName", browserName)
+              } else {
+                alert("Canceled");
+              }
               navigate("/home");
             }
           })

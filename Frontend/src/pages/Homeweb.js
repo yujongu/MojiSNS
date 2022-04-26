@@ -242,6 +242,8 @@ const Homeweb = () => {
               className="logout"
               onClick={() => {
                 localStorage.removeItem("currentUser");
+                localStorage.removeItem("Trustworthy")
+                localStorage.removeItem("SearchRes")
                 navigate(LOGIN);
               }}
             >
@@ -349,9 +351,9 @@ const Homeweb = () => {
         <div className="viewByTopic">
           <h2 className="titleWeb2">View By Topic</h2>
           <div className="outer">
-            {interestList.map((element) => (
+            {interestList.map((element, index) => (
               <div>
-                <button className="btnTopic">{element.TOPIC_NAME}</button>
+                <button key={index} className="btnTopic">{element.TOPIC_NAME}</button>
               </div>
             ))}
           </div>
