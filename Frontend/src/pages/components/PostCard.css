@@ -1,130 +1,141 @@
-.postingCard{
-    position: relative;
-    background-color: white;
-    border-radius: 25px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.postingCard {
+  position: relative;
+  background-color: white;
+  border-radius: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.postingHeader{
-    display: flex;
-    width: 100%;
-}
-    
-.postingProfile{
-    position: relative;
-    margin-left: 4%;
-    padding-top: 3%;
-    margin-bottom: 3%;
-    width: 8%;
+.postingHeader {
+  display: flex;
+  width: 100%;
 }
 
-.postPP{
-    position: relative;
-    border-radius: 50%;
+.postingProfile {
+  position: relative;
+  margin-left: 4%;
+  padding-top: 3%;
+  margin-bottom: 3%;
+  width: 8%;
 }
 
-.postingWriter{
-    position: relative;
-    width: 12%;
-    margin-left: 2%;
-    margin-top: 5.5%;
+.postPP {
+  position: relative;
+  border-radius: 50%;
 }
 
-.dateWritten{
-    position: relative;
-    width: 18%;
-    margin-left: 45%;
-    margin-top: 6%;
+.postingWriter {
+  position: relative;
+  width: 12%;
+  margin-left: 2%;
+  margin-top: 5.5%;
 }
 
-.postSetting{
-    position: relative;
-    width: 5%;
-    height: fit-content;
-    margin-left: 3%;
-    margin-top: 6%;
-    cursor: pointer;
-    display: inline-block;
+.dateWritten {
+  position: relative;
+  width: 18%;
+  margin-left: 45%;
+  margin-top: 6%;
 }
 
-.postSetting:hover, .postSetting:focus {
-    color : #ffc368;
+.postSetting {
+  position: relative;
+  width: 5%;
+  height: fit-content;
+  margin-left: 3%;
+  margin-top: 6%;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.postSetting:hover,
+.postSetting:focus {
+  color: #ffc368;
 }
 
 .postSetting_content {
-    display: none;
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    margin-top: 10px;
+  display: none;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  margin-top: 10px;
 }
 
 .postSetting_content div {
-    border-radius: 15px;
-    background-color: #ffc368;
-    color: #e26714;
-    width: 80px;
-    height: 30px;
-    font-size: 15px;
-    font-weight: bold;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 8px;
+  border-radius: 15px;
+  background-color: #ffc368;
+  color: #e26714;
+  width: 80px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .postSetting_content div:hover {
-    background-color: #e26714;
-    color: white;
+  background-color: #e26714;
+  color: white;
 }
 
-.show {display:block;}
-
-
-.postingBody{
-    display: flex;
-    width: 100%;
+.show {
+  display: block;
 }
 
-.postingSection{
-    position: relative;
-    padding: 3%;
-    width: 88%;
+.postCard_topic_section {
+  margin-left: 20px;
+  font-size: 18px;
+  font-weight: bold;
+
+}
+.postCard_topic_section span {
+  color: #e26714;
 }
 
-.postWords{
-    position: relative;
+.postingBody {
+  display: flex;
+  width: 100%;
 }
 
-.iconSection{
-    position: relative;
-    width: 4%;
-    margin-right: auto;
-    margin-left: auto;
-    text-align: center;
+.postingSection {
+  position: relative;
+  padding: 3%;
+  width: 88%;
 }
 
-.likeSection{
-    width: 100%;
-    padding-bottom: 20%;
+.postWords {
+  position: relative;
 }
 
-.likeCount{
-    font-size: large;
-    font-weight: bold;
-    padding-top: 15%;
+.iconSection {
+  position: relative;
+  width: 4%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 }
 
-
-.commentSection{
-    width: 100%;
-    padding-top: 20%;
+.likeSection {
+  width: 100%;
+  padding-bottom: 20%;
 }
 
-.commentCount{
-    font-size: large;
-    font-weight: bold;
-    padding-top: 15%;
+.likeCount {
+  font-size: large;
+  font-weight: bold;
+  padding-top: 15%;
+}
+
+.commentSection {
+  width: 100%;
+  padding-top: 20%;
+}
+
+.commentCount {
+  font-size: large;
+  font-weight: bold;
+  padding-top: 15%;
 }

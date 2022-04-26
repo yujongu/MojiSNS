@@ -50,7 +50,6 @@ const Homeweb = () => {
   React.useEffect(() => {}, [interestList]);
 
   React.useEffect(() => {
-    console.log(filteredTopics);
   }, [filteredTopics]);
 
   var eventListeners = () => {
@@ -405,6 +404,7 @@ const Homeweb = () => {
                   -1 ? (
                     <PostCard
                       key={index}
+                      topic={singlePost.TOPIC_ID.TOPIC_NAME}
                       userName={singlePost.USER_ID.USER_USERNAME}
                       postId={singlePost._id}
                       anonymous={singlePost.IS_ANONYMOUS}
@@ -419,6 +419,7 @@ const Homeweb = () => {
                 ) : (
                   <PostCard
                     key={index}
+                    topic={singlePost.TOPIC_ID.TOPIC_NAME}
                     userName={singlePost.USER_ID.USER_USERNAME}
                     postId={singlePost._id}
                     anonymous={singlePost.IS_ANONYMOUS}
@@ -430,6 +431,7 @@ const Homeweb = () => {
                 )
                 // <PostCard
                 //   key={index}
+                //   topic={singlePost.TOPIC_ID.TOPIC_NAME}
                 //   userName={singlePost.USER_ID.USER_USERNAME}
                 //   postId={singlePost._id}
                 //   anonymous={singlePost.IS_ANONYMOUS}

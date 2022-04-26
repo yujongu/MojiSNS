@@ -7,6 +7,7 @@ import axios from "axios";
 import { BackendConn } from "../../constants/backendConn";
 
 function PostCard({
+  topic,
   userName,
   postId,
   anonymous,
@@ -20,6 +21,8 @@ function PostCard({
   var pastTime = datePretty(postTime);
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   const postLink = `/postDetail/${postId}`
+
+  console.log(topic)
 
   var likePostFunc = (e) => {
     if (e.target.style.color === "rgb(0, 0, 0)") {
@@ -121,6 +124,7 @@ function PostCard({
           <div></div>
         )}
       </div>
+      <div className="postCard_topic_section">Topic: <span>{topic}</span></div>
       <div className="postingBody">
         <div className="postingSection">
           <div className="postWords">
