@@ -24,8 +24,10 @@ function UserProfile() {
   var topics = "";
 
   React.useEffect(() => {
+    incVisitorCount();
     populatePosts();
     getTargetUser();
+    
   }, []);
 
   //component did update
@@ -36,6 +38,17 @@ function UserProfile() {
       userEventListeners();
     }
   }, [userData]);
+
+  var incVisitorCount = () => {
+    const response = axios.patch(`${BackendConn}user/increaseVisitorCount/${targetUsername}`);
+    response.then((response) => {
+      if(response.status === 200) {
+
+      } else {
+        alert("Something Went Wrong...")
+      }
+    })
+  }
 
   var populatePosts = () => {
     const response = axios.get(`${BackendConn}post/getPosts/${targetUserId}`);
@@ -115,7 +128,8 @@ function UserProfile() {
 
                 <div className="nameInfos">
                   <p id="prof_name">{userData.USER_USERNAME}</p>
-                  <p id="prof_username">{userData.USER_EMAIL}</p>
+                  <p id="prof_email">{userData.USER_EMAIL}</p>
+                  <p id="prof_visitorCount">{userData.DAILY_VISITOR_COUNT} visitors visited your profile</p>
                 </div>
               </div>
             </div>

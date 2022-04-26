@@ -2,9 +2,19 @@ import React from "react";
 
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import { HOMEWEB } from "../constants/routes";
+import { browserName } from "react-device-detect";
 
 function Home() {
   let navigate = useNavigate();
+  const isLoggedIn = JSON.parse(localStorage.getItem("currentUser"));
+  const isTrustworthy = localStorage.getItem("Trustworthy");
+  const bName = localStorage.getItem("BrowserName")
+  React.useEffect(() => {
+    if(isLoggedIn != null && isTrustworthy === "YES" && bName === browserName) {
+      navigate(HOMEWEB)
+    }
+  }, [])
 
   return (
     <main className="homeMain">

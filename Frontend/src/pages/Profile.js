@@ -13,7 +13,7 @@ import axios from "axios";
 
 function Profile() {
   let navigate = useNavigate();
-  const currUser = JSON.parse(localStorage.getItem("currentUser"));
+  var currUser = JSON.parse(localStorage.getItem("currentUser"));
   //todo get curr user posts.
   var monthNames = [
     "January",
@@ -55,11 +55,22 @@ function Profile() {
   };
 
   React.useEffect(() => {
+    getMyInfo();
     populatePosts();
   }, []);
 
   //component did update
   React.useEffect(() => {}, [postData]);
+
+  var getMyInfo = () => {
+    const response = axios.get(`${BackendConn}user/getUserByUsername/${currUser.USER_USERNAME}`);
+    response.then((response) => {
+      if(response.status === 200) {
+        localStorage.setItem("currentUser", JSON.stringify(response.data))
+        currUser = JSON.parse(localStorage.getItem("currentUser"));
+      }
+    })
+  }
 
   var populatePosts = () => {
     const response = axios.get(`${BackendConn}post/getMyPosts/${currUser._id}`);
@@ -67,7 +78,6 @@ function Profile() {
       if (response.status === 200) {
         setLoading(false);
         setPostData(response.data);
-        console.log(response);
       } else {
         alert("Something Went Wrong...");
       }
@@ -93,7 +103,9 @@ function Profile() {
 
                 <div className="nameInfos">
                   <p id="prof_name">{currUser.USER_USERNAME}</p>
-                  <p id="prof_username">{currUser.USER_EMAIL}</p>
+                  <p id="prof_email">{currUser.USER_EMAIL}</p>
+                  <p id="prof_visitorCount">{currUser.DAILY_VISITOR_COUNT} visitors visited your profile</p>
+                  
                 </div>
               </div>
 
@@ -106,12 +118,12 @@ function Profile() {
                 >
                   Edit Profile
                 </button>
-                <button
+                {/* <button
                   className="interestModify"
                   onClick={() => navigate("/newinterest")}
                 >
                   Settings
-                </button>
+                </button> */}
               </div>
             </div>
 

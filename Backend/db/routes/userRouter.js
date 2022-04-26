@@ -56,7 +56,7 @@ router.post("/signup", async (req, res) => {
 router.get("/getUserByEmail/:email", async (req, res) => {
   try {
     const user = await User.findOne({ USER_EMAIL: req.params.email }).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj"
     );
     res.send(user);
     console.log("got user");
@@ -70,7 +70,7 @@ router.get("/getUserByUsername/:username", async (req, res) => {
     const user = await User.findOne({
       USER_USERNAME: req.params.username,
     }).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj"
     );
     res.send(user);
     console.log("got user");
@@ -84,7 +84,7 @@ router.get("/findUserByUsername/:username", async (req, res) => {
     const user = await User.find({
       USER_USERNAME: { $regex: `${req.params.username}`, $options: "i" },
     }).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj"
     );
     res.send(user);
     console.log(user);
@@ -171,7 +171,7 @@ router.patch("/updateUser/:id", async (req, res) => {
     console.log("wassup");
     console.log(req.body.FOLLOWING_TOPICS)
     const user = await User.findById(req.params.id).populate(
-      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS"
+      "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj"
     );
 
     if(user) {
@@ -209,6 +209,18 @@ router.patch("/updateUser/:id", async (req, res) => {
     console.log(error);
   }
 });
+
+//increase visitor count for the user
+router.patch("/increaseVisitorCount/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({USER_USERNAME: req.params.username})
+    user.DAILY_VISITOR_COUNT = user.DAILY_VISITOR_COUNT + 1
+    await user.save();
+    console.log("Visitor count incremented!")
+  } catch(error) {
+    console.log(error)
+  }
+})
 
 router.get("/getMyFollowings/:id", async (req, res) => {
   try {

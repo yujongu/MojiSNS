@@ -97,7 +97,13 @@
   font-size: 20px;
 }
 
-#prof_username {
+#prof_email {
+  color: #A6A6A6;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+#prof_visitorCount {
   color: #A6A6A6;
   font-size: 12px;
   margin-top: 5px;
