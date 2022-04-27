@@ -93,6 +93,7 @@ const Homeweb = () => {
     const response = axios.get(`${BackendConn}post/getFeed/${currUser._id}`);
     response.then((response) => {
       if (response.status === 200) {
+        console.log(response.data);
         setLoading(false);
         setPostData(response.data);
       } else {

@@ -37,7 +37,6 @@ function CommentCard({
         // Update the document title using the browser API
         showReply = document.getElementById(commentId);
         axios.post(`${BackendConn}comment/isLiked/${commentId}/${currUser._id}`).then(response => {
-            setLoading(false);
             divElement = colorLike.current;
             divLikeCount = refLikeCount.current;
             if (response.data === "Yes") {
@@ -56,9 +55,24 @@ function CommentCard({
 
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
+    var populateReplies = () => {
+        const response = axios.get(`${BackendConn}comment/getReplies/${commentId}`);
+        response.then((response) => {
+            if (response.status === 200) {
+                console.log(response.data);
+                setLoading(false);
+                setReplyData(response.data);
+            } else {
+                alert("Something Went Wrong...");
+            }
+        });
+    };
+
     var openCommentSetting = (el) => {
         el.target.nextSibling.classList.toggle("show");
     };
+
+
 
     var deleteTargetComment = (el) => {
         console.log(`delete post clicked ${el.target}, ${postId}`);
@@ -117,75 +131,143 @@ function CommentCard({
         } else {
             showReply.style.display = "block";
             console.log("show");
+            populateReplies();
         }
     }
 
-    return (
-        <div className="commentCard" >
-            <img
-                src={profileP}
-                width="30"
-                height="30"
-                alt="Sample profile">
-            </img>
-            <div className="commentContent">
-                <div className="commentWriter">
-                    {childName}
-                    <div className="commentDate">
-                        Commented {pastTime} ago
-                    </div>
-                    {childName === currUser.USER_USERNAME ? (
-                        <div className="commentSetting">
-                            <i
-                                className="fa-solid fa-ellipsis fa-2xl"
-                                id="postSet"
-                                onClick={openCommentSetting}
+    var cancelReply = () => {
+        var replyWriteID = document.getElementById(commentId + "ta");
+        replyWriteID.value = "";
+    };
 
-                            ></i>
-                            <div id="mDropdown" className="postSetting_content">
-                                <div onClick={deleteTargetComment}>Delete</div>
-                                <div onClick={editTargetComment}>Edit</div>
+    var uploadReply = () => {
+        var replyWriteID = document.getElementById(commentId + "ta");
+        console.log(replyWriteID.value);
+        if (replyWriteID.value === "") {
+            alert("Please type what you want to share");
+        }
+        else {
+            console.log("hello");
+            axios
+                .post(`${BackendConn}comment/addComment`, {
+                    POST_ID: postId._id,
+                    OWNER_ID: currUser._id,
+                    CONTENT: replyWriteID.value,
+                    PARENT_ID: commentId,
+                })
+                .then((response) => {
+                    if (response.status == 200) {
+                        //clear and hide
+                        cancelReply();
+                        populateReplies();
+                        replyWriteID.value = "";
+                        //bring and repopulate posts in timeline
+                    } else {
+                        alert("Something Went Wrong...");
+                    }
+                });
+        }
+    };
+
+    return (
+        <div>
+            {parentId === null ? (
+                <div>
+                    <div className="commentCard" >
+                        <img
+                            src={profileP}
+                            width="30"
+                            height="30"
+                            alt="Sample profile">
+                        </img>
+                        <div className="commentContent">
+                            <div className="commentWriter">
+                                {childName}
+                                <div className="commentDate">
+                                    Commented {pastTime} ago
+                                </div>
+                                {childName === currUser.USER_USERNAME ? (
+                                    <div className="commentSetting">
+                                        <i
+                                            className="fa-solid fa-ellipsis fa-2xl"
+                                            id="postSet"
+                                            onClick={openCommentSetting}
+
+                                        ></i>
+                                        <div id="mDropdown" className="postSetting_content">
+                                            <div onClick={deleteTargetComment}>Delete</div>
+                                            <div onClick={editTargetComment}>Edit</div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div></div>
+                                )}
+                            </div>
+                            <div className="commentContentText">
+                                {commentText}
+                            </div>
+                            <div className="commentFooter">
+                                <div className="likeCommentSec" ref={colorLike}
+                                >
+                                    <i
+                                        className="fa-regular fa-thumbs-up fa-xl"
+                                        id="likeComment"
+                                        onClick={likeCommentFunc}
+                                    ></i>
+                                    <div className="likeCountComment" id="likeNum" ref={refLikeCount}>
+                                        {likeCount}
+                                    </div>
+                                </div>
+                                <div className="commentReplySec" onClick={activateReply}>
+                                    <i className="fa-regular fa-comment-dots fa-2xl"
+                                        id="commentReply"
+                                    ></i>
+                                </div>
+                            </div>
+                            <div id={commentId} className="writeReply">
+                                <hr class="solid" />
+                                <div>
+                                    {isLoading ? (
+                                        <div>Loading</div>
+                                    ) : (
+                                        replyData.map((singleReply, index) => (
+                                            <ReplyCard
+                                                commentId={singleReply._id}
+                                                postId={singleReply.POST_ID}
+                                                childName={singleReply.OWNER_ID.USER_USERNAME}
+                                                parentId={singleReply.PARENT_ID}
+                                                postTime={singleReply.updatedAt}
+                                                commentText={singleReply.CONTENT}
+                                            />
+                                        ))
+                                    )}
+                                </div>
+                                <hr class="solid" />
+                                <div className="writeTitleC">Write a reply!</div>
+                                <div className="writeCardC">
+                                    <form className="commentForm">
+                                        <textarea
+                                            className="replyWrite"
+                                            id={commentId + "ta"}
+                                            placeholder="Write a reply here!"
+                                        ></textarea>
+                                    </form>
+                                    <div className="writeFooterC">
+                                        <button className="btnUploadC" onClick={uploadReply}>
+                                            Upload
+                                        </button>
+                                        <button className="btnCancelC" onClick={cancelReply}>
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    ) : (
-                        <div></div>
-                    )}
-                </div>
-                <div className="commentContentText">
-                    {commentText}
-                </div>
-                <div className="commentFooter">
-                    <div className="likeCommentSec" ref={colorLike}
-                    >
-                        <i
-                            className="fa-regular fa-thumbs-up fa-xl"
-                            id="likeComment"
-                            onClick={likeCommentFunc}
-                        ></i>
-                        <div className="likeCountComment" id="likeNum" ref={refLikeCount}>
-                            {likeCount}
-                        </div>
-                    </div>
-                    <div className="commentReplySec" onClick={activateReply}>
-                        <i className="fa-regular fa-comment-dots fa-2xl"
-                            id="commentReply"
-                        ></i>
                     </div>
                 </div>
-                <div id={commentId} className="writeReply">
-                    <hr class="solid" />
-                    <div>
-                        {isLoading ? (
-                            <div>Loading</div>
-                        ) : (
-                            replyData.map((singleReply, index) => (
-                                <ReplyCard
-                                />
-                            ))
-                        )}
-                    </div>
-                </div>
-            </div>
+            ) : (
+                <div></div>
+            )}
         </div>
     );
 };

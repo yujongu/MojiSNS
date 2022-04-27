@@ -58,3 +58,24 @@
     display: none;
     margin: 4%;
   }
+
+  .writeTitleC{
+      font-size: larger;
+      font-weight: bolder;
+      margin-bottom: 1%;
+  }
+
+  .writeCardC {
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    margin-bottom: 10%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .replyWrite {
+    position: relative;
+    background-color: transparent;
+    width: 95%;
+  }

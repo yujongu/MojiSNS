@@ -194,7 +194,6 @@ const PostDetail = (props) => {
             alert("Please type what you want to share");
         }
         else {
-            console.log("hello");
             axios
                 .post(`${BackendConn}comment/addComment`, {
                     POST_ID: postId,
@@ -305,7 +304,7 @@ const PostDetail = (props) => {
                             {isLoading ? (
                                 <div>Loading</div>
                             ) : (
-                                commentData.map((singleComment, index) => (
+                                commentData.map((singleComment, index) => (  
                                     <CommentCard
                                         commentId={singleComment._id}
                                         postId={singleComment.POST_ID}
