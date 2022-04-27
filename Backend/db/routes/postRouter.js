@@ -19,7 +19,6 @@ router.get("/getPosts", async (req, res) => {
 // add post
 router.post("/addPost", async (req, res) => {
   try {
-    console.log(req.body)
     const post = new Post({
       USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
       IS_ANONYMOUS: req.body.IS_ANONYMOUS,
@@ -72,9 +71,7 @@ router.delete("/deletePost/:id", (req, res) => {
 //update post
 router.patch("/updatePost/:id", (req, res) => {
   const id = req.params.id;
-  console.log(req.body.BODY)
-  //  console.log ("HI")
-  Post.findOneAndUpdate({ _id: id }, { BODY: req.body.BODY })
+  Post.findOneAndUpdate({ _id: id }, { BODY: `${req.body.BODY}\n-edited-` })
     .then((result) => {
       console.log("post updated");
       res.send(result);

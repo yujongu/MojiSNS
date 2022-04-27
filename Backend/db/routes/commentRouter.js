@@ -61,24 +61,6 @@ router.delete("/deleteComment/:id", async (req, res) => {
 });
 
 
-router.patch("/updateComment/:id", async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const comment = await Comment.findById(id);
-    if (req.body.CONTENT) {
-      comment.CONTENT = req.body.CONTENT;
-    }
-
-    await comment.save();
-    console.log(comment);
-
-  } catch (error) {
-    console.log(error);
-  }
-
-});
-
 router.delete("/deleteUser/:id", async (req, res) => { //delete all user comments 
   try {
     await Comment.updateMany(
@@ -175,7 +157,7 @@ router.get("/getReplies/:comment_id", async (req, res) => { //post id
 router.patch("/updateComment/:comment_id", (req, res) => {
   const id = req.params.comment_id;
 
-  Post.findOneAndUpdate({ _id: id }, { CONTENT: req.body.BODY })
+  Post.findOneAndUpdate({ _id: id }, { CONTENT: `${req.body.BODY}\n-Edited-` })
     .then((result) => {
       console.log("comment updated");
       res.send(result);
