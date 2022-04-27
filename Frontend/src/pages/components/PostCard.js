@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
 import datePretty from "../../helperFunctions/datePretty";
@@ -21,38 +21,69 @@ function PostCard({
   var pastTime = datePretty(postTime);
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   const postLink = `/postDetail/${postId}`;
+  const [isLoading, setLoading] = useState(true);
+
+  const colorLike = useRef();
+  const refLikeCount = useRef();
+
+  var divElement = null;
+  var divLikeCount = null;
+
+
+  useEffect(() => {
+    
+    axios.post(`${BackendConn}post/isLiked/${postId}/${currUser._id}`).then(response => {
+      setLoading(false);
+      divElement = colorLike.current;
+      divLikeCount = refLikeCount.current;
+      if (response.data === "Yes") {
+        console.log("change color");
+        divElement.style.color = "#E26714";
+        divLikeCount = likeCount;
+      }
+      else {
+        divElement.style.color = "#000000";
+        divLikeCount = likeCount;
+      }
+    });
+  }, []);
+
+
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+
+
 
   var likePostFunc = (e) => {
-    if (e.target.style.color === "rgb(0, 0, 0)") {
-      e.target.style.color = "#E26714";
-      e.target.nextSibling.style.color = "#E26714";
-      e.target.nextSibling.textContent =
-      parseInt(e.target.nextSibling.textContent) + 1;
-      axios.post(`${BackendConn}post/likePost/${postId}/${currUser._id}`).then((res) =>{
+    divElement = colorLike.current;
+    divLikeCount = refLikeCount.current;
+    if (divElement.style.color === "rgb(0, 0, 0)") {
+      divElement.style.color = "#E26714";
+      divLikeCount.textContent = parseInt(divLikeCount.textContent) + 1;
+      axios.post(`${BackendConn}post/likePost/${postId}/${currUser._id}`).then((res) => {
         console.log(res)
-        if(res.status === 200)
-        {
+        if (res.status === 200) {
           console.log("success liked");
         }
-        else{
+        else {
           alert("Liked failed");
         }
       })
     } else {
-      e.target.style.color = "#000000";
-      e.target.nextSibling.style.color = "#000000";
-      e.target.nextSibling.textContent =
-        parseInt(e.target.nextSibling.textContent) - 1;
-        axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser._id}`).then((res) =>{
-          console.log(res)
-          if(res.status === 200)
-          {
-            console.log("success unliked");
-          }
-          else{
-            alert("Liked failed");
-          }
-        })
+      divElement.style.color = "#000000";
+      divLikeCount.textContent = parseInt(divLikeCount.textContent) - 1;
+      axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser._id}`).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          console.log("success unliked");
+        }
+        else {
+          alert("Liked failed");
+        }
+      })
     }
   };
 
@@ -81,18 +112,8 @@ function PostCard({
     console.log(`edit post clicked, ${e.target}`);
   };
 
-  React.useEffect(() => {
-    document.querySelectorAll("#like").forEach((item, index) => {
-      //check if I liked the post
-      if (false) {
-        console.log(item.style.color);
-        console.log(index);
-        item.style.color = "#E26714";
-      } else {
-        item.style.color = "#000000";
-      }
-    });
-  }, []);
+
+
 
   return (
     <div className="postingCard">
@@ -158,13 +179,13 @@ function PostCard({
           </div>
         </div>
         <div className="iconSection">
-          <div className="likeSection">
+          <div className="likeSection" ref={colorLike}>
             <i
               className="fa-regular fa-thumbs-up fa-2xl"
               id="like"
               onClick={likePostFunc}
             ></i>
-            <div className="likeCount" id="likeNum">
+            <div className="likeCount" id="likeNum" ref={refLikeCount}>
               {likeCount}
             </div>
           </div>

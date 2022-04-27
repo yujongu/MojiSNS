@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CommentCard.css";
 import { useNavigate } from "react-router-dom";
 import datePretty from "../../helperFunctions/datePretty";
@@ -21,15 +21,35 @@ function CommentCard({
     const [isLoading, setLoading] = useState(true);
     const [replyData, setReplyData] = useState([]);
 
+    const colorLike = useRef();
+    const refLikeCount = useRef();
+
     let navigate = useNavigate();
 
     var pastTime = datePretty(postTime);
     var showReply = document.getElementById(commentId);
 
+    var divElement = null;
+    var divLikeCount = null;
+
 
     React.useEffect(() => {
         // Update the document title using the browser API
         showReply = document.getElementById(commentId);
+        axios.post(`${BackendConn}comment/isLiked/${commentId}/${currUser._id}`).then(response => {
+            setLoading(false);
+            divElement = colorLike.current;
+            divLikeCount = refLikeCount.current;
+            if (response.data === "Yes") {
+                console.log("change color");
+                divElement.style.color = "#E26714";
+                divLikeCount = likeCount;
+            }
+            else {
+                divElement.style.color = "#000000";
+                divLikeCount = likeCount;
+            }
+        });
     });
 
     React.useEffect(() => { }, [replyData]);
@@ -62,35 +82,30 @@ function CommentCard({
     };
 
     var likeCommentFunc = (e) => {
-        console.log(e.target.style.color);
-        if (e.target.style.color === "rgb(0, 0, 0)") {
-            console.log("add like");
-            e.target.style.color = "#E26714";
-            e.target.nextSibling.style.color = "#E26714";
-            e.target.nextSibling.textContent = parseInt(e.target.nextSibling.textContent) + 1;
-              axios.post(`${BackendConn}post/likeComment/${commentId}/${currUser._id}`).then((res) =>{
+        divElement = colorLike.current;
+        divLikeCount = refLikeCount.current;
+        if (divElement.style.color === "rgb(0, 0, 0)") {
+            divElement.style.color = "#E26714";
+            divLikeCount.textContent = parseInt(divLikeCount.textContent) + 1;
+            axios.post(`${BackendConn}comment/likeComment/${commentId}/${currUser._id}`).then((res) => {
                 console.log(res)
-                if(res.status === 200)
-                {
-                  console.log("success liked");
+                if (res.status === 200) {
+                    console.log("success liked");
                 }
-                else{
-                  alert("Liked failed");
+                else {
+                    alert("Liked failed");
                 }
-              })
+            })
         } else {
-            console.log("delete like");
-            e.target.style.color = "#000000";
-            e.target.nextSibling.style.color = "#000000";
-            e.target.nextSibling.textContent = parseInt(e.target.nextSibling.textContent) - 1;
-            axios.post(`${BackendConn}post/unlikeComment/${commentId}/${currUser._id}`).then((res) =>{
-              console.log(res)
-              if(res.status === 200)
-              {
-              }
-              else{
-                alert("Liked failed");
-              }
+            divElement.style.color = "#000000";
+            divLikeCount.textContent = parseInt(divLikeCount.textContent) - 1;
+            axios.post(`${BackendConn}comment/unlikeComment/${commentId}/${currUser._id}`).then((res) => {
+                console.log(res)
+                if (res.status === 200) {
+                }
+                else {
+                    alert("Liked failed");
+                }
             })
         }
     }
@@ -140,13 +155,14 @@ function CommentCard({
                     {commentText}
                 </div>
                 <div className="commentFooter">
-                    <div className="likeCommentSec">
+                    <div className="likeCommentSec" ref={colorLike}
+                    >
                         <i
                             className="fa-regular fa-thumbs-up fa-xl"
                             id="likeComment"
                             onClick={likeCommentFunc}
                         ></i>
-                        <div className="likeCountComment" id="likeNum">
+                        <div className="likeCountComment" id="likeNum" ref={refLikeCount}>
                             {likeCount}
                         </div>
                     </div>

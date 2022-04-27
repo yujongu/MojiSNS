@@ -105,7 +105,7 @@ router.post("/likeComment/:comment_id/:user_id", async (req, res) => {
         return;
       }
       await Comment.findOneAndUpdate(
-        { _id: mongoose.Types.ObjectId(req.params.post_id)},
+        { _id: mongoose.Types.ObjectId(req.params.comment_id)},
         { $inc: {"LIKES_COUNT" : 1}, $push: {LIKED_USERS: req.params.user_id}}
       )
     
@@ -117,7 +117,7 @@ router.post("/likeComment/:comment_id/:user_id", async (req, res) => {
 });
 
 
-router.post("/unlikePost/:comment_id/:user_id", async (req, res) => {
+router.post("/unlikeComment/:comment_id/:user_id", async (req, res) => {
   try {
     const temp = await Comment.findOne({ _id: req.params.comment_id })
       .populate("LIKED_USERS");
@@ -130,7 +130,7 @@ router.post("/unlikePost/:comment_id/:user_id", async (req, res) => {
         return;
       }
       await Comment.findOneAndUpdate(
-        { _id: mongoose.Types.ObjectId(req.params.post_id)},
+        { _id: mongoose.Types.ObjectId(req.params.comment_id)},
         { $inc: {"LIKES_COUNT" : -1}, $pull: {LIKED_USERS: req.params.user_id}}
       )
     

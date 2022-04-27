@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useRef, useState } from "react";
 import "./PostDetail.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -19,6 +19,15 @@ const PostDetail = (props) => {
     var showComment = document.getElementById("writeComment")
 
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    const colorLike = useRef();
+    const colorLike1 = useRef();
+    const refLikeCount = useRef();
+
+    var divElement = null;
+    var divElement1 = null;
+    var divLikeCount = null;
+
 
 
     let post_user;
@@ -43,6 +52,23 @@ const PostDetail = (props) => {
 
 
     useEffect(() => {
+        axios.post(`${BackendConn}post/isLiked/${postId}/${currUser._id}`).then(response => {
+            setLoading(false);
+            divElement = colorLike.current;
+            divElement1 = colorLike1.current;
+            divLikeCount = refLikeCount.current;
+            if (response.data === "Yes") {
+                console.log("change color");
+                divElement.style.color = "#E26714";
+                divElement1.style.color = "#E26714";
+                divLikeCount = likeCount;
+            }
+            else {
+                divElement.style.color = "#000000";
+                divElement1.style.color = "#000000";
+                divLikeCount = likeCount;
+            }
+        });
         let ignore = false;
         if (!ignore) initPost();
         return () => { ignore = true; }
@@ -85,11 +111,13 @@ const PostDetail = (props) => {
         };
 
         var likePostFunc = (e) => {
-            if (e.target.style.color === "rgb(0, 0, 0)") {
-                e.target.style.color = "#E26714";
-                e.target.nextSibling.style.color = "#E26714";
-                e.target.nextSibling.textContent =
-                    parseInt(e.target.nextSibling.textContent) + 1;
+            divElement = colorLike.current;
+            divElement1 = colorLike1.current;
+            divLikeCount = refLikeCount.current;
+            if (divElement.style.color === "rgb(0, 0, 0)") {
+                divElement.style.color = "#E26714";
+                divElement1.style.color = "#E26714";
+                divLikeCount.textContent = parseInt(divLikeCount.textContent) + 1;
                 axios.post(`${BackendConn}post/likePost/${postId}/${currUser._id}`).then((res) => {
                     console.log(res)
                     if (res.status === 200) {
@@ -100,10 +128,9 @@ const PostDetail = (props) => {
                     }
                 })
             } else {
-                e.target.style.color = "#000000";
-                e.target.nextSibling.style.color = "#000000";
-                e.target.nextSibling.textContent =
-                    parseInt(e.target.nextSibling.textContent) - 1;
+                divElement.style.color = "#000000";
+                divElement1.style.color = "#000000";
+                divLikeCount.textContent = parseInt(divLikeCount.textContent) - 1;
                 axios.post(`${BackendConn}post/unlikePost/${postId}/${currUser._id}`).then((res) => {
                     console.log(res)
                     if (res.status === 200) {
@@ -254,13 +281,14 @@ const PostDetail = (props) => {
                             </div>
                         </div>
                         <div className="iconSection">
-                            <div className="likeSection">
+                            <div className="likeSection"ref={colorLike}>
                                 <i
                                     className="fa-regular fa-thumbs-up fa-2xl"
                                     id="like"
                                     onClick={likePostFunc}
+                                    ref={colorLike1}
                                 ></i>
-                                <div className="likeCount" id="likeNum">
+                                <div className="likeCount" id="likeNum" ref={refLikeCount}>
                                     {likeCount}
                                 </div>
                             </div>
