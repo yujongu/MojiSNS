@@ -146,7 +146,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     await Post.deleteMany({USER_ID: req.params.id})
     
-    axios.delete(`http://localhost:5000/api/comment/deleteUser/${req.params.id}`)
+    axios.delete(`http://localhost:3010/api/comment/deleteUser/${req.params.id}`)
     .then(response => {
       console.log(response.data.url);
       //console.log(response.data.explanation);
@@ -197,8 +197,8 @@ router.patch("/updateUser/:id", async (req, res) => {
     if (req.body.USER_SEX) {
       user.USER_SEX = req.body.USER_SEX;
     }
-    if (req.body.FOLLOWING_TOPICS) {
-      user.FOLLOWING_TOPICS = req.body.FOLLOWING_TOPICS;
+    if (req.body.FOLLOWING_TOPICS_Obj) {
+      user.FOLLOWING_TOPICS_Obj = req.body.FOLLOWING_TOPICS_Obj;
     }
 
     await user.save();

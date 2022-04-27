@@ -109,6 +109,7 @@
 .postWords {
   position: relative;
   white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .postWords a {

@@ -76,7 +76,9 @@ function NewInterest() {
     var myId = me._id;
     console.log(fetchedTopics)
 
+
     var topicsId = [];
+
     if (moreInterest!='') {
       const response1 = await axios.post(
         `${BackendConn}topic/addTopic/`,
@@ -88,11 +90,12 @@ function NewInterest() {
     }
 
     fetchedTopics.forEach((element) => {
+      console.log(element.TOPIC_NAME)
       if (topics.indexOf(element.TOPIC_NAME) != -1) {
         topicsId.push(element._id);    
       }
     });
-    
+
    
     const response = await axios.patch(
       `${BackendConn}user/updateUser/${myId}`,
@@ -100,6 +103,8 @@ function NewInterest() {
         FOLLOWING_TOPICS_Obj: topicsId,
       }
     );
+
+    // console.log(response)
 
 
     if (response.status === 200 && response.data._id === myId) {

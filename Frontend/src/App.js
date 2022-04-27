@@ -20,8 +20,8 @@ import UserProfile from "./pages/UserProfile";
 import Follower from "./pages/Follower";
 import Following from "./pages/Following";
 import Notification from "./pages/Notification";
-import PostDetail from "./pages/PostDetail";
 import DirectMessage from "./pages/DirectMessage";
+import PostDetail from "./pages/PostDetail";
 
 function App() {
   return (
