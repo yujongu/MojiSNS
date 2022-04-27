@@ -187,7 +187,20 @@ function CommentCard({
 
     var updateComment = () => {
         divUpdateTextC = updateTextC.current;
-    
+        axios.patch(`${BackendConn}comment/updateComment/${commentId}`, {
+            BODY: divUpdateTextC.value,
+          })
+          .then((res) => {
+            console.log(res)
+            if (res.status === 200) {
+              console.log("success update");
+              cancelComment();
+              window.location.reload();
+            }
+            else {
+              alert("update failed");
+            }
+          })
       }
     
       var cancelComment = () => {
