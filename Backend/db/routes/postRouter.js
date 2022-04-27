@@ -48,7 +48,11 @@ router.get("/getPost/:id", async (req, res) => {
     );
 
     console.log(post);
-    res.send(post);
+    if(post == null) {
+      res.send("Not Found")
+    } else {
+      res.send(post);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -60,8 +64,14 @@ router.delete("/deletePost/:id", (req, res) => {
 
   Post.findByIdAndDelete(id)
     .then((result) => {
-      console.log("post deleted");
-      res.send("post deleted");
+      console.log(result)
+      if(result === null) {
+        console.log("post could not be found!")
+        res.send("Error")
+      } else {
+        console.log("post deleted");
+        res.send("post deleted");
+      }
     })
     .catch((err) => {
       console.log(err);

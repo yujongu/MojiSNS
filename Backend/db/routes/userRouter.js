@@ -81,14 +81,20 @@ router.get("/getUserByUsername/:username", async (req, res) => {
 
 router.get("/findUserByUsername/:username", async (req, res) => {
   try {
-    const user = await User.find({
+    const user = await User.findOne({
       USER_USERNAME: { $regex: `${req.params.username}`, $options: "i" },
     }).populate(
       "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj"
     );
-    res.send(user);
-    console.log(user);
-    console.log("got user");
+    if(user.length != 0) {
+      res.send(user);
+      console.log(user);
+      console.log("got user");
+    } else {
+      res.status(404)
+      res.send("ERROR: No User Found.")
+    }
+    
   } catch (error) {
     console.log(error);
   }
@@ -154,9 +160,6 @@ router.delete("/deleteUser/:id", async (req, res) => {
     .catch(error => {
       console.log(error);
     });
-
-
-    
 
     console.log("delete user");
     res.send("delete user");
