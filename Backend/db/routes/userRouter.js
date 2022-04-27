@@ -197,8 +197,8 @@ router.patch("/updateUser/:id", async (req, res) => {
     if (req.body.USER_SEX) {
       user.USER_SEX = req.body.USER_SEX;
     }
-    if (req.body.FOLLOWING_TOPICS) {
-      user.FOLLOWING_TOPICS = req.body.FOLLOWING_TOPICS;
+    if (req.body.FOLLOWING_TOPICS_Obj) {
+      user.FOLLOWING_TOPICS_Obj = req.body.FOLLOWING_TOPICS_Obj;
     }
 
     await user.save();
