@@ -74,7 +74,7 @@ router.patch("/updatePost/:id", (req, res) => {
   const id = req.params.id;
   console.log(req.body.BODY)
   //  console.log ("HI")
-  Post.findOneAndUpdate({ _id: id }, { BODY: req.body.BODY })
+  Post.findOneAndUpdate({ _id: id }, { BODY: `${req.body.BODY}\n-Edited-` })
     .then((result) => {
       console.log("post updated");
       res.send(result);
