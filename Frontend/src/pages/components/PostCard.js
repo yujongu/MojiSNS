@@ -5,6 +5,7 @@ import datePretty from "../../helperFunctions/datePretty";
 import Linkify from "react-linkify";
 import axios from "axios";
 import { BackendConn } from "../../constants/backendConn";
+import Homeweb from "../Homeweb";
 
 function PostCard({
   topic,
@@ -133,9 +134,22 @@ function PostCard({
     }
   }
 
-  var updatePost = () => {
+  var updatePost = (e) => {
     divUpdateText = updateText.current;
-
+    axios.patch(`${BackendConn}post/updatePost/${postId}`, {
+      BODY: divUpdateText.value,
+    })
+    .then((res) => {
+      console.log(res)
+      if (res.status === 200) {
+        console.log("success update");
+        cancelPost();
+        window.location.reload();
+      }
+      else {
+        alert("update failed");
+      }
+    })
   }
 
   var cancelPost = () => {
@@ -175,7 +189,7 @@ function PostCard({
             )}
           </div>
           <div className="dateWritten">
-            <h4>Posted {pastTime} ago</h4>
+            <h4>Updated {pastTime} ago</h4>
           </div>
           {userName === currUser.USER_USERNAME ? (
             <div className="postSetting">
