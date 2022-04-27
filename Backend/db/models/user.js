@@ -84,9 +84,55 @@ const userSchema = new Schema({
     default: 0,
   },
 
-  PROFILE_PICTURE: {
-    type: Buffer, // casted to MongoDB's BSON type: binData
-  },
+    USER_DESCRIPTION: {
+        type: String,
+        default: "",
+    },
+
+    USER_SEX: {
+        type: String,
+        enum: ['Male', 'Female', 'Not Sure'],
+        default: 'Not Sure'
+    },
+
+    FOLLOWING_USERS: {
+        type: [{
+          USER_ID: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "User"
+          },
+          FOLLOW_DATE: Date
+        }]
+    },
+
+    FOLLOWER_USERS: {
+        type: [{
+          USER_ID: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "User"
+          },
+          FOLLOW_DATE: Date
+        }]
+    },
+
+    FOLLOWING_TOPICS: {
+        type: [{
+          type: String,
+        }]
+    },
+
+    PROFILE_PICTURE: {
+      type: Buffer // casted to MongoDB's BSON type: binData
+    },
+
+    USER_BLOCKLIST: {
+      type: [{
+        USER_ID: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+      }]
+    }
 });
 
 module.exports = mongoose.model("User", userSchema);
