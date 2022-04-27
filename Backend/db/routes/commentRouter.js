@@ -172,4 +172,17 @@ router.get("/getReplies/:comment_id", async (req, res) => { //post id
   res.send(comments);
 });
 
+router.patch("/updateComment/:comment_id", (req, res) => {
+  const id = req.params.comment_id;
+
+  Post.findOneAndUpdate({ _id: id }, { CONTENT: req.body.BODY })
+    .then((result) => {
+      console.log("comment updated");
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;
