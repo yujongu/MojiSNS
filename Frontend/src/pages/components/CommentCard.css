@@ -30,9 +30,11 @@
 .commentDate {
     margin-left: auto;
 }
-.commentSetting{
+
+.commentSetting {
     margin-left: 6%;
 }
+
 .commentFooter {
     display: flex;
     margin-top: 0.4%;
@@ -44,12 +46,12 @@
     margin-left: 89%;
 }
 
-.likeCountComment{
+.likeCountComment {
     font-weight: bold;
     margin-left: 30%;
 }
 
-#commentReply{
+#commentReply {
     margin-top: 76%;
     margin-left: 60%;
 }
@@ -57,25 +59,30 @@
 .writeReply {
     display: none;
     margin: 4%;
-  }
+}
 
-  .writeTitleC{
-      font-size: larger;
-      font-weight: bolder;
-      margin-bottom: 1%;
-  }
+.writeTitleC {
+    font-size: larger;
+    font-weight: bolder;
+    margin-bottom: 1%;
+}
 
-  .writeCardC {
+.writeCardC {
     position: relative;
     background-color: white;
     border-radius: 15px;
     margin-bottom: 10%;
     box-sizing: border-box;
     overflow: hidden;
-  }
+}
 
-  .replyWrite {
+.replyWrite {
     position: relative;
     background-color: transparent;
     width: 95%;
-  }
+}
+
+.updateComment {
+    display: none;
+    margin: 4%;
+}

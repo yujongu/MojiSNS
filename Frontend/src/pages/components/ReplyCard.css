@@ -11,3 +11,8 @@
 .replyDate {
     margin-left: auto;
 }
+
+.updatePost {
+    display: none;
+    margin: 4%;
+  }
