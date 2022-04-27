@@ -21,6 +21,7 @@ import Follower from "./pages/Follower";
 import Following from "./pages/Following";
 import Notification from "./pages/Notification";
 import DirectMessage from "./pages/DirectMessage";
+import PostDetail from "./pages/PostDetail";
 
 function App() {
   return (
@@ -43,10 +44,7 @@ function App() {
         <Route path={PageLinks.FOLLOWER} element={<Follower />} />
         <Route path={PageLinks.FOLLOWING} element={<Following />} />
         <Route path={PageLinks.NOTIFICATION} element={<Notification />} />
-<<<<<<< HEAD
         <Route path={PageLinks.POSTDETAIL} element={<PostDetail />} />
-=======
->>>>>>> juha
         <Route path={PageLinks.DIRECTMESSAGE} element={<DirectMessage />} />
       </Routes>
     </Router>
