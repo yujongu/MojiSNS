@@ -2,6 +2,7 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const Comment = require("../models/comment");
 const router = express.Router();
+const Post = require("../models/post");
 
 router.get("/getComments/:id", async (req, res) => { //post id
     const comments = await Comment.find({
@@ -32,6 +33,10 @@ router.post("/addComment", async (req, res) => {
       CONTENT: req.body.CONTENT,
       PARENT_ID: mongoose.Types.ObjectId(req.body.PARENT_ID)
     });
+    await Post.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.body.POST_ID)},
+      { $inc: {"COMMENTS_COUNT" : 1} }
+    )    
     await comment.save();
     res.send(comment);
     console.log(comment);
@@ -56,24 +61,6 @@ router.delete("/deleteComment/:id", async (req, res) => {
 });
 
 
-router.patch("/updateComment/:id", async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const comment = await Comment.findById(id);
-    if (req.body.CONTENT) {
-      comment.CONTENT = req.body.CONTENT;
-    }
-
-    await comment.save();
-    console.log(comment);
-
-  } catch (error) {
-    console.log(error);
-  }
-
-});
-
 router.delete("/deleteUser/:id", async (req, res) => { //delete all user comments 
   try {
     await Comment.updateMany(
@@ -93,14 +80,14 @@ router.post("/likeComment/:comment_id/:user_id", async (req, res) => {
       .populate("LIKED_USERS");
 
       if (
-        temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        temp.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
       ) {
         res.send("already liked");
         console.log("already liked");
         return;
       }
       await Comment.findOneAndUpdate(
-        { _id: mongoose.Types.ObjectId(req.params.post_id)},
+        { _id: mongoose.Types.ObjectId(req.params.comment_id)},
         { $inc: {"LIKES_COUNT" : 1}, $push: {LIKED_USERS: req.params.user_id}}
       )
     
@@ -112,20 +99,20 @@ router.post("/likeComment/:comment_id/:user_id", async (req, res) => {
 });
 
 
-router.post("/unlikePost/:comment_id/:user_id", async (req, res) => {
+router.post("/unlikeComment/:comment_id/:user_id", async (req, res) => {
   try {
     const temp = await Comment.findOne({ _id: req.params.comment_id })
       .populate("LIKED_USERS");
 
       if (
-        !temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        !temp.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
       ) {
         res.send("comment not liked");
         console.log("comment not liked");
         return;
       }
       await Comment.findOneAndUpdate(
-        { _id: mongoose.Types.ObjectId(req.params.post_id)},
+        { _id: mongoose.Types.ObjectId(req.params.comment_id)},
         { $inc: {"LIKES_COUNT" : -1}, $pull: {LIKED_USERS: req.params.user_id}}
       )
     
@@ -135,30 +122,49 @@ router.post("/unlikePost/:comment_id/:user_id", async (req, res) => {
     console.log(error);
   }
 });
-/*
-router.post("/unlikePost/:post_id/:user_id", async (req, res) => {
+
+router.post("/isLiked/:comment_id/:user_id", async (req, res) => {
   try {
-    const temp = await Post.findOne({ _id: req.params.comment_id })
+    const temp = await Comment.findOne({ _id: req.params.comment_id })
       .populate("LIKED_USERS");
 
       if (
-        !temp.LIKED_USERS.some((e) => e.toString() == req.params.user_id)
+        temp.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
       ) {
-        res.send("comment not liked");
-        console.log("comment not liked");
+        res.send("Yes");
+        console.log("Yes");
         return;
       }
-    Post.updateOne(
-      { _id: req.params.comment_id},
-      { $inc: {LIKES_COUNT : -1}, $pull: {LIKED_USERS: req.params.user_id}}
-    )
     
-    res.send("like removed");
-    console.log("like removed");
+    res.send("No");
+    console.log("No");
   } catch (error) {
     console.log(error);
   }
 });
-*/
+
+router.get("/getReplies/:comment_id", async (req, res) => { //post id
+  const comments = await Comment.find({
+    PARENT_ID: req.params.comment_id})//,
+    //OWNER_ID:{$nin: req.body.USER.USER_BLOCKLIST})
+  .populate("POST_ID OWNER_ID PARENT_ID LIKED_USERS")
+  .sort({createdAt: 1, PARENT_ID: 1});
+  //console.log("Requesting comments list");
+  console.log(comments);
+  res.send(comments);
+});
+
+router.patch("/updateComment/:comment_id", (req, res) => {
+  const id = req.params.comment_id;
+
+  Post.findOneAndUpdate({ _id: id }, { CONTENT: `${req.body.BODY}\n-Edited-` })
+    .then((result) => {
+      console.log("comment updated");
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 module.exports = router;

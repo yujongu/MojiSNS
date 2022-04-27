@@ -84,9 +84,19 @@ const userSchema = new Schema({
     default: 0,
   },
 
+
   PROFILE_PICTURE: {
-    type: Buffer, // casted to MongoDB's BSON type: binData
+    type: Buffer // casted to MongoDB's BSON type: binData
   },
+
+  USER_BLOCKLIST: {
+    type: [{
+      USER_ID: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User"
+      }
+    }]
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);

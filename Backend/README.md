@@ -37,11 +37,6 @@ API
   http://localhost:5000/api/user/login/:username/:pw                 -> check if user with id/password exist in db
 
   TODO:
-<<<<<<< HEAD
-  likePost
-
-=======
->>>>>>> 63d3885f2dcc57e628087e4e4a0c6e1b0315893c
     check validity of follow/unfollow
     separate messages for login
     signup check unique email, unique username
