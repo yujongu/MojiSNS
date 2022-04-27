@@ -19,7 +19,6 @@ router.get("/getPosts", async (req, res) => {
 // add post
 router.post("/addPost", async (req, res) => {
   try {
-    console.log(req.body)
     const post = new Post({
       USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
       IS_ANONYMOUS: req.body.IS_ANONYMOUS,
