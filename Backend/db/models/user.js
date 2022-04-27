@@ -96,6 +96,15 @@ const userSchema = new Schema({
           ref: "User"
       }
     }]
+  },
+
+  SAVED_POSTS: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
   }
 });
 
