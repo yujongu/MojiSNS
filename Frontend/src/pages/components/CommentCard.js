@@ -23,6 +23,8 @@ function CommentCard({
 
     const colorLike = useRef();
     const refLikeCount = useRef();
+    const updateCommenting = useRef();
+    const updateTextC = useRef();
 
     let navigate = useNavigate();
 
@@ -31,6 +33,8 @@ function CommentCard({
 
     var divElement = null;
     var divLikeCount = null;
+    var divUpdateComment = null;
+    var divUpdateTextC = null;
 
 
     React.useEffect(() => {
@@ -93,6 +97,7 @@ function CommentCard({
 
     var editTargetComment = (el) => {
         console.log(`edit post clicked, ${el.target}`);
+        activateUpdateC();
     };
 
     var likeCommentFunc = (e) => {
@@ -168,6 +173,28 @@ function CommentCard({
                 });
         }
     };
+
+    var activateUpdateC = (el) => {
+        divUpdateComment = updateCommenting.current;
+        if (divUpdateComment.style.display === "block") {
+            divUpdateComment.style.display = "none";
+            console.log("hide");
+        } else {
+            divUpdateComment.style.display = "block";
+            console.log("show");
+        }
+    }
+
+    var updateComment = () => {
+        divUpdateTextC = updateTextC.current;
+    
+      }
+    
+      var cancelComment = () => {
+        divUpdateTextC = updateTextC.current;
+        divUpdateTextC.value = "";
+        activateUpdateC();
+      }
 
     return (
         <div>
@@ -261,6 +288,26 @@ function CommentCard({
                                         </button>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref={updateCommenting} className="updateComment">
+                        <div className="writeTitleC">Update the post!</div>
+                        <div className="writeCardC">
+                            <form className="commentForm">
+                                <textarea
+                                    className="replyWrite"
+                                    ref={updateTextC}
+                                    placeholder="Update the post here!"
+                                ></textarea>
+                            </form>
+                            <div className="writeFooterC">
+                                <button className="btnUploadC" onClick={updateComment}>
+                                    Update
+                                </button>
+                                <button className="btnCancelC" onClick={cancelComment}>
+                                    Cancel
+                                </button>
                             </div>
                         </div>
                     </div>

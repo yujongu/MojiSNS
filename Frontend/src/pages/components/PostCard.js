@@ -25,27 +25,36 @@ function PostCard({
 
   const colorLike = useRef();
   const refLikeCount = useRef();
+  const updatePosting = useRef();
+  const updateText = useRef();
+
 
   var divElement = null;
   var divLikeCount = null;
+  var divUpdatePost = null;
+  var divUpdateText = null;
+
 
 
   useEffect(() => {
-    
     axios.post(`${BackendConn}post/isLiked/${postId}/${currUser._id}`).then(response => {
       setLoading(false);
       divElement = colorLike.current;
       divLikeCount = refLikeCount.current;
+      divUpdatePost = updatePosting.current;
       if (response.data === "Yes") {
         console.log("change color");
         divElement.style.color = "#E26714";
         divLikeCount = likeCount;
+        divUpdatePost = updatePosting.current;
       }
       else {
         divElement.style.color = "#000000";
         divLikeCount = likeCount;
+        divUpdatePost = updatePosting.current;
       }
     });
+    divUpdatePost = updatePosting.current;
   }, []);
 
 
@@ -110,93 +119,137 @@ function PostCard({
 
   var editTargetPost = (e) => {
     console.log(`edit post clicked, ${e.target}`);
+    activateUpdate();
   };
 
+  var activateUpdate = () => {
+    divUpdatePost = updatePosting.current;
+    if (divUpdatePost.style.display === "block") {
+      divUpdatePost.style.display = "none";
+      console.log("hide");
+    } else {
+      divUpdatePost.style.display = "block";
+      console.log("show");
+    }
+  }
 
+  var updatePost = () => {
+    divUpdateText = updateText.current;
 
+  }
+
+  var cancelPost = () => {
+    divUpdateText = updateText.current;
+    divUpdateText.value = "";
+    activateUpdate();
+  }
 
   return (
-    <div className="postingCard">
-      <div className="postingHeader">
-        <div className="postingProfile">
-          {anonymous ? (
-            <img
-              className="postPP"
-              src="anonymous_Img.png"
-              alt="Sample profile"
-            ></img>
-          ) : (
-            <img
-              className="postPP"
-              src="profile.png"
-              alt="Sample profile"
-            ></img>
-          )}
-        </div>
-        <div className="postingWriter">
-          {anonymous ? (
-            userName === currUser.USER_USERNAME ? (
-              <h3>HIDDEN USER - me</h3>
+    <div>
+      <div className="postingCard">
+        <div className="postingHeader">
+          <div className="postingProfile">
+            {anonymous ? (
+              <img
+                className="postPP"
+                src="anonymous_Img.png"
+                alt="Sample profile"
+              ></img>
             ) : (
-              <h3>HIDDEN USER</h3>
-            )
+              <img
+                className="postPP"
+                src="profile.png"
+                alt="Sample profile"
+              ></img>
+            )}
+          </div>
+          <div className="postingWriter">
+            {anonymous ? (
+              userName === currUser.USER_USERNAME ? (
+                <h3>HIDDEN USER - me</h3>
+              ) : (
+                <h3>HIDDEN USER</h3>
+              )
+            ) : (
+              <h3>{userName}</h3>
+            )}
+          </div>
+          <div className="dateWritten">
+            <h4>Posted {pastTime} ago</h4>
+          </div>
+          {userName === currUser.USER_USERNAME ? (
+            <div className="postSetting">
+              <i
+                className="fa-solid fa-ellipsis fa-2xl"
+                id="postSet"
+                onClick={openPostSetting}
+              ></i>
+              <div id="mDropdown" className="postSetting_content">
+                <div onClick={deleteTargetPost}>Delete</div>
+                <div onClick={editTargetPost}>Edit</div>
+              </div>
+            </div>
           ) : (
-            <h3>{userName}</h3>
+            <div className="postSetting">
+              
+            </div>
           )}
         </div>
-        <div className="dateWritten">
-          <h4>Posted {pastTime} ago</h4>
+        <div className="postCard_topic_section">
+          Topic: <span>{topic}</span>
         </div>
-        {userName === currUser.USER_USERNAME ? (
-          <div className="postSetting">
-            <i
-              className="fa-solid fa-ellipsis fa-2xl"
-              id="postSet"
-              onClick={openPostSetting}
-            ></i>
-            <div id="mDropdown" className="postSetting_content">
-              <div onClick={deleteTargetPost}>Delete</div>
-              <div onClick={editTargetPost}>Edit</div>
+        <div className="postingBody">
+          <div className="postingSection">
+            <div className="postWords">
+              <Linkify
+                componentDecorator={(decoratedHref, postText, key) => (
+                  <a target="blank" href={decoratedHref} key={key}>
+                    {postText}
+                  </a>
+                )}
+              >{postText}</Linkify>
             </div>
           </div>
-        ) : (
-          <div></div>
-        )}
-      </div>
-      <div className="postCard_topic_section">
-        Topic: <span>{topic}</span>
-      </div>
-      <div className="postingBody">
-        <div className="postingSection">
-          <div className="postWords">
-            <Linkify
-              componentDecorator={(decoratedHref, postText, key) => (
-                <a target="blank" href={decoratedHref} key={key}>
-                  {postText}
-                </a>
-              )}
-            >{postText}</Linkify>
-          </div>
-        </div>
-        <div className="iconSection">
-          <div className="likeSection" ref={colorLike}>
-            <i
-              className="fa-regular fa-thumbs-up fa-2xl"
-              id="like"
-              onClick={likePostFunc}
-            ></i>
-            <div className="likeCount" id="likeNum" ref={refLikeCount}>
-              {likeCount}
+          <div className="iconSection">
+            <div className="likeSection" ref={colorLike}>
+              <i
+                className="fa-regular fa-thumbs-up fa-2xl"
+                id="like"
+                onClick={likePostFunc}
+              ></i>
+              <div className="likeCount" id="likeNum" ref={refLikeCount}>
+                {likeCount}
+              </div>
+            </div>
+            <div
+              className="commentSection"
+              onClick={() => {
+                navigate(postLink);
+              }}
+            >
+              <i className="fa-regular fa-comment-dots fa-2xl"></i>
+              <h5 className="commentCount">{commentCount}</h5>
             </div>
           </div>
-          <div
-            className="commentSection"
-            onClick={() => {
-              navigate(postLink);
-            }}
-          >
-            <i className="fa-regular fa-comment-dots fa-2xl"></i>
-            <h5 className="commentCount">{commentCount}</h5>
+        </div>
+      </div>
+      <div ref={updatePosting} className="updatePost">
+        <div className="writeTitleC">Update the post!</div>
+        <div className="writeCardC">
+          <form className="commentForm">
+            <textarea
+              className="replyWrite"
+              ref={updateText}
+              placeholder="Update the post here!"
+            ></textarea>
+          </form>
+          <div className="writeFooterC">
+            <button className="btnUploadC" onClick={updatePost}>
+              Update
+            </button>
+            <button className="btnCancelC" onClick={cancelPost}>
+              Cancel
+            </button>
           </div>
         </div>
       </div>
