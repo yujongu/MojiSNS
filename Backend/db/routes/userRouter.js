@@ -513,6 +513,28 @@ router.patch("/blockUser/:id", async (req, res) => {
         },
       }
     );
+
+    await User.findOneAndUpdate( //remove from follower list
+      { _id: req.params.id },
+      {
+        $pull: {
+          FOLLOWER_USERS: {
+            USER_ID: mongoose.Types.ObjectId(req.body.USER_ID),
+          },
+        },
+      }
+    );
+
+
+    await User.findOneAndUpdate(
+      { _id: req.body.USER_ID },
+      {
+        $pull: {
+          FOLLOWING_USERS: { USER_ID: mongoose.Types.ObjectId(req.params.id) },
+        },
+      }
+    );
+
     await User.findOneAndUpdate(
       { _id: req.body.USER_ID },
       {
@@ -523,7 +545,11 @@ router.patch("/blockUser/:id", async (req, res) => {
     );
 
     console.log("user blocked");
-    res.send("user blocked");
+    const final = await User.findOne({
+      _id: req.params.id 
+    }).populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj USER_BLOCKLIST")
+
+    res.send(final);
   } catch (error) {
     console.log(error);
   }
@@ -543,7 +569,11 @@ router.patch("/unblockUser/:id", async (req, res) => {
     );
 
     console.log("user unblocked");
-    res.send("user unblocked");
+    const final = await User.findOne({
+      _id: req.params.id 
+    }).populate("FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj USER_BLOCKLIST")
+
+    res.send(final);
   } catch (error) {
     console.log(error);
   }

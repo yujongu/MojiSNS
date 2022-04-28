@@ -251,7 +251,7 @@ function PostCard({
           ) : (
             <div className="postSave" ref={heartSave}>
               <i
-                class="fa-solid fa-heart fa-2xl"
+                className="fa-solid fa-heart fa-2xl"
                 onClick={savePosting}
               ></i>
             </div>

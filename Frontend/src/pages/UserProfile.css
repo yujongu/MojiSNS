@@ -19,3 +19,22 @@
   background-color: white;
   color: black;
 }
+
+.blockUserBtn{
+  margin: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-style: none;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #ffc368;
+  color: #e26714;
+  transition: 0.4s;
+}
+
+.blockUserBtn:hover {
+  background-color: #fc5c5c;
+  color: white;
+}

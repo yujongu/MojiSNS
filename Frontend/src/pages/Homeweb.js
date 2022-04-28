@@ -23,6 +23,11 @@ const Homeweb = () => {
   const [interestList, setInterestList] = useState([]);
   const [filteredTopics, setFilteredTopics] = useState([]);
 
+  const userBlockedList = [];
+  (currUser.USER_BLOCKLIST).forEach((element) => {
+    userBlockedList.push(element.USER_ID);
+  })
+
   var postAnonymous = false;
   //window onload
   React.useEffect(() => {
@@ -45,7 +50,8 @@ const Homeweb = () => {
   };
 
   //component did update
-  React.useEffect(() => {}, [postData]);
+  React.useEffect(() => {
+  }, [postData]);
 
   React.useEffect(() => {}, [interestList]);
 
@@ -93,9 +99,16 @@ const Homeweb = () => {
     const response = axios.get(`${BackendConn}post/getFeed/${currUser._id}`);
     response.then((response) => {
       if (response.status === 200) {
-        console.log(response.data);
         setLoading(false);
-        setPostData(response.data);
+        const tempPostHolder = [];
+
+        response.data.forEach((element) => {
+          if(userBlockedList.indexOf(element.USER_ID._id) === -1) {
+            tempPostHolder.push(element)
+          }
+        })
+        // setPostData(response.data);
+        setPostData(tempPostHolder)
       } else {
         alert("Something Went Wrong...");
       }
@@ -441,17 +454,6 @@ const Homeweb = () => {
                       postText={singlePost.BODY}
                     />
                   )
-                // <PostCard
-                //   key={index}
-                //   topic={singlePost.TOPIC_ID.TOPIC_NAME}
-                //   userName={singlePost.USER_ID.USER_USERNAME}
-                //   postId={singlePost._id}
-                //   anonymous={singlePost.IS_ANONYMOUS}
-                //   postTime={singlePost.updatedAt}
-                //   likeCount={singlePost.LIKES_COUNT}
-                //   commentCount={singlePost.COMMENTS_COUNT}
-                //   postText={singlePost.BODY}
-                // />
               )
             )}
           </div>

@@ -29,6 +29,7 @@ function UserSearchResult() {
                 showTime={false}
                 time={""}
               />
+              // console.log(singleUser)
             ))}
           </div>
         </div>

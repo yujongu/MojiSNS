@@ -13,9 +13,11 @@ import { DIRECTMESSAGE, HOMEWEB } from "../constants/routes";
 function UserProfile() {
   const location = useLocation();
   let navigate = useNavigate();
+  var me = JSON.parse(localStorage.getItem("currentUser"));
 
   var targetUsername = location.state.username;
   var targetUserId = location.state.uid;
+
 
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
@@ -24,10 +26,18 @@ function UserProfile() {
   var topics = "";
 
   React.useEffect(() => {
+    var a = document.querySelector(".blockUserBtn")
+    if(me.USER_BLOCKLIST.indexOf(targetUserId) !== -1) {
+      a.style.backgroundColor = "#ffc368";
+      a.style.color = "#e26714";
+    } else {
+      a.style.backgroundColor = "#fc5c5c";
+      a.style.color = "white";
+    }
+
     incVisitorCount();
     populatePosts();
     getTargetUser();
-    
   }, []);
 
   //component did update
@@ -37,18 +47,20 @@ function UserProfile() {
     if (userData.length != 0) {
       userEventListeners();
     }
+    
   }, [userData]);
 
   var incVisitorCount = () => {
-    const response = axios.patch(`${BackendConn}user/increaseVisitorCount/${targetUsername}`);
+    const response = axios.patch(
+      `${BackendConn}user/increaseVisitorCount/${targetUsername}`
+    );
     response.then((response) => {
-      if(response.status === 200) {
-
+      if (response.status === 200) {
       } else {
-        alert("Something Went Wrong...")
+        alert("Something Went Wrong...");
       }
-    })
-  }
+    });
+  };
 
   var populatePosts = () => {
     const response = axios.get(`${BackendConn}post/getPosts/${targetUserId}`);
@@ -76,8 +88,14 @@ function UserProfile() {
   };
 
   var redirectToDmUser = () => {
-    console.log(userData)
-    navigate(DIRECTMESSAGE, { state: { username: targetUsername, uid: targetUserId, useremail: userData.USER_EMAIL } });
+    console.log(userData);
+    navigate(DIRECTMESSAGE, {
+      state: {
+        username: targetUsername,
+        uid: targetUserId,
+        useremail: userData.USER_EMAIL,
+      },
+    });
   };
 
   var userEventListeners = () => {
@@ -109,6 +127,61 @@ function UserProfile() {
     var interestList = document.querySelector(".interestList");
     interestList.textContent = topics;
   };
+
+  var blockUser = () => {
+    var a = document.querySelector(".blockUserBtn");
+    console.log(a);
+    a.style.backgroundColor = "#fc5c5c";
+    a.style.color = "white";
+    const response = axios.patch(`${BackendConn}user/blockUser/${me._id}`, {
+      USER_ID: targetUserId,
+    });
+    response.then((response) => {
+      if (response.status === 200) {
+        if (response.data === "already blocked") {
+          alert("The user's already blocked!");
+        } else {
+          alert("User has been blocked!");
+          console.log(response.data)
+          localStorage.setItem("currentUser", JSON.stringify(response.data))
+        }
+      } else {
+        alert("Something Went Wrong...");
+      }
+    });
+  };
+
+  var unblockUser = () => {
+    var a = document.querySelector(".blockUserBtn");
+    console.log(a);
+    a.style.backgroundColor = "#ffc368";
+    a.style.color = "#e26714";
+
+    const response = axios.patch(`${BackendConn}user/unblockUser/${me._id}`, {
+      USER_ID: targetUserId,
+    });
+    response.then((response) => {
+      if (response.status === 200) {
+        alert("User has been unblocked!");
+        console.log(response.data)
+        localStorage.setItem("currentUser", JSON.stringify(response.data))
+
+      } else {
+        alert("Something Went Wrong...");
+      }
+    });
+  };
+
+  var userBlockHandler = () => {
+    var a = document.querySelector(".blockUserBtn")
+    console.log(a.style.backgroundColor)
+    if(a.style.backgroundColor === "rgb(252, 92, 92)") {
+      unblockUser();
+    } else {
+      blockUser();
+    }
+  };
+
   return (
     <main className="profileContainer">
       <div className="itemFlex">
@@ -129,8 +202,16 @@ function UserProfile() {
                 <div className="nameInfos">
                   <p id="prof_name">{userData.USER_USERNAME}</p>
                   <p id="prof_email">{userData.USER_EMAIL}</p>
-                  <p id="prof_visitorCount">{userData.DAILY_VISITOR_COUNT} visitors visited your profile</p>
+                  <p id="prof_visitorCount">
+                    {userData.DAILY_VISITOR_COUNT} visitors visited your profile
+                  </p>
                 </div>
+              </div>
+
+              <div>
+                <button className="blockUserBtn" onClick={userBlockHandler}>
+                  Block user
+                </button>
               </div>
             </div>
 
@@ -173,8 +254,9 @@ function UserProfile() {
         <div className="dmBtnContainer">
           {/* <a href={DIRECTMESSAGE}>
           </a> */}
-          <button className="dmBtn" onClick={redirectToDmUser}>Message&gt;</button>
-
+          <button className="dmBtn" onClick={redirectToDmUser}>
+            Message&gt;
+          </button>
         </div>
       </div>
     </main>
