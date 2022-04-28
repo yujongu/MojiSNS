@@ -24,7 +24,7 @@
     margin-top: 30px;
   }
 
-  #writeComment {
+  .writeComment {
     display: none;
     margin: 4%;
   }

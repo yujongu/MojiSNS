@@ -53,6 +53,16 @@
   color: #ffc368;
 }
 
+.postSave {
+  position: relative;
+  width: 5%;
+  height: fit-content;
+  margin-left: 3%;
+  margin-top: 6%;
+  cursor: pointer;
+  display: inline-block;
+}
+
 .postSetting_content {
   display: none;
   position: absolute;
