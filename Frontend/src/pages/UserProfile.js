@@ -18,21 +18,28 @@ function UserProfile() {
   var targetUsername = location.state.username;
   var targetUserId = location.state.uid;
 
-
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
   const [userData, setUserData] = useState([]);
   var formattedBday = "";
   var topics = "";
 
+  const userBlockedList = [];
+  (me.USER_BLOCKLIST).forEach((element) => {
+    userBlockedList.push(element.USER_ID);
+  })
+
   React.useEffect(() => {
-    var a = document.querySelector(".blockUserBtn")
-    if(me.USER_BLOCKLIST.indexOf(targetUserId) !== -1) {
+    var a = document.querySelector(".blockUserBtn");
+   
+    if (userBlockedList.indexOf(targetUserId) === -1) {
       a.style.backgroundColor = "#ffc368";
       a.style.color = "#e26714";
+      a.textContent = "Block User";
     } else {
       a.style.backgroundColor = "#fc5c5c";
       a.style.color = "white";
+      a.textContent = "Unblock User";
     }
 
     incVisitorCount();
@@ -47,7 +54,6 @@ function UserProfile() {
     if (userData.length != 0) {
       userEventListeners();
     }
-    
   }, [userData]);
 
   var incVisitorCount = () => {
@@ -133,6 +139,7 @@ function UserProfile() {
     console.log(a);
     a.style.backgroundColor = "#fc5c5c";
     a.style.color = "white";
+    a.textContent = "Unblock User";
     const response = axios.patch(`${BackendConn}user/blockUser/${me._id}`, {
       USER_ID: targetUserId,
     });
@@ -142,8 +149,8 @@ function UserProfile() {
           alert("The user's already blocked!");
         } else {
           alert("User has been blocked!");
-          console.log(response.data)
-          localStorage.setItem("currentUser", JSON.stringify(response.data))
+          console.log(response.data);
+          localStorage.setItem("currentUser", JSON.stringify(response.data));
         }
       } else {
         alert("Something Went Wrong...");
@@ -156,16 +163,15 @@ function UserProfile() {
     console.log(a);
     a.style.backgroundColor = "#ffc368";
     a.style.color = "#e26714";
-
+    a.textContent = "Block User";
     const response = axios.patch(`${BackendConn}user/unblockUser/${me._id}`, {
       USER_ID: targetUserId,
     });
     response.then((response) => {
       if (response.status === 200) {
         alert("User has been unblocked!");
-        console.log(response.data)
-        localStorage.setItem("currentUser", JSON.stringify(response.data))
-
+        console.log(response.data);
+        localStorage.setItem("currentUser", JSON.stringify(response.data));
       } else {
         alert("Something Went Wrong...");
       }
@@ -173,9 +179,9 @@ function UserProfile() {
   };
 
   var userBlockHandler = () => {
-    var a = document.querySelector(".blockUserBtn")
-    console.log(a.style.backgroundColor)
-    if(a.style.backgroundColor === "rgb(252, 92, 92)") {
+    var a = document.querySelector(".blockUserBtn");
+    console.log(a.style.backgroundColor);
+    if (a.style.backgroundColor === "rgb(252, 92, 92)") {
       unblockUser();
     } else {
       blockUser();

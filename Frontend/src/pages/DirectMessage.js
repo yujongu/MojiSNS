@@ -25,7 +25,20 @@ function DirectMessage() {
   const [messageRec, setMessageRec] = useState("");
   const [nMessages, setnMessages] = useState([]);
 
+  const userBlockedList = [];
+  (currUser.USER_BLOCKLIST).forEach((element) => {
+    userBlockedList.push(element.USER_ID);
+  })
+
   useEffect(() => {
+    if(
+      userBlockedList.indexOf(targetUserId)
+       !== -1) {
+      alert("This user is blocked!")
+      var a = document.getElementById("sendMsgBtn")
+      a.disabled = true
+      return;
+    }
     joinRoom();
     getPrevMessages();
   }, []);
