@@ -34,6 +34,7 @@ function Profile() {
     monthNames[parseInt(bday[1]) - 1] + " " + bday[2] + ", " + bday[0];
   var topics = "";
   currUser.FOLLOWING_TOPICS_Obj.forEach((t) => {
+    console.log(t);
     topics += `${t.TOPIC_NAME} `;
   });
 
@@ -63,14 +64,22 @@ function Profile() {
   React.useEffect(() => {}, [postData]);
 
   var getMyInfo = () => {
-    const response = axios.get(`${BackendConn}user/getUserByUsername/${currUser.USER_USERNAME}`);
+    const response = axios.get(
+      `${BackendConn}user/getUserByUsername/${currUser.USER_USERNAME}`
+    );
     response.then((response) => {
-      if(response.status === 200) {
-        localStorage.setItem("currentUser", JSON.stringify(response.data))
+      if (response.status === 200) {
+        localStorage.setItem("currentUser", JSON.stringify(response.data));
         currUser = JSON.parse(localStorage.getItem("currentUser"));
+
+        topics = "";
+        currUser.FOLLOWING_TOPICS_Obj.forEach((t) => {
+          console.log(t);
+          topics += `${t.TOPIC_NAME} `;
+        });
       }
-    })
-  }
+    });
+  };
 
   var populatePosts = () => {
     const response = axios.get(`${BackendConn}post/getMyPosts/${currUser._id}`);
@@ -104,8 +113,9 @@ function Profile() {
                 <div className="nameInfos">
                   <p id="prof_name">{currUser.USER_USERNAME}</p>
                   <p id="prof_email">{currUser.USER_EMAIL}</p>
-                  <p id="prof_visitorCount">{currUser.DAILY_VISITOR_COUNT} visitors visited your profile</p>
-                  
+                  <p id="prof_visitorCount">
+                    {currUser.DAILY_VISITOR_COUNT} visitors visited your profile
+                  </p>
                 </div>
               </div>
 
