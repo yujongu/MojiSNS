@@ -20,11 +20,14 @@ function UserInfoShort({ ind, username, uid, showTime, time }) {
       );
       followBtn.style.display = "none";
     }
-    currUser.FOLLOWING_USERS.forEach((following) => {
-      if (following.USER_ID._id === uid) {
-        setFollowing(true);
-      }
-    });
+    if(currUser.FOLLOWING_USERS.length !== 0) {
+      currUser.FOLLOWING_USERS.forEach((following) => {
+        if (following.USER_ID._id === uid) {
+          setFollowing(true);
+        }
+      });
+    }
+    
   }, []);
 
   React.useEffect(() => {}, isFollowing);

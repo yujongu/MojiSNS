@@ -37,9 +37,9 @@ router.post("/addComment", async (req, res) => {
       { _id: mongoose.Types.ObjectId(req.body.POST_ID)},
       { $inc: {"COMMENTS_COUNT" : 1} }
     )    
-    await comment.save();
-    res.send(comment);
-    console.log(comment);
+    var response = await comment.save();
+    res.send(response);
+    console.log(response);
   } catch (error) {
     console.log(error);
   }

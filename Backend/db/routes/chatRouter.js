@@ -15,17 +15,25 @@ router.get("/getMessages/:roomname", async (req, res) => {
     res.send(chats)
 })
 
+
 router.post("/addMessage", async (req, res) => {
     try{
-        const chat = new Chat({
-            ROOM_NAME: req.body.ROOM_NAME,
-            CHAT_OWNER_ID: req.body.CHAT_OWNER_ID,
-            CHAT_MESSAGE: req.body.CHAT_MESSAGE,
-        });
+        if(req.body.CHAT_MESSAGE.length == 0) {
+            res.send("ERROR");
+            return;
+        } else {
 
-        await chat.save();
-        res.send(chat);
-        console.log("chat saved");
+            const chat = new Chat({
+                ROOM_NAME: req.body.ROOM_NAME,
+                CHAT_OWNER_ID: req.body.CHAT_OWNER_ID,
+                CHAT_MESSAGE: req.body.CHAT_MESSAGE,
+            });
+    
+            await chat.save();
+            res.send(chat);
+            console.log("chat saved");
+        }
+        
     } catch (error) {
         console.log(error)
     }
