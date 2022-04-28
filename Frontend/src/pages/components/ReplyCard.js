@@ -69,7 +69,6 @@ function ReplyCard({
                             ></i>
                             <div id="mDropdown" className="postSetting_content">
                                 <div onClick={deleteTargetComment}>Delete</div>
-                                <div onClick={editTargetComment}>Edit</div>
                             </div>
                         </div>
                     ) : (
