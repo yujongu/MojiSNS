@@ -9,7 +9,7 @@ import { BackendConn } from "../constants/backendConn";
 import MessageUI from "./components/MessageUI";
 import { element } from "prop-types";
 
-const socket = io.connect("http://localhost:3010");
+const socket = io.connect("http://localhost:5000");
 
 function DirectMessage() {
   const navigate = useNavigate();

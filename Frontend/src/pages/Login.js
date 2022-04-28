@@ -57,7 +57,7 @@ function Login() {
           .get(`${BackendConn}user/login/${username}/${password}`)
           .then((res) => {
             console.log(res);
-            if (res.data === "User not found") {
+            if (res.data === "User not found" || res.data === "Incorrect password") {
               alert("Username or Password is not valid!");
             }
             else {

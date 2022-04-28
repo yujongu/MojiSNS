@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const Post = require("../models/post");
+const Comment = require("../models/comment")
 const Topic = require("../models/topic");
 const { default: mongoose } = require("mongoose");
 const router = express.Router();
@@ -48,7 +49,11 @@ router.get("/getPost/:id", async (req, res) => {
     );
 
     console.log(post);
-    res.send(post);
+    if(post == null) {
+      res.send("Not Found")
+    } else {
+      res.send(post);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -60,12 +65,34 @@ router.delete("/deletePost/:id", (req, res) => {
 
   Post.findByIdAndDelete(id)
     .then((result) => {
-      console.log("post deleted");
-      res.send("post deleted");
+      console.log(result)
+      if(result === null) {
+        console.log("post could not be found!")
+        res.send("Error")
+      } else {
+        console.log("post deleted");
+
+        Comment.deleteMany({
+          POST_ID: mongoose.Types.ObjectId(id)
+        }).then((result) => {
+          if(result.status === 200) {
+            console.log("Following Comments Deleted")
+            
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+
+        res.send("post deleted");
+      }
     })
     .catch((err) => {
       console.log(err);
     });
+    
+    
 }); // delete all comments
 
 //update post
@@ -154,7 +181,7 @@ router.post("/likePost/:post_id/:user_id", async (req, res) => {
       if (
         post.LIKED_USERS.some((e) => e._id.toString() == req.params.user_id)
       ) {
-
+        res.status(404)
         res.send("already liked");
         console.log("already liked");
         return;

@@ -10,6 +10,7 @@ const router = express.Router();
 const { scryptSync, randomBytes, timingSafeEqual } = require("crypto");
 //const bcrypt = require("bcrypt");
 const Notification = require("../models/notification");
+const Chat = require("../models/chat");
 
 router.get("/getUsers", async (req, res) => {
   const users = await User.find().populate(
@@ -86,9 +87,15 @@ router.get("/findUserByUsername/:username", async (req, res) => {
     }).populate(
       "FOLLOWING_USERS.USER_ID FOLLOWER_USERS.USER_ID FOLLOWING_TOPICS_Obj"
     );
-    res.send(user);
-    console.log(user);
-    console.log("got user");
+    if(user.length != 0) {
+      res.send(user);
+      console.log(user);
+      console.log("got user");
+    } else {
+      res.status(404)
+      res.send("ERROR: No User Found.")
+    }
+    
   } catch (error) {
     console.log(error);
   }
@@ -105,7 +112,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
       },
       "./template/deleteEmail.handlebars"
     );
-    //remove following list
+    //remove follower list
     user.FOLLOWER_USERS.forEach( async (element) => {
       await User.findOneAndUpdate(
         { _id: element.USER_ID },
@@ -118,7 +125,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
         }
       );
     });
-    
+    //remove following list
     user.FOLLOWING_USERS.forEach(async (element) => {
       await User.findOneAndUpdate(
         { _id: element.USER_ID },
@@ -131,7 +138,7 @@ router.delete("/deleteUser/:id", async (req, res) => {
         }
       );
     });
-
+    //remove notifications
     await Notification.deleteMany({
       $or: [
         {
@@ -142,11 +149,16 @@ router.delete("/deleteUser/:id", async (req, res) => {
         } 
       ]
     })
-
+    //remove target user
     await User.findByIdAndDelete(req.params.id);
+    //remove posts
     await Post.deleteMany({USER_ID: req.params.id})
-    
-    axios.delete(`http://localhost:3010/api/comment/deleteUser/${req.params.id}`)
+    //remove chats
+    await Chat.deleteMany({
+      ROOM_NAME: { $regex: `${user.USER_USERNAME}`, $options: "i"},
+    })
+
+    axios.delete(`http://localhost:5000/api/comment/deleteUser/${req.params.id}`)
     .then(response => {
       console.log(response.data.url);
       //console.log(response.data.explanation);
@@ -154,9 +166,6 @@ router.delete("/deleteUser/:id", async (req, res) => {
     .catch(error => {
       console.log(error);
     });
-
-
-    
 
     console.log("delete user");
     res.send("delete user");
@@ -217,6 +226,7 @@ router.patch("/increaseVisitorCount/:username", async (req, res) => {
     user.DAILY_VISITOR_COUNT = user.DAILY_VISITOR_COUNT + 1
     await user.save();
     console.log("Visitor count incremented!")
+    res.send("Visitor Incremented!")
   } catch(error) {
     console.log(error)
   }
