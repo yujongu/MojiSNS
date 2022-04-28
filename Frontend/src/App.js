@@ -22,6 +22,7 @@ import Following from "./pages/Following";
 import Notification from "./pages/Notification";
 import DirectMessage from "./pages/DirectMessage";
 import PostDetail from "./pages/PostDetail";
+import SavedPosts from "./pages/SavedPosts";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path={PageLinks.NOTIFICATION} element={<Notification />} />
         <Route path={PageLinks.POSTDETAIL} element={<PostDetail />} />
         <Route path={PageLinks.DIRECTMESSAGE} element={<DirectMessage />} />
+        <Route path={PageLinks.SAVEDPOSTS} element={<SavedPosts />} />
       </Routes>
     </Router>
   );

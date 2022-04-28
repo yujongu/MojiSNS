@@ -98,8 +98,6 @@ router.delete("/deletePost/:id", (req, res) => {
 //update post
 router.patch("/updatePost/:id", (req, res) => {
   const id = req.params.id;
-  console.log(req.body.BODY)
-  //  console.log ("HI")
   Post.findOneAndUpdate({ _id: id }, { BODY: `${req.body.BODY}\n-Edited-` })
     .then((result) => {
       console.log("post updated");
@@ -243,4 +241,94 @@ router.post("/isLiked/:post_id/:user_id", async (req, res) => {
     console.log(error);
   }
 });
+
+router.post("/savePost/:post_id/:user_id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.user_id })
+      //.populate("USER_ID TOPIC_ID LIKED_USERS");
+      //post.LIKED_USERS.some((e) => console.log(e._id.toString()))
+
+
+      if (
+        user.SAVED_POSTS.some((e) => e._id.toString() == req.params.post_id)
+      ) {
+
+        res.send("already saved");
+        console.log("already saved");
+        return;
+      }
+    await User.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.params.user_id)},
+      { $push: {SAVED_POSTS: req.params.post_id}}
+    )
+    
+    res.send("post saved");
+    console.log("post saved");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/unsavePost/:post_id/:user_id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.user_id })
+      //.populate("USER_ID TOPIC_ID LIKED_USERS");
+      //post.LIKED_USERS.some((e) => console.log(e._id.toString()))
+
+
+      if (
+        !user.SAVED_POSTS.some((e) => e._id.toString() == req.params.post_id)
+      ) {
+        res.send("not saved");
+        console.log("not saved");
+        return;
+      }
+    await User.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(req.params.user_id)},
+      { $pull: {SAVED_POSTS: req.params.post_id}}
+    )
+    
+    res.send("post unsaved");
+    console.log("post unsaved");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/getSavedPosts/:user_id", async (req, res) => {
+  const user = await User.findOne(
+    {_id: req.params.user_id}
+  )
+  const posts = await Post.find(
+    { _id: user.SAVED_POSTS }
+  )
+    .populate("USER_ID TOPIC_ID LIKED_USERS")
+  
+    console.log(posts);
+  //console.log(posts);
+  res.send(posts);
+});
+
+
+
+router.post("/isSaved/:post_id/:user_id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.user_id })
+      //.populate("USER_ID TOPIC_ID LIKED_USERS");
+
+      if (
+        user.SAVED_POSTS.some((e) => e._id.toString() == req.params.post_id)
+      ) {
+        res.send("Yes");
+        console.log("Yes");
+        return;
+      }
+    
+    res.send("No");
+    console.log("No");
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
+

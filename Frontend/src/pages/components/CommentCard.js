@@ -3,6 +3,7 @@ import "./CommentCard.css";
 import { useNavigate } from "react-router-dom";
 import datePretty from "../../helperFunctions/datePretty";
 import ReplyCard from "./ReplyCard";
+import PostDetail from "../PostDetail";
 import axios from "axios";
 import { BackendConn } from "../../constants/backendConn";
 import profileP from "../../images/profile.png";
@@ -20,44 +21,71 @@ function CommentCard({
 
     const [isLoading, setLoading] = useState(true);
     const [replyData, setReplyData] = useState([]);
+    const [isCheck, setCheck] = useState(true);
 
     const colorLike = useRef();
     const refLikeCount = useRef();
     const updateCommenting = useRef();
     const updateTextC = useRef();
+    const replyLoad = useRef();
 
     let navigate = useNavigate();
 
     var pastTime = datePretty(postTime);
-    var showReply = document.getElementById(commentId);
-
+    var showReply = null;
     var divElement = null;
     var divLikeCount = null;
     var divUpdateComment = null;
     var divUpdateTextC = null;
 
 
+
+    var activateReply = (el) => {
+        if (showReply.style.display === "block") {
+            showReply.style.display = "none";
+            console.log("hide");
+        } else {
+            showReply.style.display = "block";
+            console.log("show");
+            populateReplies();
+        }
+    }
+
     React.useEffect(() => {
         // Update the document title using the browser API
-        showReply = document.getElementById(commentId);
-        axios.post(`${BackendConn}comment/isLiked/${commentId}/${currUser._id}`).then(response => {
-            divElement = colorLike.current;
-            divLikeCount = refLikeCount.current;
-            if (response.data === "Yes") {
-                console.log("change color");
-                divElement.style.color = "#E26714";
-                divLikeCount = likeCount;
-            }
-            else {
-                divElement.style.color = "#000000";
-                divLikeCount = likeCount;
-            }
-        });
-    });
+        if(isCheck)
+        {
+            axios.post(`${BackendConn}comment/isLiked/${commentId}/${currUser._id}`).then(response => {
+                divElement = colorLike.current;
+                divLikeCount = refLikeCount.current;
+                if (response.data === "Yes") {
+                    console.log("change color");
+                    divElement.style.color = "#E26714";
+                    divLikeCount = likeCount;
+                }
+                else {
+                    divElement.style.color = "#000000";
+                    divLikeCount = likeCount;
+                }
+            });
+            setCheck(false);
+            populateReplies();
+        }
+    },[]);
 
-    React.useEffect(() => { }, [replyData]);
+    React.useEffect(() => {
+        showReply = replyLoad.current;
+    })
+
+    React.useEffect(() => {
+    }, [replyData]);
 
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
+
+
+    var openCommentSetting = (el) => {
+        el.target.nextSibling.classList.toggle("show");
+    };
 
     var populateReplies = () => {
         const response = axios.get(`${BackendConn}comment/getReplies/${commentId}`);
@@ -71,12 +99,6 @@ function CommentCard({
             }
         });
     };
-
-    var openCommentSetting = (el) => {
-        el.target.nextSibling.classList.toggle("show");
-    };
-
-
 
     var deleteTargetComment = (el) => {
         console.log(`delete post clicked ${el.target}, ${postId}`);
@@ -187,14 +209,27 @@ function CommentCard({
 
     var updateComment = () => {
         divUpdateTextC = updateTextC.current;
-    
-      }
-    
-      var cancelComment = () => {
+        axios.patch(`${BackendConn}comment/updateComment/${commentId}`, {
+            BODY: divUpdateTextC.value,
+        })
+            .then((res) => {
+                console.log(res)
+                if (res.status === 200) {
+                    console.log("success update");
+                    cancelComment();
+                    window.location.reload();
+                }
+                else {
+                    alert("update failed");
+                }
+            })
+    }
+
+    var cancelComment = () => {
         divUpdateTextC = updateTextC.current;
         divUpdateTextC.value = "";
         activateUpdateC();
-      }
+    }
 
     return (
         <div>
@@ -251,7 +286,7 @@ function CommentCard({
                                     ></i>
                                 </div>
                             </div>
-                            <div id={commentId} className="writeReply">
+                            <div ref={replyLoad} className="writeReply">
                                 <hr class="solid" />
                                 <div>
                                     {isLoading ? (
