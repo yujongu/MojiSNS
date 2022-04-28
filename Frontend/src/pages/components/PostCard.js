@@ -51,10 +51,14 @@ function PostCard({
       setLoading(false);
       if (response.data === "Yes") {
         console.log("change color");
+        divElement = colorLike.current;
+        divLikeCount = refLikeCount.current;
         divElement.style.color = "#E26714";
         divLikeCount = likeCount;
       }
       else {
+        divElement = colorLike.current;
+        divLikeCount = refLikeCount.current;
         divElement.style.color = "#000000";
         divLikeCount = likeCount;
       }
@@ -109,10 +113,26 @@ function PostCard({
     if(divSavePost.style.color === "rgb(0, 0, 0)")
     {
       divSavePost.style.color = "#FD6161";
+      axios.post(`${BackendConn}post/savePost/${postId}/${currUser._id}`).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          console.log("success save");
+        } else {
+          alert("save failed");
+        }
+      });
     }
     else
     {
       divSavePost.style.color = "#000000";
+      axios.post(`${BackendConn}post/unsavePost/${postId}/${currUser._id}`).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          console.log("success unsave");
+        } else {
+          alert("unsave failed");
+        }
+      });
     }
   }
 
