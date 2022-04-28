@@ -118,12 +118,12 @@ function Profile() {
                 >
                   Edit Profile
                 </button>
-                {/* <button
+                <button
                   className="interestModify"
-                  onClick={() => navigate("/newinterest")}
+                  onClick={() => navigate("/savedPosts")}
                 >
-                  Settings
-                </button> */}
+                  Saved Posts
+                </button>
               </div>
             </div>
 

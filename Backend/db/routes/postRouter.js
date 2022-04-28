@@ -273,7 +273,7 @@ router.get("/getSavedPosts/:user_id", async (req, res) => {
     {_id: req.params.user_id}
   )
   const posts = await Post.find(
-    { $all: user.SAVED_POSTS }
+    { _id: {$all: user.SAVED_POSTS }}
   )
     .populate("USER_ID TOPIC_ID LIKED_USERS")
 
