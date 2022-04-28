@@ -281,4 +281,26 @@ router.get("/getSavedPosts/:user_id", async (req, res) => {
   res.send(posts);
 });
 
+
+
+router.post("/isSaved/:post_id/:user_id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.user_id })
+      //.populate("USER_ID TOPIC_ID LIKED_USERS");
+
+      if (
+        user.SAVED_POSTS.some((e) => e._id.toString() == req.params.post_id)
+      ) {
+        res.send("Yes");
+        console.log("Yes");
+        return;
+      }
+    
+    res.send("No");
+    console.log("No");
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
+
