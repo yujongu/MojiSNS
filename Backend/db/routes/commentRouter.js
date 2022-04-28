@@ -9,7 +9,7 @@ router.get("/getComments/:id", async (req, res) => { //post id
       POST_ID: req.params.id})//,
       //OWNER_ID:{$nin: req.body.USER.USER_BLOCKLIST})
     .populate("POST_ID OWNER_ID PARENT_ID LIKED_USERS")
-    .sort({createdAt: -1, PARENT_ID: 1});
+    .sort({createdAt: 1, PARENT_ID: 1});
     console.log("Requesting comments list");
     console.log(comments);
     res.send(comments);

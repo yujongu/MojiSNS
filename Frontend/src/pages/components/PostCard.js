@@ -23,12 +23,11 @@ function PostCard({
   const currUser = JSON.parse(localStorage.getItem("currentUser"));
   const postLink = `/postDetail/${postId}`;
   const [isLoading, setLoading] = useState(true);
-
+  const heartSave = useRef();
   const colorLike = useRef();
   const refLikeCount = useRef();
   const updatePosting = useRef();
   const updateText = useRef();
-  const heartSave = useRef();
 
 
   var divElement = null;
@@ -61,6 +60,19 @@ function PostCard({
         divLikeCount = refLikeCount.current;
         divElement.style.color = "#000000";
         divLikeCount = likeCount;
+      }
+    });
+
+    axios.post(`${BackendConn}post/isSaved/${postId}/${currUser._id}`).then(response => {
+      setLoading(false);
+      if (response.data === "Yes") {
+        console.log("change color post");
+        divSavePost = heartSave.current;
+        divSavePost.style.color = "#FD6161";
+      }
+      else {
+        divSavePost = heartSave.current;
+        divSavePost.style.color = "#000000";
       }
     });
   }, []);
@@ -110,8 +122,7 @@ function PostCard({
 
   var savePosting = () => {
     divSavePost = heartSave.current;
-    if(divSavePost.style.color === "rgb(0, 0, 0)")
-    {
+    if (divSavePost.style.color === "rgb(0, 0, 0)") {
       divSavePost.style.color = "#FD6161";
       axios.post(`${BackendConn}post/savePost/${postId}/${currUser._id}`).then((res) => {
         console.log(res);
@@ -122,8 +133,7 @@ function PostCard({
         }
       });
     }
-    else
-    {
+    else {
       divSavePost.style.color = "#000000";
       axios.post(`${BackendConn}post/unsavePost/${postId}/${currUser._id}`).then((res) => {
         console.log(res);
