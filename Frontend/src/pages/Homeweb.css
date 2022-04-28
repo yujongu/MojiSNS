@@ -101,6 +101,10 @@
   margin-left: 10px;
 }
 
+.writeFooter {
+  display: flex;
+}
+
 .logout:hover {
   background-color: white;
   color: black;
