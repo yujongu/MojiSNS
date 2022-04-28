@@ -28,34 +28,37 @@ function PostCard({
   const refLikeCount = useRef();
   const updatePosting = useRef();
   const updateText = useRef();
+  const heartSave = useRef();
 
 
   var divElement = null;
   var divLikeCount = null;
   var divUpdatePost = null;
   var divUpdateText = null;
+  var divSavePost = null;
 
+
+  React.useEffect(() => {
+    divElement = colorLike.current;
+    divLikeCount = refLikeCount.current;
+    divUpdatePost = updatePosting.current;
+    divSavePost = heartSave.current;
+  })
 
 
   useEffect(() => {
     axios.post(`${BackendConn}post/isLiked/${postId}/${currUser._id}`).then(response => {
       setLoading(false);
-      divElement = colorLike.current;
-      divLikeCount = refLikeCount.current;
-      divUpdatePost = updatePosting.current;
       if (response.data === "Yes") {
         console.log("change color");
         divElement.style.color = "#E26714";
         divLikeCount = likeCount;
-        divUpdatePost = updatePosting.current;
       }
       else {
         divElement.style.color = "#000000";
         divLikeCount = likeCount;
-        divUpdatePost = updatePosting.current;
       }
     });
-    divUpdatePost = updatePosting.current;
   }, []);
 
 
@@ -101,6 +104,18 @@ function PostCard({
     e.target.nextSibling.classList.toggle("show");
   };
 
+  var savePosting = () => {
+    divSavePost = heartSave.current;
+    if(divSavePost.style.color === "rgb(0, 0, 0)")
+    {
+      divSavePost.style.color = "#FD6161";
+    }
+    else
+    {
+      divSavePost.style.color = "#000000";
+    }
+  }
+
   var deleteTargetPost = (e) => {
     console.log(`delete post clicked ${e.target}, ${postId}`);
     if (window.confirm("Would you really like to delete this post?")) {
@@ -139,17 +154,17 @@ function PostCard({
     axios.patch(`${BackendConn}post/updatePost/${postId}`, {
       BODY: divUpdateText.value,
     })
-    .then((res) => {
-      console.log(res)
-      if (res.status === 200) {
-        console.log("success update");
-        cancelPost();
-        window.location.reload();
-      }
-      else {
-        alert("update failed");
-      }
-    })
+      .then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          console.log("success update");
+          cancelPost();
+          window.location.reload();
+        }
+        else {
+          alert("update failed");
+        }
+      })
   }
 
   var cancelPost = () => {
@@ -204,8 +219,11 @@ function PostCard({
               </div>
             </div>
           ) : (
-            <div className="postSetting">
-              
+            <div className="postSave" ref={heartSave}>
+              <i
+                class="fa-solid fa-heart fa-2xl"
+                onClick={savePosting}
+              ></i>
             </div>
           )}
         </div>

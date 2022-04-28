@@ -1,4 +1,4 @@
-import React, { useEffect,useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./PostDetail.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -8,21 +8,20 @@ import CommentCard from "./components/CommentCard";
 import profileP from "../images/profile.png";
 import anonymousP from "../images/anonymous_Img.png"
 
-
-
 const PostDetail = (props) => {
     let navigate = useNavigate();
     const { postId } = useParams();
     const [postData, setPostData] = useState([]);
     const [commentData, setCommentData] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    var showComment = document.getElementById("writeComment")
+    var showComment = null;
 
     const currUser = JSON.parse(localStorage.getItem("currentUser"));
 
     const colorLike = useRef();
     const colorLike1 = useRef();
     const refLikeCount = useRef();
+    const openComment = useRef();
 
     var divElement = null;
     var divElement1 = null;
@@ -36,6 +35,8 @@ const PostDetail = (props) => {
     let likeCount;
     let commentCount;
     let postText;
+
+
 
 
     function initPost() {
@@ -73,6 +74,9 @@ const PostDetail = (props) => {
         if (!ignore) initPost();
         return () => { ignore = true; }
     }, []);
+    React.useEffect(() => {
+        showComment = openComment.current;
+    })
 
     console.log(postData);
     if (postData.length !== 0) {
@@ -161,14 +165,14 @@ const PostDetail = (props) => {
     }, []);
 
     function activateComment() {
-        if (showComment.style.display === "block") {
-            showComment.style.display = "none";
-            console.log("hide");
-        } else {
-            showComment.style.display = "block";
-            console.log("show");
+            if (showComment.style.display === "block") {
+                showComment.style.display = "none";
+                console.log("hide");
+            } else {
+                showComment.style.display = "block";
+                console.log("show");
+            }
         }
-    }
 
     var populateComments = () => {
         const response = axios.get(`${BackendConn}comment/getComments/${postId}`);
@@ -182,6 +186,8 @@ const PostDetail = (props) => {
             }
         });
     };
+
+
 
     var cancelComment = () => {
         var commentWriteID = document.getElementById("commentWriteID");
@@ -205,9 +211,9 @@ const PostDetail = (props) => {
                     if (response.status == 200) {
                         //clear and hide
                         cancelComment();
-
                         populateComments();
                         commentWriteID.value = "";
+                        window.location.reload();
                         //bring and repopulate posts in timeline
                     } else {
                         alert("Something Went Wrong...");
@@ -280,7 +286,7 @@ const PostDetail = (props) => {
                             </div>
                         </div>
                         <div className="iconSection">
-                            <div className="likeSection"ref={colorLike}>
+                            <div className="likeSection" ref={colorLike}>
                                 <i
                                     className="fa-regular fa-thumbs-up fa-2xl"
                                     id="like"
@@ -297,14 +303,14 @@ const PostDetail = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div id="writeComment">
+                    <div className="writeComment" ref={openComment}>
                         <hr class="solid" />
                         <h2 className="writeTitle">Comments</h2>
                         <div className="commentsTL">
                             {isLoading ? (
                                 <div>Loading</div>
                             ) : (
-                                commentData.map((singleComment, index) => (  
+                                commentData.map((singleComment, index) => (
                                     <CommentCard
                                         commentId={singleComment._id}
                                         postId={singleComment.POST_ID}
