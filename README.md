@@ -16,3 +16,10 @@ Jooheon Lee<br/>
 cd Frontend //change directory to frontend
 npm start
 ```
+
+Open New terminal,
+```
+cd Backend //change directory to backend
+npm start
+```
+
